@@ -7,6 +7,7 @@ import Home from "./pages/Home.js";
 import UserManagement from "./pages/UserManagement.js";
 import ViewChecklists from "./pages/ViewChecklists.js";
 
+
 import "./App.css";
 
 class App extends Component {
@@ -15,7 +16,8 @@ class App extends Component {
   }
 
   render() {
-    return (
+    return (  
+      
       <BrowserRouter>
         <div className="App">
           <Switch>
@@ -27,6 +29,7 @@ class App extends Component {
             />
             <Route exact path="/viewchecklists" component={ViewChecklists} />
             <Route exact path="/users" component={UserManagement} />
+          
             <Route
               render={function() {
                 return <p>Not Found</p>;
