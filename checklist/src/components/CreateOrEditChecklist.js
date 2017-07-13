@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
-import Check from "../components/Check.js";
+import Checkbox from "../components/Checkbox.js"
 
 const tabs = [
   {
@@ -21,15 +21,19 @@ const tabs = [
   }
 ];
 
-export default class Home extends Component {
+export default class CreateOrEditChecklist extends Component {
   render() {
     return (
       <div>
-        <TopNavBar className="horizontal" tabs={tabs} currentURL="/" />
-        <p> Home </p>
+        <TopNavBar
+          className="horizontal"
+          tabs={tabs}
+          currentURL="/createchecklist"
+        />
         <div>
-        <Check/>
+        <Checkbox/>
         </div>
+        <p> Create or Edit! </p>
       </div>
     );
   }

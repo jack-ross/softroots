@@ -26,11 +26,11 @@ export default class Home extends Component {
     return (
       <div>
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/" />
-        <p> Home </p>
-        <div>
-        <Check/>
-        </div>
+        <p> Homes </p>
+        <Check />
+        <p> Also home </p>
       </div>
+     
     );
   }
 }
