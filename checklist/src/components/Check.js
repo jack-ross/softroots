@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 const CheckboxGroup = Checkbox.Group;
 
-const plainOptions = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+const plainOptions = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const defaultCheckedList = ['Apple', 'Orange'];
 
 class Check extends React.Component {
@@ -15,7 +15,7 @@ class Check extends React.Component {
   render() {
     return (
       <div>
-        <div style={{ borderBottom: '2px solid #E9E9E9' }}>
+        <div style={{}}>
           <Checkbox
             indeterminate={this.state.indeterminate}
             onChange={this.onCheckAllChange}
