@@ -1,6 +1,7 @@
 import React from "react";
 import Chart from "./components/Chart.js";
 import { StyleSheet, Text, View } from "react-native";
+import Throughput from "./components/throughputModule/Throughput.js";
 
 let data = require("./currentDataFinal.js");
 let data2 = require("./pastDataFinal.js");
@@ -26,23 +27,23 @@ let dataSets = [
 
 export default class App extends React.Component {
   render() {
-    return (
-      <View>
-        <Chart
-          dataSetsAndStyles={dataSets}
-          graphType={"line"}
-          xValueName={"time"}
-          yValueName={"sales"}
-          yTickFormatFunction={y => `$${y}`}
-          xTickFormatFunction={x => `${x}:00`}
-          chartStyle={{
-            parent: {
-              border: "10px solid #ccc"
-            }
-          }}
-        />
-      </View>
+    // chart for testing
+    let chart = (
+      <Chart
+        dataSetsAndStyles={dataSets}
+        graphType={"line"}
+        xValueName={"time"}
+        yValueName={"sales"}
+        yTickFormatFunction={y => `$${y}`}
+        xTickFormatFunction={x => `${x}:00`}
+        chartStyle={{
+          parent: {
+            border: "10px solid #ccc"
+          }
+        }}
+      />
     );
+    return <Throughput />;
   }
 }
 
