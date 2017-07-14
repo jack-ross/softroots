@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
+import ApproveOrDenyUserList from "../components/ApproveOrDenyUserList.js";
 
 const tabs = [
   {
@@ -25,7 +26,10 @@ export default class UserManagement extends Component {
     return (
       <div>
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/users" />
-        <p> User Management! </p>
+        <h1> Unverified Users </h1>
+        <ApproveOrDenyUserList />
+
+        <h1> Verified Users </h1>
       </div>
     );
   }
