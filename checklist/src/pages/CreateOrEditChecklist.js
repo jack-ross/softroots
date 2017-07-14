@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
+import DynamicInput from "../components/DynamicInput";
 
 const tabs = [
   {
@@ -20,6 +21,8 @@ const tabs = [
   }
 ];
 
+const testData = ["mike", "stephen", "ashwin"];
+
 export default class CreateOrEditChecklist extends Component {
   render() {
     return (
@@ -30,6 +33,7 @@ export default class CreateOrEditChecklist extends Component {
           currentURL="/createchecklist"
         />
         <p> Create or Edit! </p>
+        <DynamicInput defaultValues={testData} />
       </div>
     );
   }
