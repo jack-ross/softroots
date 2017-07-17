@@ -37,7 +37,7 @@ export default class DynamicInput extends Component {
 
   componentWillMount() {
     // if default values are passed in, put them in the state to be rendered as Inputs
-    if (this.props.defaultValues) {
+    if (this.props.defaultValues && this.props.defaultValues.length > 0) {
       let updatedInputValues = {};
       this.props.defaultValues.map((dataObject, index) => {
         let key = `input_${index}`;

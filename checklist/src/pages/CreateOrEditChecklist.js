@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
-import DynamicInput from "../components/DynamicInput";
+import DynamicInput from "../components/DynamicInput.js";
+import DynamicHeaders from "../components/DynamicHeaders.js";
 
 const tabs = [
   {
@@ -21,27 +22,6 @@ const tabs = [
   }
 ];
 
-const testData = [
-  {
-    name: "michael",
-    birthday: "july 4"
-  },
-  {
-    name: "kevin",
-    birthday: "october 9"
-  }
-];
-const fields = [
-  {
-    name: "name",
-    description: "Name Please: "
-  },
-  {
-    name: "birthday",
-    description: "Birthday Please: "
-  }
-];
-
 export default class CreateOrEditChecklist extends Component {
   render() {
     return (
@@ -52,7 +32,7 @@ export default class CreateOrEditChecklist extends Component {
           currentURL="/createchecklist"
         />
         <p> Create or Edit! </p>
-        <DynamicInput defaultValues={testData} fields={fields} />
+        <DynamicHeaders />
       </div>
     );
   }
