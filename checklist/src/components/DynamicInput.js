@@ -3,8 +3,12 @@ import { Form, Input, Button } from "antd";
 let FormItem = Form.Item;
 
 /* PROPS:
-  defaultValues (OPTIONAL): [string]; values to be placed in the state (and accordingly 
-    the Inputs) when this component is first rendered
+  defaultValues (OPTIONAL): [objects]; values to be placed in the state (and accordingly 
+    the Inputs) when this component is first rendered; each object MUST have the same
+    fields as the field names in this.props.fields (see below)
+  fields: [obj]; the fields that the inputs correspond to; each object has two fields:
+    name: string; the name of the field being used as a key (i.e. "name")
+    description: string; the description to be displayed to the user (i.e. "Enter Date of Birth:")
 */
 
 /* STATE:
@@ -17,9 +21,15 @@ let FormItem = Form.Item;
 export default class DynamicInput extends Component {
   constructor(props) {
     super(props);
+
+    // create dummy object with the fields that were passed in as props
+    let initialValues = {};
+    this.props.fields.map(field => {
+      initialValues[field.name] = "";
+    });
     this.state = {
       inputValues: {
-        input_0: ""
+        input_0: initialValues
       },
       count: 1
     };
@@ -29,9 +39,9 @@ export default class DynamicInput extends Component {
     // if default values are passed in, put them in the state to be rendered as Inputs
     if (this.props.defaultValues) {
       let updatedInputValues = {};
-      this.props.defaultValues.map((value, index) => {
+      this.props.defaultValues.map((dataObject, index) => {
         let key = `input_${index}`;
-        updatedInputValues[key] = value;
+        updatedInputValues[key] = dataObject;
       });
 
       this.setState({
@@ -46,7 +56,11 @@ export default class DynamicInput extends Component {
   addInput() {
     let newInputKey = `input_${this.state.count}`;
     let newInputValues = this.state.inputValues;
-    newInputValues[newInputKey] = "";
+    let newValue = {};
+    this.props.fields.map(field => {
+      newValue[field.name] = "";
+    });
+    newInputValues[newInputKey] = newValue;
 
     this.setState({
       ...this.state,
@@ -66,9 +80,9 @@ export default class DynamicInput extends Component {
   }
 
   // while typing in an Input, the new value is reflected in the state
-  onChange(event, key) {
+  onChange(event, field, key) {
     let newInputValues = this.state.inputValues;
-    newInputValues[key] = event.target.value;
+    newInputValues[key][field] = event.target.value;
     this.setState({
       ...this.state,
       inputValues: newInputValues
@@ -76,20 +90,35 @@ export default class DynamicInput extends Component {
   }
 
   render() {
+    console.log(this.state.inputValues);
     // grab the keys and sort them (so it's [input_0, input_1, ..., input_n] )
     const inputKeys = Object.keys(this.state.inputValues);
-    const sortedKeys = inputKeys.sort();
+    const sortedKeys = inputKeys.sort((a, b) => {
+      // from the strings input_a and input_b, grab the numbers a and b and compare them
+      let firstIndexAsInt = parseInt(a.split("_")[1]);
+      let secondIndexAsInt = parseInt(b.split("_")[1]);
+      return firstIndexAsInt - secondIndexAsInt;
+    });
 
     // map over the keys to create the Inputs to be rendered
     const inputs = sortedKeys.map(inputKey => {
+      // map over the fields too
+      const individualInputs = this.props.fields.map(field => {
+        return (
+          <div>
+            <p>
+              {" "}{field.description}{" "}
+            </p>
+            <Input
+              value={this.state.inputValues[inputKey][field.name]}
+              onChange={e => this.onChange(e, field.name, inputKey)}
+            />
+          </div>
+        );
+      });
       return (
-        <div>
-          <Input
-            key={inputKey}
-            value={this.state.inputValues[inputKey]}
-            onChange={e => this.onChange(e, inputKey)}
-            name={inputKey}
-          />
+        <div key={inputKey}>
+          {individualInputs}
           <Button onClick={() => this.deleteInput(inputKey)}>Remove</Button>
         </div>
       );

@@ -21,7 +21,26 @@ const tabs = [
   }
 ];
 
-const testData = ["mike", "stephen", "ashwin"];
+const testData = [
+  {
+    name: "michael",
+    birthday: "july 4"
+  },
+  {
+    name: "kevin",
+    birthday: "october 9"
+  }
+];
+const fields = [
+  {
+    name: "name",
+    description: "Name Please: "
+  },
+  {
+    name: "birthday",
+    description: "Birthday Please: "
+  }
+];
 
 export default class CreateOrEditChecklist extends Component {
   render() {
@@ -33,7 +52,7 @@ export default class CreateOrEditChecklist extends Component {
           currentURL="/createchecklist"
         />
         <p> Create or Edit! </p>
-        <DynamicInput defaultValues={testData} />
+        <DynamicInput defaultValues={testData} fields={fields} />
       </div>
     );
   }
