@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
+import CollapseableList from "../components/CollapseableList.js";
 
 const tabs = [
   {
@@ -20,6 +21,12 @@ const tabs = [
   }
 ];
 
+let testdata = [
+  {
+    title: "Hello",
+    description: "Hello1"
+  }
+];
 export default class ViewChecklists extends Component {
   render() {
     return (
@@ -30,6 +37,7 @@ export default class ViewChecklists extends Component {
           currentURL="/viewchecklists"
         />
         <p> View Checklists! </p>
+        <CollapseableList listInfo={testdata} />
       </div>
     );
   }
