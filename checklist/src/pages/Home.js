@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
 import Check from "../components/Check.js";
+import Sort from "../components/Sort.js";
 
 const tabs = [
   {
@@ -30,6 +31,9 @@ export default class Home extends Component {
         <div>
         <Check/>
         </div>
+        <div>
+          <Sort/>
+          </div>
       </div>
     );
   }
