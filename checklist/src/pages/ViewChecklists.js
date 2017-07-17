@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
-import CollapseableList from "../components/CollapseableList.js";
 
 const tabs = [
   {
