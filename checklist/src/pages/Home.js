@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
-import Check from "../components/Check.js";
+import Checklist from "../components/Checklist.js";
 import SortableTasks from "../components/SortableTasks.js";
 
 const tabs = [
@@ -22,6 +22,18 @@ const tabs = [
   }
 ];
 
+const daysOfWeek = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+];
+
+const checkedItems = ["Monday", "Thursday"];
+
 const dummyData = [
   "Clean the bathroom",
   "Prep food for tomorrow",
@@ -39,7 +51,10 @@ export default class Home extends Component {
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/" />
         <p> Home </p>
         <div>
-          <Check />
+          <Checklist
+            checklistValues={daysOfWeek}
+            defaultCheckedValues={checkedItems}
+          />
         </div>
         <div>
           <SortableTasks
