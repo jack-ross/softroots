@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
 import Checklist from "../components/Checklist.js";
-import Sort from "../components/Sort.js";
+import SortableTasks from "../components/SortableTasks.js";
 
 const tabs = [
   {
@@ -31,9 +31,20 @@ const daysOfWeek = [
   "Friday",
   "Saturday"
 ];
+
 const checkedItems = ["Monday", "Thursday"];
 
+const dummyData = [
+  "Clean the bathroom",
+  "Prep food for tomorrow",
+  "Mop the back"
+];
+
 export default class Home extends Component {
+  forChild(a, b) {
+    console.log(a + " " + b);
+  }
+
   render() {
     return (
       <div>
@@ -46,7 +57,10 @@ export default class Home extends Component {
           />
         </div>
         <div>
-          <Sort />
+          <SortableTasks
+            initialValues={dummyData}
+            updateParent={(a, b) => this.forChild(a, b)}
+          />
         </div>
       </div>
     );
