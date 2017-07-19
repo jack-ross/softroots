@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
 import Checklist from "../components/Checklist.js";
 import SortableTasks from "../components/SortableTasks.js";
+import background from "../components/softroots.jpg";
 
 const tabs = [
   {
@@ -62,6 +63,7 @@ export default class Home extends Component {
             updateParent={(a, b) => this.forChild(a, b)}
           />
         </div>
+        <img className="background" src={background} />
       </div>
     );
   }
