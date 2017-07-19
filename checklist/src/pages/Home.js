@@ -50,18 +50,6 @@ export default class Home extends Component {
       <div>
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/" />
         <p> Home </p>
-        <div>
-          <Checklist
-            checklistValues={daysOfWeek}
-            defaultCheckedValues={checkedItems}
-          />
-        </div>
-        <div>
-          <SortableTasks
-            initialValues={dummyData}
-            updateParent={(a, b) => this.forChild(a, b)}
-          />
-        </div>
       </div>
     );
   }
