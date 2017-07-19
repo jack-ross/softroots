@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Form, Input, Button } from "antd";
-let FormItem = Form.Item;
 
 /* PROPS:
   defaultValues (OPTIONAL): [objects]; values to be placed in the state (and accordingly 
@@ -20,6 +19,7 @@ let FormItem = Form.Item;
 
 export default class DynamicInput extends Component {
   constructor(props) {
+    console.log("I'm being called");
     super(props);
 
     // create dummy object with the fields that were passed in as props
@@ -36,6 +36,7 @@ export default class DynamicInput extends Component {
   }
 
   componentWillMount() {
+    console.log("component mounted!");
     // if default values are passed in, put them in the state to be rendered as Inputs
     if (this.props.defaultValues && this.props.defaultValues.length > 0) {
       let updatedInputValues = {};
@@ -127,10 +128,8 @@ export default class DynamicInput extends Component {
     // render everything
     return (
       <div>
-        <Form>
-          {inputs}
-          <Button onClick={() => this.addInput()}>+ Add Another</Button>
-        </Form>
+        {inputs}
+        <Button onClick={() => this.addInput()}>+ Add Another</Button>
       </div>
     );
   }

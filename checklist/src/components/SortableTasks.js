@@ -5,7 +5,6 @@ import {
   SortableHandle,
   arrayMove
 } from "react-sortable-hoc";
-import Sort from "../components/Sort.css";
 
 /* PROPS:
     initialValues: [string]; the values to be displayed in their original order
