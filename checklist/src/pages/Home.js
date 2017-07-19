@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
 import Checklist from "../components/Checklist.js";
-import SortableTasks from "../components/SortableTasks.js";
+import background from "../components/softroots.jpg";
 
 const tabs = [
   {
@@ -50,6 +50,7 @@ export default class Home extends Component {
       <div>
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/" />
         <p> Home </p>
+        <img className="background" src={background} />
       </div>
     );
   }
