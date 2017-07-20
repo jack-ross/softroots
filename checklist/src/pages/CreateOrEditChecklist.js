@@ -11,7 +11,7 @@ import "../css/CreateOrEditChecklist.css";
 const tabs = [
   {
     name: "Home",
-    url: "/"
+    url: "/home"
   },
   {
     name: "Create a Checklist",

@@ -6,7 +6,7 @@ import background from "../images/softroots.jpg";
 const tabs = [
   {
     name: "Home",
-    url: "/"
+    url: "/home"
   },
   {
     name: "Create a Checklist",

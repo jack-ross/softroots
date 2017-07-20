@@ -5,7 +5,7 @@ import CollapseableList from "../components/CollapseableList.js";
 const tabs = [
   {
     name: "Home",
-    url: "/"
+    url: "/home"
   },
   {
     name: "Create a Checklist",
