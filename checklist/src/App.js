@@ -7,6 +7,7 @@ import CreateOrEditChecklist from "./pages/CreateOrEditChecklist.js";
 import Home from "./pages/Home.js";
 import UserManagement from "./pages/UserManagement.js";
 import ViewChecklists from "./pages/ViewChecklists.js";
+import Login from "./pages/Login.js";
 
 import "./App.css";
 
@@ -20,7 +21,8 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={Login} />
+            <Route exact path="/home" component={Home} />
             <Route
               exact
               path="/createchecklist"

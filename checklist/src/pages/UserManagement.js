@@ -7,7 +7,7 @@ import "../css/UserManagement.css";
 const tabs = [
   {
     name: "Home",
-    url: "/"
+    url: "/home"
   },
   {
     name: "Create a Checklist",
