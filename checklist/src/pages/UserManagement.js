@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
 import ApproveOrDenyUserList from "../components/ApproveOrDenyUserList.js";
 import ChangePrivilegeList from "../components/ChangePrivilegeList.js";
+import "../css/UserManagement.css";
 
 const tabs = [
   {
@@ -30,14 +31,17 @@ export default class UserManagement extends Component {
     return (
       <div>
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/users" />
-        <h1> Unverified Users </h1>
-        <ApproveOrDenyUserList />
+        <div className="userManagement">
+          <h1> Unverified Users </h1>
+          <ApproveOrDenyUserList />
+          <div style={{ margin: "24px 0" }} />
 
-        <h1> Verified Users </h1>
-        <ChangePrivilegeList
-          fieldsToDisplay={fieldsToDisplay}
-          arrayOfPrivileges={arrayOfPrivileges}
-        />
+          <h1> Verified Users </h1>
+          <ChangePrivilegeList
+            fieldsToDisplay={fieldsToDisplay}
+            arrayOfPrivileges={arrayOfPrivileges}
+          />
+        </div>
       </div>
     );
   }

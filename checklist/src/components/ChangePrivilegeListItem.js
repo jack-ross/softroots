@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Menu, Dropdown, Icon, Button, Modal } from "antd";
+import { Menu, Dropdown, Icon, Button, Modal, Card } from "antd";
 
 /* PROPS:
     onDelete: function to call when the delete button is clicked
@@ -90,7 +90,7 @@ class ChangePrivilegeListItem extends Component {
 
     // finally, render everything!
     return (
-      <div className="wholeUser">
+      <Card className="wholeUser">
         <div className="userProfile">
           {this.props.databaseObject.profilePic != null &&
             <div className="userPictureContainer">
@@ -103,9 +103,11 @@ class ChangePrivilegeListItem extends Component {
           <div className="userFieldContainer">
             {fieldsAndValues}
           </div>
+          <div style={{ margin: "12px 0" }} />
         </div>
+
         <Dropdown overlay={possibleValueMenu}>
-          <Button style={{ marginLeft: 8 }}>
+          <Button>
             {dropdownTextToDisplay} <Icon type="down" />
           </Button>
         </Dropdown>
@@ -121,8 +123,7 @@ class ChangePrivilegeListItem extends Component {
         >
           Remove User
         </Button>
-        <div style={{ margin: "24px 0" }} />
-      </div>
+      </Card>
     );
   }
 }

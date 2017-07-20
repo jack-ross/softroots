@@ -5,7 +5,8 @@ import {
   SortableHandle,
   arrayMove
 } from "react-sortable-hoc";
-import { Input, Icon, Button } from "antd";
+import { Input, Icon, Button, Card } from "antd";
+import dragIcon from "../images/drag.png";
 
 /* PROPS
     fields: [obj]
@@ -22,7 +23,7 @@ import { Input, Icon, Button } from "antd";
 */
 
 // the drag handle made from Higher Order Component
-const DragHandle = SortableHandle(() => <Icon type="bars" />); // This can be any component you want
+const DragHandle = SortableHandle(() => <img src={dragIcon} height="15" />); // This can be any component you want
 
 // the Higher Order Component we'll use to create these inputs
 const SortableItem = SortableElement(
@@ -43,6 +44,9 @@ const SortableItem = SortableElement(
             {" "}{prompt}{" "}
           </h3>
           <Input
+            style={{ width: 200 }}
+            type="textarea"
+            autosize
             value={dataObject[field]}
             onChange={e => handleInputChange(e, field, indexForChange)}
           />
@@ -53,9 +57,15 @@ const SortableItem = SortableElement(
     // return those inputs and a DragHandle inside a list item
     return (
       <li>
-        <DragHandle />
-        {inputs}
-        <Button onClick={() => removeInputs(indexForChange)}> Remove </Button>
+        <Card style={{ width: 300 }}>
+          <DragHandle />
+          {inputs}
+          <div style={{ margin: "10px 0" }} />
+          <Button onClick={() => removeInputs(indexForChange)}>
+            {" "}Remove Task{" "}
+          </Button>
+        </Card>
+        <div style={{ margin: "24px 0" }} />
       </li>
     );
   }
@@ -158,7 +168,8 @@ export default class DraggableInputs extends Component {
           onSortEnd={this.onSortEnd}
           useDragHandle={true}
         />
-        <Button onClick={() => this.addInputs()}> Add Another </Button>
+        <Button onClick={() => this.addInputs()}> + Add Another Task </Button>
+        <div style={{ margin: "24px 0" }} />
       </div>
     );
   }

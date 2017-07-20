@@ -42,7 +42,7 @@ export default class Checklist extends React.Component {
 
   onCheckAllChange = e => {
     this.setState({
-      checkedList: e.target.checked ? this.props.checklistValues : [],
+      checkedItems: e.target.checked ? this.props.checklistValues : [],
       indeterminate: false,
       checkAll: e.target.checked
     });
