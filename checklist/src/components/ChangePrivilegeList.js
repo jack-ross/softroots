@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "antd";
 import ChangePrivilegeListItem from "./ChangePrivilegeListItem.js";
+import firebase from "../configs/firebaseConfig";
 
 /* PROPS:
     firebasePath: string; the url the data is being pulled from to display (i.e. /users)
@@ -44,38 +45,42 @@ class ChangePrivilegeList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firebaseData: testData
+      firebaseData: [],
+      status: "Loading..."
     };
   }
 
   componentWillMount() {
-    /*
-    database.ref(this.props.firebasePath).on("value", snapshot => {
+    firebase.database().ref(this.props.firebasePath).on("value", snapshot => {
       if (snapshot.val() === null) {
         this.setState({
           ...this.state
         });
       } else {
         this.setState({
-          firebaseData: snapshot.val()
+          firebaseData: snapshot.val(),
+          status: "No verified users."
         });
       }
     });
-    */
   }
 
   onDelete(objectToDelete) {
     console.log("You called delete!!");
-    // database.ref(this.props.firebasePath + "/" + objectToDelete.key).remove();
+    /*
+    firebase
+      .database()
+      .ref(this.props.firebasePath + "/" + objectToDelete.uid)
+      .remove();
+    */
   }
 
   onChangeField(newValue, objectToEdit) {
     console.log("You changed privilege to " + newValue);
-    /*
-    database
-      .ref(this.props.firebasePath + "/" + objectToEdit.key + "/privilege")
+    firebase
+      .database()
+      .ref(this.props.firebasePath + "/" + objectToEdit.uid + "/role")
       .set(newValue);
-    */
   }
 
   render() {
@@ -91,7 +96,7 @@ class ChangePrivilegeList extends Component {
     });
     const listObjects = constListObjects
       .sort((a, b) => {
-        return a.name > b.name;
+        return a.location > b.location;
       })
       .map(dataObject => {
         return (
