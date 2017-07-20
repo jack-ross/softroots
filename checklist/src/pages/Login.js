@@ -115,6 +115,7 @@ export default class Login extends Component {
         .then(user => {
           let uid = user.uid;
           let userInfo = this.state.createAccountInfo;
+          userInfo.uid = uid;
           delete userInfo.password;
           delete userInfo.passwordRepeated;
           firebase.database().ref("users/unverified/" + uid).set(userInfo);
