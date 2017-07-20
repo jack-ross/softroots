@@ -61,7 +61,6 @@ export default class ViewChecklists extends Component {
           tabs={tabs}
           currentURL="/viewchecklists"
         />
-        <p> View Checklists! </p>
         <CollapseableList listInfo={testdata} />
       </div>
     );

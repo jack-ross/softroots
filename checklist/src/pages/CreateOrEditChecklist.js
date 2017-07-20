@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import { Input, Button, Modal } from "antd";
 import TopNavBar from "../components/TopNavBar.js";
 import DynamicInput from "../components/DynamicInput.js";
-import DynamicHeaders from "../components/DynamicHeaders.js";
 import DraggableInputs from "../components/DraggableInputs.js";
 import NewDynamicHeaders from "../components/NewDynamicHeaders.js";
+import Checklist from "../components/Checklist.js";
+import DropdownSelection from "../components/DropdownSelection.js";
+import "../css/CreateOrEditChecklist.css";
 
 const tabs = [
   {
@@ -31,7 +34,14 @@ const testFields = [
   },
   {
     field: "longDescription",
-    prompt: "Please enter a more detailed description here:"
+    prompt: "Detailed Description:"
+  }
+];
+
+const timeFields = [
+  {
+    name: "time",
+    description: "How long should this take (in hours)?"
   }
 ];
 
@@ -46,7 +56,38 @@ const testData = [
   }
 ];
 
+const daysOfWeek = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+];
+
+const roles = ["GM", "Grill", "Line", "Prep"];
+
+const checkedItems = [];
+
+const locations = ["Charlottesville", "Pittsburgh", "Richmond"];
+
 export default class CreateOrEditChecklist extends Component {
+  onDropdownClick(value) {
+    console.log(value);
+  }
+
+  confirmSubmit() {
+    Modal.confirm({
+      title: "Submit Checklist?",
+      content: "Make sure everything is correct!",
+      okText: "Submit",
+      cancelText: "Cancel",
+      onOk: () => {},
+      onCancel() {}
+    });
+  }
+
   render() {
     return (
       <div>
@@ -55,8 +96,47 @@ export default class CreateOrEditChecklist extends Component {
           tabs={tabs}
           currentURL="/createchecklist"
         />
-        <p> Create or Edit! </p>
-        <NewDynamicHeaders fields={testFields} />
+        <div className="createEditPage">
+          <h1> Checklist Title </h1>
+          <Input style={{ width: 300 }} />
+
+          <h1> Description </h1>
+          <Input style={{ width: 300 }} type="textarea" autosize />
+          <div style={{ margin: "24px 0" }} />
+
+          <h1> Create Subsections </h1>
+          <NewDynamicHeaders fields={testFields} />
+          <div style={{ margin: "24px 0" }} />
+
+          <h1> Repeat? </h1>
+          <div style={{ margin: "24px 0" }} />
+          <h2> Days to Repeat </h2>
+          <Checklist
+            checklistValues={daysOfWeek}
+            defaultCheckedValues={checkedItems}
+          />
+          <div style={{ margin: "24px 0" }} />
+
+          <h2> Duration (in hours) </h2>
+          <Input style={{ width: 300 }} />
+          <div style={{ margin: "24px 0" }} />
+
+          <h1> Role? </h1>
+          <DropdownSelection
+            defaultText={"Select Role"}
+            dropdownValues={roles}
+            onClickField={value => this.onDropdownClick(value)}
+          />
+          <div style={{ margin: "24px 0" }} />
+
+          <h1> Location(s)? </h1>
+          <Checklist checklistValues={locations} defaultCheckedValues={[]} />
+          <div style={{ margin: "24px 0" }} />
+
+          <Button type="primary" onClick={() => this.confirmSubmit()}>
+            {" "}Submit!{" "}
+          </Button>
+        </div>
       </div>
     );
   }

@@ -63,11 +63,18 @@ export default class NewDynamicHeaders extends Component {
       return (
         <div>
           <h2> Subsection Title </h2>
-          <Input value={datum} onChange={e => this.onHeaderChange(e, index)} />
+          <Input
+            style={{ width: 200 }}
+            value={datum}
+            onChange={e => this.onHeaderChange(e, index)}
+          />
+          <div style={{ margin: "16px 0" }} />
+          <h2> Tasks </h2>
           <DraggableInputs fields={this.props.fields} />
           <Button onClick={() => this.removeHeader(index)}>
             {" "}Remove Subsection{" "}
           </Button>
+          <div style={{ margin: "24px 0" }} />
         </div>
       );
     });
@@ -75,7 +82,10 @@ export default class NewDynamicHeaders extends Component {
     return (
       <div>
         {headerInputs}
-        <Button onClick={() => this.addHeader()}> + Add Another Header </Button>
+        <div style={{ margin: "24px 0" }} />
+        <Button type="primary" onClick={() => this.addHeader()}>
+          {" "}+ New Subsection{" "}
+        </Button>
       </div>
     );
   }

@@ -44,6 +44,7 @@ export default class CollapseableList extends Component {
 
       return (
         <Panel header={list.title} key={index}>
+          <h2> Description </h2>
           <p>
             {" "}{list.description}{" "}
           </p>
@@ -54,7 +55,7 @@ export default class CollapseableList extends Component {
       );
     });
     return (
-      <Collapse defaultActiveKey={["1"]} onChange={key => this.callback(key)}>
+      <Collapse defaultActiveKey={["0"]} onChange={key => this.callback(key)}>
         {panels}
       </Collapse>
     );

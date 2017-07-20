@@ -29,12 +29,12 @@ import ChangePrivilegeListItem from "./ChangePrivilegeListItem.js";
 
 const testData = [
   {
-    name: "mike",
+    name: "Mike",
     birthday: "july 4",
     privilege: "grill"
   },
   {
-    name: "kevin",
+    name: "Kevin",
     birthday: "oct 9",
     privilege: "admin"
   }
@@ -86,7 +86,10 @@ class ChangePrivilegeList extends Component {
 
     // otherwise, create the list objects to be rendered (prints the field names, the field values, the
     // dropdown box of potential privileges, the save privilege button, and the delete button
-    const listObjects = Object.values(this.state.firebaseData)
+    let constListObjects = Object.keys(this.state.firebaseData).map(key => {
+      return this.state.firebaseData[key];
+    });
+    const listObjects = constListObjects
       .sort((a, b) => {
         return a.name > b.name;
       })

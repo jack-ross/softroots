@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Modal } from "antd";
+import { Button, Modal, Card } from "antd";
 
 /* PROPS:
   fields: [obj]; array of objects containing two fields:
@@ -55,8 +55,9 @@ export default class ApproveOrDenyUserListItem extends Component {
     });
 
     return (
-      <div>
+      <Card>
         {userInfoRender}
+        <div style={{ margin: "12px 0" }} />
         <Button
           type="primary"
           icon="check-circle-o"
@@ -70,8 +71,7 @@ export default class ApproveOrDenyUserListItem extends Component {
         >
           Delete
         </Button>
-        <div style={{ margin: "20px 0" }} />
-      </div>
+      </Card>
     );
   }
 }

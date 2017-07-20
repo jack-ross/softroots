@@ -51,7 +51,7 @@ export default class DropdownSelection extends Component {
     // render the button
     return (
       <Dropdown overlay={possibleValueMenu}>
-        <Button style={{ marginLeft: 8 }}>
+        <Button>
           {this.state.valueToShow} <Icon type="down" />
         </Button>
       </Dropdown>

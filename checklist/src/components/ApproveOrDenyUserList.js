@@ -3,12 +3,12 @@ import ApproveOrDenyUserListItem from "./ApproveOrDenyUserListItem.js";
 
 const testData = [
   {
-    name: "mike",
+    name: "Mike",
     email: "mdc8wa@virginia.edu",
     role: "grill"
   },
   {
-    name: "stephen",
+    name: "Stephen",
     email: "steve@love.com",
     role: "gm"
   }
