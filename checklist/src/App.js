@@ -12,6 +12,17 @@ import Login from "./pages/Login.js";
 import "./App.css";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userInfo: undefined
+    };
+  }
+
+  componentWillMount() {
+    console.log("Hey this was mounted");
+  }
+
   onClick(value) {
     console.log(value);
   }
