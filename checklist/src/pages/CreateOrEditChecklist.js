@@ -6,6 +6,7 @@ import DraggableInputs from "../components/DraggableInputs.js";
 import NewDynamicHeaders from "../components/NewDynamicHeaders.js";
 import Checklist from "../components/Checklist.js";
 import DropdownSelection from "../components/DropdownSelection.js";
+import PleaseLogin from "../components/PleaseLogin.js";
 import "../css/CreateOrEditChecklist.css";
 
 const tabs = [
@@ -89,6 +90,10 @@ export default class CreateOrEditChecklist extends Component {
   }
 
   render() {
+    if (!this.props.userInfo) {
+      return <PleaseLogin />;
+    }
+
     return (
       <div>
         <TopNavBar

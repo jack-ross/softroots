@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
 import ApproveOrDenyUserList from "../components/ApproveOrDenyUserList.js";
 import ChangePrivilegeList from "../components/ChangePrivilegeList.js";
+import PleaseLogin from "../components/PleaseLogin.js";
 import "../css/UserManagement.css";
 
 const tabs = [
@@ -59,6 +60,10 @@ const roles = [
 
 export default class UserManagement extends Component {
   render() {
+    if (!this.props.userInfo) {
+      return <PleaseLogin />;
+    }
+
     return (
       <div>
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/users" />
