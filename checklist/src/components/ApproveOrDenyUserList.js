@@ -2,19 +2,6 @@ import React, { Component } from "react";
 import ApproveOrDenyUserListItem from "./ApproveOrDenyUserListItem.js";
 import firebase from "../configs/firebaseConfig.js";
 
-const testData = [
-  {
-    name: "Mike",
-    email: "mdc8wa@virginia.edu",
-    role: "grill"
-  },
-  {
-    name: "Stephen",
-    email: "steve@love.com",
-    role: "gm"
-  }
-];
-
 const fieldInfo = [
   {
     visibleDescription: "First Name",
@@ -29,7 +16,7 @@ const fieldInfo = [
     field: "email"
   },
   {
-    visibleDescription: "Role:",
+    visibleDescription: "Role",
     field: "role"
   },
   {
@@ -52,9 +39,9 @@ export default class ApproveOrDenyUserList extends Component {
     usersListener.on("value", snapshot => {
       let userInfo = snapshot.val();
       if (!snapshot.val()) {
-        // TODO display message that no users are unverified in the system
         this.setState({
           ...this.state,
+          users: [],
           status: "No unverified users found."
         });
         return;
