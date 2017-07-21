@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
 import Checklist from "../components/Checklist.js";
+import PleaseLogin from "../components/PleaseLogin.js";
 import background from "../images/softroots.jpg";
 
 const tabs = [
@@ -46,9 +47,21 @@ export default class Home extends Component {
   }
 
   render() {
+    if (!this.props.userInfo) {
+      return <PleaseLogin />;
+    }
+    let name = <p />;
+    if (this.props.userInfo) {
+      name = (
+        <p>
+          {" "}{this.props.userInfo.firstName} {this.props.userInfo.lastName}{" "}
+        </p>
+      );
+    }
     return (
       <div>
-        <TopNavBar className="horizontal" tabs={tabs} currentURL="/" />
+        <TopNavBar className="horizontal" tabs={tabs} currentURL="/home" />
+        {name}
         <div className="albertoPic">
           <img src={background} />
         </div>

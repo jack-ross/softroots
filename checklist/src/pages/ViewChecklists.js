@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
 import CollapseableList from "../components/CollapseableList.js";
+import PleaseLogin from "../components/PleaseLogin.js";
 
 const tabs = [
   {
@@ -54,6 +55,10 @@ let testdata = [
 
 export default class ViewChecklists extends Component {
   render() {
+    if (!this.props.userInfo) {
+      return <PleaseLogin />;
+    }
+
     return (
       <div>
         <TopNavBar

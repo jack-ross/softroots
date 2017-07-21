@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
+import { Modal, Button, notification } from "antd";
 
 // the different pages that can be rendered
 import CreateOrEditChecklist from "./pages/CreateOrEditChecklist.js";
@@ -8,6 +9,8 @@ import Home from "./pages/Home.js";
 import UserManagement from "./pages/UserManagement.js";
 import ViewChecklists from "./pages/ViewChecklists.js";
 import Login from "./pages/Login.js";
+
+import firebase from "./configs/firebaseConfig.js";
 
 import "./App.css";
 
@@ -20,36 +23,106 @@ class App extends Component {
   }
 
   componentWillMount() {
-    console.log("Hey this was mounted");
+    let auth = firebase.auth();
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        firebase
+          .database()
+          .ref("/users/verified/" + user.uid)
+          .once("value", snapshot => {
+            this.setState({
+              ...this.state,
+              userInfo: snapshot.val()
+            });
+          });
+      } else {
+        this.setState({
+          ...this.state,
+          userInfo: undefined
+        });
+      }
+    });
   }
 
-  onClick(value) {
-    console.log(value);
+  onClickSignOut() {
+    Modal.confirm({
+      title: "Log Out?",
+      content: "Are you sure you want to log out?",
+      onOk: () => this.signOut(),
+      onCancel: () => {},
+      okText: "Log Out",
+      cancelText: "Cancel"
+    });
+  }
+
+  signOut() {
+    firebase
+      .auth()
+      .signOut()
+      .then(function() {
+        window.location.href = "/";
+      })
+      .catch(function(error) {
+        // An error happened.
+        notification.open({
+          message: "ERROR",
+          description: "There was a problem signing you out.  Please try again."
+        });
+      });
   }
 
   render() {
-    return (
-      <BrowserRouter>
-        <div className="App">
-          <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/home" component={Home} />
-            <Route
-              exact
-              path="/createchecklist"
-              component={CreateOrEditChecklist}
-            />
-            <Route exact path="/viewchecklists" component={ViewChecklists} />
-            <Route exact path="/users" component={UserManagement} />
+    let userInfo = <p />;
+    if (this.state.userInfo) {
+      userInfo = (
+        <p>
+          {" "}Welcome {this.state.userInfo.firstName}{" "}
+        </p>
+      );
+    }
 
-            <Route
-              render={function() {
-                return <p>Not Found</p>;
-              }}
-            />
-          </Switch>
-        </div>
-      </BrowserRouter>
+    return (
+      <div>
+        {userInfo}
+        {this.state.userInfo !== undefined &&
+          <Button onClick={() => this.onClickSignOut()}> Sign Out </Button>}
+        <BrowserRouter>
+          <div className="App">
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <Route
+                exact
+                path="/home"
+                component={() => <Home userInfo={this.state.userInfo} />}
+              />
+              <Route
+                exact
+                path="/createchecklist"
+                component={() =>
+                  <CreateOrEditChecklist userInfo={this.state.userInfo} />}
+              />
+              <Route
+                exact
+                path="/viewchecklists"
+                component={() =>
+                  <ViewChecklists userInfo={this.state.userInfo} />}
+              />
+              <Route
+                exact
+                path="/users"
+                component={() =>
+                  <UserManagement userInfo={this.state.userInfo} />}
+              />
+
+              <Route
+                render={function() {
+                  return <p>Not Found</p>;
+                }}
+              />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </div>
     );
   }
 }

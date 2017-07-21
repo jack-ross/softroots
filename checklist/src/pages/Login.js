@@ -4,15 +4,6 @@ import DropdownSelection from "../components/DropdownSelection.js";
 import "../css/Login.css";
 import firebase from "../configs/firebaseConfig.js";
 
-let auth = firebase.auth();
-auth.onAuthStateChanged(function(user) {
-  if (user) {
-    console.log(user);
-  } else {
-    console.log("No user");
-  }
-});
-
 /* PROPS
 */
 
