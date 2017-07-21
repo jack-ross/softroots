@@ -7,7 +7,7 @@ import firebase from "../configs/firebaseConfig";
     firebasePath: string; the url the data is being pulled from to display (i.e. /users)
     fieldsToDisplay: [obj]; array of objects representing the fields and their prompts, as such
       field: "name",
-      prompt: "User's Name:"
+      visibleDescription: "User's Name:"
     arrayOfPrivileges: [string]; array of the possible strings "privilege" could be set to
       (i.e. ["intern", "admin"])
       IMPORTANT: this file makes the assumption the field we wish to edit is called "privilege"
