@@ -24,6 +24,28 @@ const tabs = [
 ];
 
 let fieldsToDisplay = ["firstName", "lastName", "role"];
+const fields = [
+  {
+    field: "firstName",
+    visibleDescription: "First Name"
+  },
+  {
+    field: "lastName",
+    visibleDescription: "Last Name"
+  },
+  {
+    field: "email",
+    visibleDescription: "Email Address"
+  },
+  {
+    field: "role",
+    visibleDescription: "Role"
+  },
+  {
+    field: "location",
+    visibleDescription: "Location"
+  }
+];
 const roles = [
   "GM",
   "Assistant GM",
@@ -47,7 +69,7 @@ export default class UserManagement extends Component {
 
           <h1> Verified Users </h1>
           <ChangePrivilegeList
-            fieldsToDisplay={fieldsToDisplay}
+            fieldsToDisplay={fields}
             arrayOfPrivileges={roles}
             firebasePath="/users/verified"
           />

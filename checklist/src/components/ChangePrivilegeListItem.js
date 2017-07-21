@@ -4,7 +4,9 @@ import { Menu, Dropdown, Icon, Button, Modal, Card } from "antd";
 /* PROPS:
     onDelete: function to call when the delete button is clicked
     onSubmit: function to call when the submit button is clicked
-    fieldsToDisplay: [string]; array of the fields to be displayed
+    fieldsToDisplay: [obj]; array of objects representing the fields and their prompts, as such
+      field: "name",
+      visibleDescription: "User's Name:"
     databaseObject: object; the object pulled from Firebase by parent component
     fieldToChange: string; the field to be changed by Dropdown box (i.e. privilege)
     possibleValues: [string]; the array of possible values for above field to be displayed in the Dropdown box
@@ -53,14 +55,14 @@ class ChangePrivilegeListItem extends Component {
 
   render() {
     // map through the fields and display them and their values
-    const fieldsAndValues = this.props.fieldsToDisplay.map(field => {
+    const fieldsAndValues = this.props.fieldsToDisplay.map(fieldObj => {
       return (
         <div>
           <h3 className="userField">
-            {" "}{field.toUpperCase() + ":"}{" "}
+            {" "}{fieldObj.visibleDescription}{" "}
           </h3>
           <p className="userObject">
-            {" "}{this.props.databaseObject[field]}{" "}
+            {" "}{this.props.databaseObject[fieldObj.field]}{" "}
           </p>
         </div>
       );

@@ -5,7 +5,9 @@ import firebase from "../configs/firebaseConfig";
 
 /* PROPS:
     firebasePath: string; the url the data is being pulled from to display (i.e. /users)
-    fieldsToDisplay: [string]; array of the fields to be displayed (i.e. ["name", "privilege"])
+    fieldsToDisplay: [obj]; array of objects representing the fields and their prompts, as such
+      field: "name",
+      prompt: "User's Name:"
     arrayOfPrivileges: [string]; array of the possible strings "privilege" could be set to
       (i.e. ["intern", "admin"])
       IMPORTANT: this file makes the assumption the field we wish to edit is called "privilege"
@@ -13,7 +15,7 @@ import firebase from "../configs/firebaseConfig";
 
 /* STATE:
     firebaseData: object; the data that is pulled from this.props.firebasePath; makes the fundamental
-      assumption each object has a "key" value corresponding to that object's key in Firebase
+      assumption each object has a "uid" value corresponding to that object's key in Firebase
       EXAMPLE: {
                 {
                   name: "mike",
@@ -28,19 +30,6 @@ import firebase from "../configs/firebaseConfig";
               };
 */
 
-const testData = [
-  {
-    name: "Mike",
-    birthday: "july 4",
-    privilege: "grill"
-  },
-  {
-    name: "Kevin",
-    birthday: "oct 9",
-    privilege: "admin"
-  }
-];
-
 class ChangePrivilegeList extends Component {
   constructor(props) {
     super(props);
@@ -52,16 +41,23 @@ class ChangePrivilegeList extends Component {
 
   componentWillMount() {
     firebase.database().ref(this.props.firebasePath).on("value", snapshot => {
-      if (snapshot.val() === null) {
+      if (!snapshot.val()) {
         this.setState({
-          ...this.state
+          ...this.state,
+          firebaseData: [],
+          status: "No verified users found."
         });
-      } else {
-        this.setState({
-          firebaseData: snapshot.val(),
-          status: "No verified users."
-        });
+        return;
       }
+
+      let users = snapshot.val();
+      let arrayOfUsers = Object.keys(users).map(userID => {
+        return users[userID];
+      });
+      this.setState({
+        firebaseData: arrayOfUsers,
+        status: ""
+      });
     });
   }
 
@@ -84,17 +80,8 @@ class ChangePrivilegeList extends Component {
   }
 
   render() {
-    // if the firebase data hasn't loaded/is null, just render "Nothing to display"
-    if (Object.keys(this.state.firebaseData).length === 0) {
-      return <p> Nothing to display </p>;
-    }
-
-    // otherwise, create the list objects to be rendered (prints the field names, the field values, the
-    // dropdown box of potential privileges, the save privilege button, and the delete button
-    let constListObjects = Object.keys(this.state.firebaseData).map(key => {
-      return this.state.firebaseData[key];
-    });
-    const listObjects = constListObjects
+    // map through the firebase data and create the ListItems to be rendered
+    const listObjects = this.state.firebaseData
       .sort((a, b) => {
         return a.location > b.location;
       })
@@ -105,7 +92,7 @@ class ChangePrivilegeList extends Component {
             onSubmit={(value, obj) => this.onChangeField(value, obj)}
             fieldsToDisplay={this.props.fieldsToDisplay}
             databaseObject={dataObject}
-            fieldToChange={"privilege"}
+            fieldToChange={"role"}
             possibleValues={this.props.arrayOfPrivileges}
           />
         );
@@ -114,6 +101,9 @@ class ChangePrivilegeList extends Component {
     // render those list objects
     return (
       <div>
+        <p>
+          {" "}{this.state.status}{" "}
+        </p>
         {listObjects}
       </div>
     );
