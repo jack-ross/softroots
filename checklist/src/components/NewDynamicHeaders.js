@@ -3,74 +3,70 @@ import { Input, Button } from "antd";
 import DraggableInputs from "./DraggableInputs.js";
 
 /* PROPS
-    initialData (OPTIONAL): [obj]; array of initial data to be rendered formatted as such:
+    data: [obj]; array of initial data to be rendered formatted as such:
       title: "string", name of subsection
       subtasks: [obj], where objects have field1, field2, ..., field_n as provided
         in this.props.fields
     fields: [obj]
       field: string
       prompt: string
-*/
-
-/* STATE
-    data: [obj], data currently being stored, where each object rep's a
-      subsection of a checklist with the following fields:
-      title: "string", name of subsection
-      subtasks: [obj], where objects have field1, field2, ..., field_n as provided
-        in this.props.fields
+    updateParent: function for updating the parent's state to be passed in again as data props
 */
 
 export default class NewDynamicHeaders extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [""]
-    };
+  createEmptyObjectWithFields() {
+    let blankObjectWithFields = {};
+    this.props.fields.map(field => {
+      blankObjectWithFields[field] = "";
+    });
+    return blankObjectWithFields;
   }
 
   addHeader() {
-    // TODO
-    let updatedData = this.state.data;
-    updatedData.push("");
-    this.setState({
-      ...this.state,
-      data: updatedData
-    });
+    let updatedData = this.props.data;
+    let newObject = {
+      title: "",
+      subtasks: [this.createEmptyObjectWithFields()]
+    };
+    updatedData.push(newObject);
+    this.props.updateParent(updatedData);
   }
 
   removeHeader(index) {
-    // TODO
-    let data = this.state.data;
+    let data = this.props.data;
     data.splice(index, 1);
-    this.setState({
-      ...this.state,
-      data: data
-    });
+    this.props.updateParent(data);
   }
 
   onHeaderChange(event, index) {
-    let data = this.state.data;
-    data[index] = event.target.value;
-    this.setState({
-      ...this.state,
-      data: data
-    });
+    let data = this.props.data;
+    data[index].title = event.target.value;
+    this.props.updateParent(data);
+  }
+
+  onSubtasksChange(subtasks, index) {
+    let data = this.props.data;
+    data[index].subtasks = subtasks;
+    this.props.updateParent(data);
   }
 
   render() {
-    // TODO
-    const headerInputs = this.state.data.map((datum, index) => {
+    const headerInputs = this.props.data.map((dataObj, index) => {
       return (
         <div>
           <h2> Subsection Title </h2>
           <Input
             style={{ width: 200 }}
-            value={datum}
+            value={dataObj.title}
             onChange={e => this.onHeaderChange(e, index)}
           />
           <div style={{ margin: "16px 0" }} />
           <h2> Tasks </h2>
-          <DraggableInputs fields={this.props.fields} />
+          <DraggableInputs
+            values={this.props.data[index].subtasks}
+            fields={this.props.fields}
+            updateParent={subtasks => this.onSubtasksChange(subtasks, index)}
+          />
           <Button onClick={() => this.removeHeader(index)}>
             {" "}Remove Subsection{" "}
           </Button>

@@ -86,7 +86,7 @@ export default class CreateOrEditChecklist extends Component {
     };
   }
 
-  onDropdownClick(value, field) {
+  updateField(field, value) {
     this.setState({
       ...this.state,
       [field]: value
@@ -97,13 +97,6 @@ export default class CreateOrEditChecklist extends Component {
     this.setState({
       ...this.state,
       endTimes: timeData
-    });
-  }
-
-  onCheck(field, checkedItems) {
-    this.setState({
-      ...this.state,
-      [field]: checkedItems
     });
   }
 
@@ -123,8 +116,7 @@ export default class CreateOrEditChecklist extends Component {
       return <PleaseLogin />;
     }
 
-    console.log("the object in the state is");
-    console.log(this.state.endTimes);
+    console.log(this.state);
 
     return (
       <div>
@@ -135,14 +127,27 @@ export default class CreateOrEditChecklist extends Component {
         />
         <div className="createEditPage">
           <h1> Checklist Title </h1>
-          <Input style={{ width: 300 }} />
+          <Input
+            style={{ width: 300 }}
+            onChange={e => this.updateField("title", e.target.value)}
+          />
 
           <h1> Description </h1>
-          <Input style={{ width: 300 }} type="textarea" autosize />
+          <Input
+            style={{ width: 300 }}
+            onChange={e => this.updateField("description", e.target.value)}
+            type="textarea"
+            autosize
+          />
           <div style={{ margin: "24px 0" }} />
 
           <h1> Create Subsections </h1>
-          <NewDynamicHeaders fields={testFields} />
+          <NewDynamicHeaders
+            fields={testFields}
+            data={this.state.subsections}
+            updateParent={subsections =>
+              this.updateField("subsections", subsections)}
+          />
           <div style={{ margin: "24px 0" }} />
 
           <h1> Repeat? </h1>
@@ -151,14 +156,15 @@ export default class CreateOrEditChecklist extends Component {
           <Checklist
             checklistValues={daysOfWeek}
             checkedValues={this.state.daysToRepeat}
-            onCheck={checkedItems => this.onCheck("daysToRepeat", checkedItems)}
+            onCheck={checkedItems =>
+              this.updateField("daysToRepeat", checkedItems)}
           />
           <div style={{ margin: "24px 0" }} />
 
           <h2> End Times </h2>
           <TimeDropdowns
             timeData={this.state.endTimes}
-            onChange={data => this.onChangeEndTime(data)}
+            onChange={data => this.updateField("endTimes", data)}
           />
           <div style={{ margin: "24px 0" }} />
 
@@ -166,7 +172,7 @@ export default class CreateOrEditChecklist extends Component {
           <DropdownSelection
             promptText={"Select Role"}
             dropdownValues={roles}
-            onClickField={value => this.onDropdownClick(value, "role")}
+            onClickField={value => this.updateField("role", value)}
             selectedValue={this.state.role}
           />
           <div style={{ margin: "24px 0" }} />
@@ -175,7 +181,8 @@ export default class CreateOrEditChecklist extends Component {
           <Checklist
             checklistValues={locations}
             checkedValues={this.state.locations}
-            onCheck={checkedItems => this.onCheck("locations", checkedItems)}
+            onCheck={checkedItems =>
+              this.updateField("locations", checkedItems)}
           />
           <div style={{ margin: "24px 0" }} />
 
