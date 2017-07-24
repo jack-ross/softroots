@@ -12,14 +12,11 @@ import dragIcon from "../images/drag.png";
     fields: [obj]
       field: string
       prompt: string
-    initialValues (OPTIONAL): [obj]
+    values: [obj]
       field1: string
       ...
       field_n: string
-*/
-
-/* STATE
-    values: [obj]; same format as this.props.defaultValues
+    updateParent: function; updates the parent with the data
 */
 
 // the drag handle made from Higher Order Component
@@ -94,73 +91,41 @@ const SortableList = SortableContainer(
 
 // finally the class itself
 export default class DraggableInputs extends Component {
-  constructor(props) {
-    super(props);
-
-    // set values to initialValues if prop passed down, otherwise
-    // make them all empty strings
-    let values = [];
-    if (this.props.initialValues) {
-      values = this.props.initialValues;
-    } else {
-      let defaultValue = {};
-      this.props.fields.map(field => {
-        defaultValue[field.field] = "";
-      });
-      values.push(defaultValue);
-    }
-
-    this.state = {
-      values: values
-    };
-  }
-
   onSortEnd = ({ oldIndex, newIndex }) => {
-    let values = this.state.values;
-    this.setState({
-      values: arrayMove(values, oldIndex, newIndex)
-    });
+    let values = this.props.values;
+    values = arrayMove(values, oldIndex, newIndex);
+    this.props.updateParent(values);
   };
 
   handleInputChange(event, field, index) {
-    let values = this.state.values;
+    let values = this.props.values;
     values[index][field] = event.target.value;
-    this.setState({
-      ...this.state,
-      values: values
-    });
+    this.props.updateParent(values);
   }
 
   addInputs() {
-    let values = this.state.values;
+    let values = this.props.values;
     let newValue = {};
     this.props.fields.map(field => {
       newValue[field.field] = "";
     });
     values.push(newValue);
-    this.setState({
-      ...this.state,
-      values: values
-    });
+    this.props.updateParent(values);
   }
 
   removeInputs(index) {
-    console.log(index);
-    let values = this.state.values;
+    let values = this.props.values;
     values.splice(index, 1);
-    this.setState({
-      ...this.state,
-      values: values
-    });
+    this.props.updateParent(values);
   }
 
   render() {
-    let values = this.state.values;
+    let values = this.props.values;
 
     return (
       <div>
         <SortableList
-          dataObjects={this.state.values}
+          dataObjects={this.props.values}
           fieldObjects={this.props.fields}
           handleInputChange={(e, field, index) =>
             this.handleInputChange(e, field, index)}
