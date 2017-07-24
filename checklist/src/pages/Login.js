@@ -276,14 +276,16 @@ export default class Login extends Component {
 
           <h3> Location </h3>
           <DropdownSelection
-            defaultText="Select Location"
+            promptText="Select Location"
+            selectedValue={this.state.createAccountInfo.location}
             dropdownValues={locations}
             onClickField={val => this.onChange(val, "location", "create")}
           />
 
           <h3> Roles </h3>
           <DropdownSelection
-            defaultText="Select Role"
+            promptText="Select Role"
+            selectedValue={this.state.createAccountInfo.role}
             dropdownValues={roles}
             onClickField={val => this.onChange(val, "role", "create")}
           />
