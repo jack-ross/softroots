@@ -4,13 +4,13 @@ import React, { Component } from "react";
 /* PROPS:
 
 checklistValues= [String] The value that are displayed to be checked
-defaultCheckedValues = [Strings] the values that are checked by default
+checkedValues = [Strings] the values that are checked by default
+onCheck = function; called to update parent component when an item is checked
 
 */
 
 /* STATE
 
-checkedItems = [Strings] represents the currently checked items
 indeterminate= Boolean used for the checkAll logic
 checkAll = Boolean also for checkAll logic
 
@@ -23,7 +23,6 @@ export default class Checklist extends React.Component {
     super(props);
 
     this.state = {
-      checkedItems: this.props.defaultCheckedValues,
       indeterminate: true,
       checkAll: false
     };
@@ -32,20 +31,24 @@ export default class Checklist extends React.Component {
   onChange = checkedList => {
     this.setState({
       ...this.state,
-      checkedItems: checkedList,
       indeterminate:
         !!checkedList.length &&
         checkedList.length < this.props.checklistValues.length,
       checkAll: checkedList.length === this.props.checklistValues.length
     });
+    this.props.onCheck(checkedList);
   };
 
   onCheckAllChange = e => {
+    let checkedItems = [];
+    if (e.target.checked) {
+      checkedItems = this.props.checklistValues;
+    }
     this.setState({
-      checkedItems: e.target.checked ? this.props.checklistValues : [],
       indeterminate: false,
       checkAll: e.target.checked
     });
+    this.props.onCheck(checkedItems);
   };
 
   render() {
@@ -63,7 +66,7 @@ export default class Checklist extends React.Component {
         <br />
         <CheckboxGroup
           options={this.props.checklistValues}
-          value={this.state.checkedItems}
+          value={this.props.checkedValues}
           onChange={this.onChange}
         />
       </div>

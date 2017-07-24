@@ -7,6 +7,7 @@ import NewDynamicHeaders from "../components/NewDynamicHeaders.js";
 import Checklist from "../components/Checklist.js";
 import DropdownSelection from "../components/DropdownSelection.js";
 import PleaseLogin from "../components/PleaseLogin.js";
+import TimeDropdowns from "../components/TimeDropdowns.js";
 import "../css/CreateOrEditChecklist.css";
 
 const tabs = [
@@ -69,13 +70,41 @@ const daysOfWeek = [
 
 const roles = ["GM", "Grill", "Line", "Prep"];
 
-const checkedItems = [];
-
 const locations = ["Charlottesville", "Pittsburgh", "Richmond"];
 
 export default class CreateOrEditChecklist extends Component {
-  onDropdownClick(value) {
-    console.log(value);
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: "",
+      description: "",
+      subsections: [],
+      daysToRepeat: [],
+      endTimes: [],
+      locations: [],
+      role: ""
+    };
+  }
+
+  onDropdownClick(value, field) {
+    this.setState({
+      ...this.state,
+      [field]: value
+    });
+  }
+
+  onChangeEndTime(timeData) {
+    this.setState({
+      ...this.state,
+      endTimes: timeData
+    });
+  }
+
+  onCheck(field, checkedItems) {
+    this.setState({
+      ...this.state,
+      [field]: checkedItems
+    });
   }
 
   confirmSubmit() {
@@ -93,6 +122,9 @@ export default class CreateOrEditChecklist extends Component {
     if (!this.props.userInfo) {
       return <PleaseLogin />;
     }
+
+    console.log("the object in the state is");
+    console.log(this.state.endTimes);
 
     return (
       <div>
@@ -118,24 +150,33 @@ export default class CreateOrEditChecklist extends Component {
           <h2> Days to Repeat </h2>
           <Checklist
             checklistValues={daysOfWeek}
-            defaultCheckedValues={checkedItems}
+            checkedValues={this.state.daysToRepeat}
+            onCheck={checkedItems => this.onCheck("daysToRepeat", checkedItems)}
           />
           <div style={{ margin: "24px 0" }} />
 
-          <h2> Duration (in hours) </h2>
-          <Input style={{ width: 300 }} />
+          <h2> End Times </h2>
+          <TimeDropdowns
+            timeData={this.state.endTimes}
+            onChange={data => this.onChangeEndTime(data)}
+          />
           <div style={{ margin: "24px 0" }} />
 
           <h1> Role? </h1>
           <DropdownSelection
-            defaultText={"Select Role"}
+            promptText={"Select Role"}
             dropdownValues={roles}
-            onClickField={value => this.onDropdownClick(value)}
+            onClickField={value => this.onDropdownClick(value, "role")}
+            selectedValue={this.state.role}
           />
           <div style={{ margin: "24px 0" }} />
 
           <h1> Location(s)? </h1>
-          <Checklist checklistValues={locations} defaultCheckedValues={[]} />
+          <Checklist
+            checklistValues={locations}
+            checkedValues={this.state.locations}
+            onCheck={checkedItems => this.onCheck("locations", checkedItems)}
+          />
           <div style={{ margin: "24px 0" }} />
 
           <Button type="primary" onClick={() => this.confirmSubmit()}>
