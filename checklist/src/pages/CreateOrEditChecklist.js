@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Button, Modal } from "antd";
+import { Input, Button, Modal, notification } from "antd";
 import TopNavBar from "../components/TopNavBar.js";
 import DynamicInput from "../components/DynamicInput.js";
 import DraggableInputs from "../components/DraggableInputs.js";
@@ -8,6 +8,7 @@ import Checklist from "../components/Checklist.js";
 import DropdownSelection from "../components/DropdownSelection.js";
 import PleaseLogin from "../components/PleaseLogin.js";
 import TimeDropdowns from "../components/TimeDropdowns.js";
+import ChecklistValidation from "../validation/ChecklistValidation.js";
 import "../css/CreateOrEditChecklist.css";
 
 const tabs = [
@@ -40,24 +41,6 @@ const testFields = [
   }
 ];
 
-const timeFields = [
-  {
-    name: "time",
-    description: "How long should this take (in hours)?"
-  }
-];
-
-const testData = [
-  {
-    shortDescription: "Do the laundry",
-    longDescription: "Open the hatch, throw in a laundry pod."
-  },
-  {
-    shortDescription: "Clean the grill",
-    longDescription: "Throw some alcohol on there and start a fire"
-  }
-];
-
 const daysOfWeek = [
   "Sunday",
   "Monday",
@@ -70,7 +53,7 @@ const daysOfWeek = [
 
 const roles = ["GM", "Grill", "Line", "Prep"];
 
-const locations = ["Charlottesville", "Pittsburgh", "Richmond"];
+const locations = ["Charlottesville, VA", "Newark, DE"];
 
 export default class CreateOrEditChecklist extends Component {
   constructor(props) {
@@ -101,6 +84,28 @@ export default class CreateOrEditChecklist extends Component {
   }
 
   confirmSubmit() {
+    // validate input; throw errors if found
+    let valid = new ChecklistValidation();
+    let errorsAndWarnings = valid.validateChecklist(this.state);
+    if (errorsAndWarnings.errors.length !== 0) {
+      errorsAndWarnings.errors.map(error => {
+        notification.error({
+          message: "ERROR",
+          description: error
+        });
+      });
+      return;
+    }
+
+    // if no errors, but warnings, display them along with submit modal
+    errorsAndWarnings.warnings.map(warning => {
+      notification.warning({
+        message: "WARNING",
+        description: warning
+      });
+    });
+
+    // confirm submit with a modal
     Modal.confirm({
       title: "Submit Checklist?",
       content: "Make sure everything is correct!",
