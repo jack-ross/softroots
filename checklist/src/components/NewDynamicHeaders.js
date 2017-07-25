@@ -14,19 +14,11 @@ import DraggableInputs from "./DraggableInputs.js";
 */
 
 export default class NewDynamicHeaders extends Component {
-  createEmptyObjectWithFields() {
-    let blankObjectWithFields = {};
-    this.props.fields.map(field => {
-      blankObjectWithFields[field] = "";
-    });
-    return blankObjectWithFields;
-  }
-
   addHeader() {
     let updatedData = this.props.data;
     let newObject = {
       title: "",
-      subtasks: [this.createEmptyObjectWithFields()]
+      subtasks: []
     };
     updatedData.push(newObject);
     this.props.updateParent(updatedData);
