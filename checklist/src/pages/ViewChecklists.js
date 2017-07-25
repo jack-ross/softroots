@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal } from "antd";
+import { Modal, notification } from "antd";
 import TopNavBar from "../components/TopNavBar.js";
 import CollapseableList from "../components/CollapseableList.js";
 import PleaseLogin from "../components/PleaseLogin.js";
@@ -7,6 +7,7 @@ import { Redirect } from "react-router-dom";
 import firebase from "../configs/firebaseConfig.js";
 import ChecklistForm from "../components/ChecklistForm.js";
 import submitChecklist from "../firebase/submitChecklist.js";
+import Validation from "../validation/ChecklistValidation.js";
 
 const tabs = [
   {
@@ -110,6 +111,41 @@ export default class ViewChecklists extends Component {
     });
   }
 
+  onClickSubmit(updatedChecklist) {
+    // validate the new input first, throw any errors and break if they exist
+    let valid = new Validation();
+    let errorsAndWarnings = valid.validateChecklist(updatedChecklist);
+    if (errorsAndWarnings.errors.length > 0) {
+      errorsAndWarnings.errors.map(error => {
+        notification.error({
+          message: "ERROR",
+          description: error
+        });
+      });
+      return;
+    }
+
+    // otherwise, display any warnings and confirm they want to save these changes
+    errorsAndWarnings.warnings.map(warning => {
+      notification.error({
+        message: "WARNING",
+        description: warning
+      });
+    });
+    Modal.confirm({
+      title: "Confirm Changes?",
+      content: "Do you want to save these changes?",
+      onOk: () => this.updateFirebase(updatedChecklist),
+      onCancel: () => {},
+      okText: "Save Changes",
+      cancelText: "Cancel"
+    });
+  }
+
+  updateFirebase(updatedChecklist) {
+    console.log(updatedChecklist);
+  }
+
   render() {
     console.log(this.state);
     if (!this.props.userInfo) {
@@ -160,7 +196,7 @@ export default class ViewChecklists extends Component {
         <Modal
           title="Edit Checklist"
           visible={this.state.isModalVisible}
-          onOk={() => this.onLoginSubmit()}
+          onOk={() => this.onClickSubmit(this.state.checklistToEdit)}
           onCancel={() => this.onCancel()}
           okText="Save Changes"
           cancelText="Cancel"

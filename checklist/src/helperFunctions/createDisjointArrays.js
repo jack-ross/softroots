@@ -1,4 +1,4 @@
-export default function(firstArray, secondArray) {
+export default function createDisjointArrays(firstArray, secondArray) {
   let overlap = firstArray.filter(n => {
     return secondArray.indexOf(n) !== -1;
   });
