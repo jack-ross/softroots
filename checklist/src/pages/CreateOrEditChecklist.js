@@ -9,6 +9,8 @@ import DropdownSelection from "../components/DropdownSelection.js";
 import PleaseLogin from "../components/PleaseLogin.js";
 import TimeDropdowns from "../components/TimeDropdowns.js";
 import ChecklistValidation from "../validation/ChecklistValidation.js";
+import ChecklistForm from "../components/ChecklistForm.js";
+import submitChecklist from "../firebase/submitChecklist.js";
 import "../css/CreateOrEditChecklist.css";
 
 const tabs = [
@@ -76,13 +78,6 @@ export default class CreateOrEditChecklist extends Component {
     });
   }
 
-  onChangeEndTime(timeData) {
-    this.setState({
-      ...this.state,
-      endTimes: timeData
-    });
-  }
-
   confirmSubmit() {
     // validate input; throw errors if found
     let valid = new ChecklistValidation();
@@ -111,7 +106,9 @@ export default class CreateOrEditChecklist extends Component {
       content: "Make sure everything is correct!",
       okText: "Submit",
       cancelText: "Cancel",
-      onOk: () => {},
+      onOk: () => {
+        submitChecklist(this.state);
+      },
       onCancel() {}
     });
   }
@@ -130,71 +127,13 @@ export default class CreateOrEditChecklist extends Component {
           tabs={tabs}
           currentURL="/createchecklist"
         />
-        <div className="createEditPage">
-          <h1> Checklist Title </h1>
-          <Input
-            style={{ width: 300 }}
-            onChange={e => this.updateField("title", e.target.value)}
-          />
-
-          <h1> Description </h1>
-          <Input
-            style={{ width: 300 }}
-            onChange={e => this.updateField("description", e.target.value)}
-            type="textarea"
-            autosize
-          />
-          <div style={{ margin: "24px 0" }} />
-
-          <h1> Create Subsections </h1>
-          <NewDynamicHeaders
-            fields={testFields}
-            data={this.state.subsections}
-            updateParent={subsections =>
-              this.updateField("subsections", subsections)}
-          />
-          <div style={{ margin: "24px 0" }} />
-
-          <h1> Repeat? </h1>
-          <div style={{ margin: "24px 0" }} />
-          <h2> Days to Repeat </h2>
-          <Checklist
-            checklistValues={daysOfWeek}
-            checkedValues={this.state.daysToRepeat}
-            onCheck={checkedItems =>
-              this.updateField("daysToRepeat", checkedItems)}
-          />
-          <div style={{ margin: "24px 0" }} />
-
-          <h2> End Times </h2>
-          <TimeDropdowns
-            timeData={this.state.endTimes}
-            onChange={data => this.updateField("endTimes", data)}
-          />
-          <div style={{ margin: "24px 0" }} />
-
-          <h1> Role? </h1>
-          <DropdownSelection
-            promptText={"Select Role"}
-            dropdownValues={roles}
-            onClickField={value => this.updateField("role", value)}
-            selectedValue={this.state.role}
-          />
-          <div style={{ margin: "24px 0" }} />
-
-          <h1> Location(s)? </h1>
-          <Checklist
-            checklistValues={locations}
-            checkedValues={this.state.locations}
-            onCheck={checkedItems =>
-              this.updateField("locations", checkedItems)}
-          />
-          <div style={{ margin: "24px 0" }} />
-
-          <Button type="primary" onClick={() => this.confirmSubmit()}>
-            {" "}Submit!{" "}
-          </Button>
-        </div>
+        <ChecklistForm
+          checklistData={this.state}
+          updateField={(field, value) => this.updateField(field, value)}
+        />
+        <Button type="primary" onClick={() => this.confirmSubmit()}>
+          {" "}Submit!{" "}
+        </Button>
       </div>
     );
   }

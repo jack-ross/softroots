@@ -8,6 +8,7 @@ const Panel = Collapse.Panel;
       subsections: [obj] where each object has the following fields
         title: string; name of the subsection (i.e. "Back of the Store")
         subtasks: [string]; the different tasks for that subsection (i.e. "Mop the back")
+    onClickEdit: function; called when Edit button is clicked
 */
 
 /* STATE:
@@ -27,7 +28,7 @@ export default class CollapseableList extends Component {
           // return statements
           return (
             <p>
-              {" "}{subtask}{" "}
+              {" "}{subtask.shortDescription}{" "}
             </p>
           );
         });
@@ -49,7 +50,7 @@ export default class CollapseableList extends Component {
             {" "}{list.description}{" "}
           </p>
           {subsectionRender}
-          <Button> Edit </Button>
+          <Button onClick={() => this.props.onClickEdit(list)}> Edit </Button>
           <Button> Ad Hoc </Button>
         </Panel>
       );
