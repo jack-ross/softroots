@@ -10,6 +10,7 @@ import submitChecklist from "../firebase/submitChecklist.js";
 import Validation from "../validation/ChecklistValidation.js";
 import submitEditedChecklist from "../firebase/submitEditedChecklist.js";
 import deleteChecklist from "../firebase/deleteChecklist.js";
+import "../css/ViewChecklists.css";
 
 const tabs = [
   {
@@ -199,6 +200,7 @@ export default class ViewChecklists extends Component {
               onClickEdit={checklist => this.onClickEdit(checklist)}
               onClickDelete={checklist => this.onClickDelete(checklist)}
             />
+            <div style={{ margin: "24px 0" }} />
           </div>
         );
       });
@@ -222,7 +224,9 @@ export default class ViewChecklists extends Component {
         <p>
           {" "}{this.state.status}{" "}
         </p>
-        {checklistDisplays}
+        <div className="viewChecklists">
+          {checklistDisplays}
+        </div>
 
         <Modal
           title="Edit Checklist"

@@ -60,7 +60,7 @@ export default class TimeDropdowns extends Component {
           <DropdownSelection
             promptText="Select Minutes"
             selectedValue={timeObj.minutes}
-            dropdownValues={["0", "15", "30", "45"]}
+            dropdownValues={["00", "15", "30", "45"]}
             onClickField={val => this.updateField(index, "minutes", val)}
           />
           <DropdownSelection

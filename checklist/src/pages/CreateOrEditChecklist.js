@@ -127,13 +127,15 @@ export default class CreateOrEditChecklist extends Component {
           tabs={tabs}
           currentURL="/createchecklist"
         />
-        <ChecklistForm
-          checklistData={this.state}
-          updateField={(field, value) => this.updateField(field, value)}
-        />
-        <Button type="primary" onClick={() => this.confirmSubmit()}>
-          {" "}Submit!{" "}
-        </Button>
+        <div className="createEditPage">
+          <ChecklistForm
+            checklistData={this.state}
+            updateField={(field, value) => this.updateField(field, value)}
+          />
+          <Button type="primary" onClick={() => this.confirmSubmit()}>
+            {" "}Submit!{" "}
+          </Button>
+        </div>
       </div>
     );
   }
