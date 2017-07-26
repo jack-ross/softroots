@@ -53,14 +53,18 @@ export default class CollapseableList extends Component {
           {subsectionRender}
           <Button onClick={() => this.props.onClickEdit(list)}> Edit </Button>
           <Button> Ad Hoc </Button>
-          <Button type="danger" onClick={() => this.props.onClickDelete(list)}>
+          <Button
+            type="danger"
+            icon="close-circle-o"
+            onClick={() => this.props.onClickDelete(list)}
+          >
             {" "}Delete{" "}
           </Button>
         </Panel>
       );
     });
     return (
-      <Collapse defaultActiveKey={["0"]} onChange={key => this.callback(key)}>
+      <Collapse onChange={key => this.callback(key)}>
         {panels}
       </Collapse>
     );

@@ -40,7 +40,7 @@ const locations = ["Charlottesville, VA", "Newark, DE"];
 export default class ChecklistForm extends Component {
   render() {
     return (
-      <div className="createEditPage">
+      <div>
         <h1> Checklist Title </h1>
         <Input
           style={{ width: 300 }}
