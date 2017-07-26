@@ -8,6 +8,8 @@ import firebase from "../configs/firebaseConfig.js";
 import ChecklistForm from "../components/ChecklistForm.js";
 import submitChecklist from "../firebase/submitChecklist.js";
 import Validation from "../validation/ChecklistValidation.js";
+import submitEditedChecklist from "../firebase/submitEditedChecklist.js";
+import deleteChecklist from "../firebase/deleteChecklist.js";
 
 const tabs = [
   {
@@ -66,7 +68,9 @@ export default class ViewChecklists extends Component {
       status: "Loading...",
       data: [],
       checklistToEdit: {},
-      isModalVisible: false
+      isModalVisible: false,
+      initialRole: "",
+      initialLocations: []
     };
   }
 
@@ -75,11 +79,13 @@ export default class ViewChecklists extends Component {
     firebase.database().ref("/checklists").on("value", snapshot => {
       if (snapshot.val()) {
         this.setState({
+          ...this.state,
           status: "",
           data: snapshot.val()
         });
       } else {
         this.setState({
+          ...this.state,
           status: "No checklists found.",
           data: []
         });
@@ -88,10 +94,34 @@ export default class ViewChecklists extends Component {
   }
 
   onClickEdit(checklist) {
+    let checklistToEdit = checklist;
+    // if checklist doesn't have end times, initalize those fields
+    if (!checklistToEdit.endTimes) {
+      checklistToEdit.endTimes = [];
+    }
+    if (!checklistToEdit.daysToRepeat) {
+      checklistToEdit.daysToRepeat = [];
+    }
     this.setState({
       ...this.state,
       checklistToEdit: checklist,
-      isModalVisible: true
+      isModalVisible: true,
+      initialRole: checklist.role,
+      initialLocations: checklist.locations
+    });
+  }
+
+  onClickDelete(checklist) {
+    Modal.confirm({
+      title: "Delete Checklist?",
+      content:
+        "This will delete the checklist across all locations.  This action CANNOT be undone.",
+      okText: "Delete",
+      cancelText: "Cancel",
+      onOk: () => {
+        deleteChecklist(checklist);
+      },
+      onCancel: () => {}
     });
   }
 
@@ -127,7 +157,7 @@ export default class ViewChecklists extends Component {
 
     // otherwise, display any warnings and confirm they want to save these changes
     errorsAndWarnings.warnings.map(warning => {
-      notification.error({
+      notification.warning({
         message: "WARNING",
         description: warning
       });
@@ -135,19 +165,19 @@ export default class ViewChecklists extends Component {
     Modal.confirm({
       title: "Confirm Changes?",
       content: "Do you want to save these changes?",
-      onOk: () => this.updateFirebase(updatedChecklist),
+      onOk: () =>
+        submitEditedChecklist(
+          this.state.checklistToEdit,
+          this.state.initialLocations,
+          this.state.initialRole
+        ),
       onCancel: () => {},
       okText: "Save Changes",
       cancelText: "Cancel"
     });
   }
 
-  updateFirebase(updatedChecklist) {
-    console.log(updatedChecklist);
-  }
-
   render() {
-    console.log(this.state);
     if (!this.props.userInfo) {
       return <PleaseLogin />;
     }
@@ -167,6 +197,7 @@ export default class ViewChecklists extends Component {
             <CollapseableList
               listInfo={checklists}
               onClickEdit={checklist => this.onClickEdit(checklist)}
+              onClickDelete={checklist => this.onClickDelete(checklist)}
             />
           </div>
         );

@@ -1,16 +1,29 @@
 import createDisjointArrays from "../helperFunctions/createDisjointArrays.js";
+import convertLocationForFirebasePath from "../helperFunctions/convertLocationForFirebasePath";
+import firebase from "../configs/firebaseConfig.js";
+import { notification } from "antd";
 
 export default function submitEditedChecklist(
   checklist,
   initialLocations,
   initialRole
 ) {
+  // first, clean up locations to the proper strings (i.e. charlottesville_va)
+  // still hardcoded in for Roots
+  let locationKeys = checklist.locations.map(location => {
+    return convertLocationForFirebasePath(location);
+  });
+
+  initialLocations = initialLocations.map(location => {
+    return convertLocationForFirebasePath(location);
+  });
+
   // first, use helper function to create three disjoint arrays: original locations
   // no longer relevant, overlap between original locations and new locations, and finally
   // the new locations not originally present
   let disjointLocationArrays = createDisjointArrays(
-    checklist.locations,
-    initialLocations
+    initialLocations,
+    locationKeys
   );
 
   let exclusiveInitialLocations = disjointLocationArrays.disjointFirstArray;
@@ -28,14 +41,16 @@ export default function submitEditedChecklist(
   // for exclusively old locations, go to that location and the initial role and
   // delete checklist
   exclusiveInitialLocations.map(location => {
-    let path = "/" + location + "/" + initialRole + "/" + checklist.key;
+    let path =
+      "/checklists/" + location + "/" + initialRole + "/" + checklist.key;
     firebaseUpdates[path] = null;
   });
 
   // for exclusively new locations, go to that location and the current role and add
   // the checklist
   exclusiveNewLocations.map(location => {
-    let path = "/" + location + "/" + currentRole + "/" + checklist.key;
+    let path =
+      "/checklists/" + location + "/" + currentRole + "/" + checklist.key;
     firebaseUpdates[path] = checklist;
   });
 
@@ -44,18 +59,34 @@ export default function submitEditedChecklist(
   // from original path and update in new path based on the change in role
   overlapLocations.map(location => {
     if (currentRole === initialRole) {
-      let path = "/" + location + "/" + currentRole + "/" + checklist.key;
+      let path =
+        "/checklists/" + location + "/" + currentRole + "/" + checklist.key;
       firebaseUpdates[path] = checklist;
     } else {
       let pathToDelete =
-        "/" + location + "/" + initialRole + "/" + checklist.key;
+        "/checklists/" + location + "/" + initialRole + "/" + checklist.key;
       firebaseUpdates[pathToDelete] = null;
       let pathToUpdate =
-        "/" + location + "/" + initialRole + "/" + checklist.key;
+        "/checklists/" + location + "/" + currentRole + "/" + checklist.key;
       firebaseUpdates[pathToUpdate] = checklist;
     }
   });
 
   // make all the firebase calls
-  console.log(firebaseUpdates);
+  firebase
+    .database()
+    .ref()
+    .update(firebaseUpdates)
+    .then(response => {
+      notification.success({
+        message: "Changes Saved",
+        description: "Your changes were successfully saved."
+      });
+    })
+    .catch(error => {
+      notification.error({
+        message: "ERROR",
+        description: "Firebase error: " + error
+      });
+    });
 }

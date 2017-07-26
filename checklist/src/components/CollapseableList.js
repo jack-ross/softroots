@@ -9,6 +9,7 @@ const Panel = Collapse.Panel;
         title: string; name of the subsection (i.e. "Back of the Store")
         subtasks: [string]; the different tasks for that subsection (i.e. "Mop the back")
     onClickEdit: function; called when Edit button is clicked
+    onClickDelete: function; called when Delete button is clicked
 */
 
 /* STATE:
@@ -52,6 +53,9 @@ export default class CollapseableList extends Component {
           {subsectionRender}
           <Button onClick={() => this.props.onClickEdit(list)}> Edit </Button>
           <Button> Ad Hoc </Button>
+          <Button type="danger" onClick={() => this.props.onClickDelete(list)}>
+            {" "}Delete{" "}
+          </Button>
         </Panel>
       );
     });
