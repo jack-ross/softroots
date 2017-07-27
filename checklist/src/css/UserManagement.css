@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Questrial|Source+Sans');
+
 .userManagement {
   width: 500px;
   margin: auto;
+  padding: 30px;
+  font-family: 'Open Sans', sans-serif;
 }

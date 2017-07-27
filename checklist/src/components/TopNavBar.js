@@ -1,6 +1,7 @@
 import { Menu } from "antd";
 import React from "react";
 import { Redirect } from "react-router-dom";
+import "../css/TopNavBar.css";
 
 /* PROPS:
     className: string; MUST be either "horizontal" or "vertical" to display properly
