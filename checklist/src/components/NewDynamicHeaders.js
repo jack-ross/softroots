@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Input, Button } from "antd";
 import DraggableInputs from "./DraggableInputs.js";
+import displayConfirmDeleteModal from "../helperFunctions/displayConfirmDeleteModal.js";
 
 /* PROPS
     data: [obj]; array of initial data to be rendered formatted as such:
@@ -59,7 +60,10 @@ export default class NewDynamicHeaders extends Component {
             fields={this.props.fields}
             updateParent={subtasks => this.onSubtasksChange(subtasks, index)}
           />
-          <Button onClick={() => this.removeHeader(index)}>
+          <Button
+            onClick={() =>
+              displayConfirmDeleteModal(() => this.removeHeader(index))}
+          >
             {" "}Remove Subsection{" "}
           </Button>
           <div style={{ margin: "24px 0" }} />

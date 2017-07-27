@@ -7,6 +7,7 @@ import {
 } from "react-sortable-hoc";
 import { Input, Icon, Button, Card } from "antd";
 import dragIcon from "../images/drag.png";
+import displayConfirmDeleteModal from "../helperFunctions/displayConfirmDeleteModal.js";
 
 /* PROPS
     fields: [obj]
@@ -58,7 +59,10 @@ const SortableItem = SortableElement(
           <DragHandle />
           {inputs}
           <div style={{ margin: "10px 0" }} />
-          <Button onClick={() => removeInputs(indexForChange)}>
+          <Button
+            onClick={() =>
+              displayConfirmDeleteModal(() => removeInputs(indexForChange))}
+          >
             {" "}Remove Task{" "}
           </Button>
         </Card>

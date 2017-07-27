@@ -89,7 +89,11 @@ class App extends Component {
         <BrowserRouter>
           <div className="App">
             <Switch>
-              <Route exact path="/" component={Login} />
+              <Route
+                exact
+                path="/"
+                component={() => <Login userInfo={this.state.userInfo} />}
+              />
               <Route
                 exact
                 path="/home"
