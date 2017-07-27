@@ -3,8 +3,10 @@ import { Button, Modal, Input, notification } from "antd";
 import DropdownSelection from "../components/DropdownSelection.js";
 import "../css/Login.css";
 import firebase from "../configs/firebaseConfig.js";
+import { Redirect } from "react-router-dom";
 
 /* PROPS
+    userInfo: user info pulled from firebase after logging in; if logged in, redirect to home page
 */
 
 /* STATE
@@ -128,6 +130,9 @@ export default class Login extends Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
+      .then(function() {
+        window.location.href = "/home";
+      })
       .catch(function(error) {
         notification.error({
           title: "ERROR",
@@ -207,6 +212,11 @@ export default class Login extends Component {
   }
 
   render() {
+    // if logged in, then redirect to home page
+    if (this.props.userInfo) {
+      return <Redirect to="/home" />;
+    }
+
     return (
       <div className="LoginPage">
         <h1> SOFTROOTS </h1>
