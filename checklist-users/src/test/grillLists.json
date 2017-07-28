@@ -1,0 +1,71 @@
+{
+  "-Kpv0mwXCUWiMoEjV3tk" : {
+    "daysToRepeat" : [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ],
+    "description" : "Things to do for Viper",
+    "endTimes" : [ {
+      "amPm" : "PM",
+      "hours" : "10",
+      "minutes" : "00"
+    } ],
+    "key" : "-Kpv0mwXCUWiMoEjV3tk",
+    "locations" : [ "Newark, DE", "Charlottesville, VA" ],
+    "role" : "Grill",
+    "subsections" : [ {
+      "subtasks" : [ {
+        "longDescription" : "He likes doggo treats",
+        "shortDescription" : "Feed Viper"
+      }, {
+        "longDescription" : "Water is his favorite",
+        "shortDescription" : "Give Viper drink"
+      } ],
+      "title" : "Food"
+    }, {
+      "subtasks" : [ {
+        "longDescription" : "1000 miles or go home",
+        "shortDescription" : "Walk Viper"
+      } ],
+      "title" : "Exercise"
+    } ],
+    "title" : "Viper Tasks"
+  },
+  "-KpzSsEyMJmtjc43c1kU" : {
+    "daysToRepeat" : [ "Sunday" ],
+    "description" : "lol",
+    "endTimes" : [ {
+      "amPm" : "AM",
+      "hours" : "8",
+      "minutes" : "00"
+    } ],
+    "key" : "-KpzSsEyMJmtjc43c1kU",
+    "locations" : [ "Charlottesville, VA" ],
+    "role" : "Grill",
+    "subsections" : [ {
+      "subtasks" : [ {
+        "longDescription" : "lol",
+        "shortDescription" : "lol"
+      } ],
+      "title" : "lol"
+    } ],
+    "title" : "lol"
+  },
+  "-Kq4O4vWemk-9BusohRL" : {
+    "daysToRepeat" : [ "Saturday", "Monday" ],
+    "description" : "Work to do",
+    "endTimes" : [ {
+      "amPm" : "AM",
+      "hours" : "9",
+      "minutes" : "15"
+    } ],
+    "key" : "-Kq4O4vWemk-9BusohRL",
+    "locations" : [ "Charlottesville, VA" ],
+    "role" : "Grill",
+    "subsections" : [ {
+      "subtasks" : [ {
+        "longDescription" : "Clean the door",
+        "shortDescription" : "Open the door"
+      } ],
+      "title" : "Opening "
+    } ],
+    "title" : "Work "
+  }
+}

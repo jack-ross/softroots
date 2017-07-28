@@ -1,0 +1,22 @@
+{
+  "-KpumZsyjjzcabmZCYdC" : {
+    "daysToRepeat" : [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ],
+    "description" : "We're opening the store",
+    "endTimes" : [ {
+      "amPm" : "AM",
+      "hours" : "7",
+      "minutes" : "00"
+    } ],
+    "key" : "-KpumZsyjjzcabmZCYdC",
+    "locations" : [ "Charlottesville, VA" ],
+    "role" : "Line",
+    "subsections" : [ {
+      "subtasks" : [ {
+        "longDescription" : "90 degree angles",
+        "shortDescription" : "Open the doors"
+      } ],
+      "title" : "Front"
+    } ],
+    "title" : "Opening"
+  }
+}

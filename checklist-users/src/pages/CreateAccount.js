@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import DropdownSelection from "../components/DropdownSelection.js";
-import { Input, Button } from "antd";
+import { Input, Button, notification } from "antd";
 import createAccountValidation from "../validation/createAccountValidation.js";
 import { Link } from "react-router-dom";
+import firebase from "../configs/firebaseConfig.js";
 import "../css/CreateAccount.css";
 
 // arrays for the dropdowns when creating an account
@@ -40,11 +41,34 @@ export default class CreateAccount extends Component {
   }
 
   onClickSubmit() {
-    createAccountValidation(this.state);
+    if (createAccountValidation(this.state)) {
+      let email = this.state.email;
+      let password = this.state.password;
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(user => {
+          notification.success({
+            title: "SUCCESS",
+            description: "Account created."
+          });
+          let uid = user.uid;
+          let userInfo = this.state;
+          userInfo.uid = uid;
+          delete userInfo.password;
+          delete userInfo.passwordRepeated;
+          firebase.database().ref("users/unverified/" + uid).set(userInfo);
+        })
+        .catch(function(error) {
+          notification.error({
+            title: "ERROR",
+            description: error.message
+          });
+        });
+    }
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="CreateAccount">
         <h3> First Name </h3>
