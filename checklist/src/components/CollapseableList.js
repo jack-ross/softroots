@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Collapse, Button } from "antd";
+import { Collapse, Button, Card } from "antd";
+import "../css/CollapseableList.css";
 const Panel = Collapse.Panel;
 /* PROPS:
     listInfo: [obj]; array of list objects to be rendered with the following fields:
@@ -28,9 +29,11 @@ export default class CollapseableList extends Component {
         let subtaskArray = subsection.subtasks.map(subtask => {
           // return statements
           return (
-            <p>
-              {" "}{subtask.shortDescription}{" "}
-            </p>
+            <div>
+              <p>
+                {" "}{subtask.shortDescription}{" "}
+              </p>
+            </div>
           );
         });
 
@@ -39,7 +42,9 @@ export default class CollapseableList extends Component {
             <h3>
               {" "}{subsection.title}{" "}
             </h3>
+
             {subtaskArray}
+            <div style={{ margin: "15px 0" }} />
           </div>
         );
       });
@@ -50,7 +55,9 @@ export default class CollapseableList extends Component {
           <p>
             {" "}{list.description}{" "}
           </p>
+          <div style={{ margin: "20px 0" }} />
           {subsectionRender}
+
           <Button onClick={() => this.props.onClickEdit(list)}> Edit </Button>
           <Button> Ad Hoc </Button>
           <Button

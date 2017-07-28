@@ -1,5 +1,12 @@
 .viewChecklists {
-  width: 45%;
+  width: 55%;
   margin: auto;
-  padding: 30px;
+  padding: 50px;
+}
+
+ant-collapse-header {
+  color: #000000;
+}
+.ant-collapse-header {
+  font-size: 14px;
 }

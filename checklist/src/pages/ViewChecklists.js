@@ -200,13 +200,13 @@ export default class ViewChecklists extends Component {
               onClickEdit={checklist => this.onClickEdit(checklist)}
               onClickDelete={checklist => this.onClickDelete(checklist)}
             />
-            <div style={{ margin: "24px 0" }} />
+            <div style={{ margin: "30px 0" }} />
           </div>
         );
       });
       return (
         <div>
-          <h1>
+          <h1 style={{ textAlign: "center", color: "#707070" }}>
             {" "}{location}{" "}
           </h1>
           {roleChecklists}

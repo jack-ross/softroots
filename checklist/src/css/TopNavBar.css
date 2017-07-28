@@ -1,7 +1,8 @@
-.ant-menu-dark {
-  background: pink;
+.ant-menu-item {
+  float: left;
+  color: "blue";
 }
 
-.ant-menu-item {
-  float: right;
+.ant-menu {
+  color: lavender;
 }
