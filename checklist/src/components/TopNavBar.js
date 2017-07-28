@@ -65,7 +65,7 @@ export default class TopNavBar extends React.Component {
       narrow = true;
     }
     return (
-      <div>
+      <div className="tabs">
         {narrow &&
           <div>
             <Menu
@@ -79,7 +79,7 @@ export default class TopNavBar extends React.Component {
             </Menu>
           </div>}
         {!narrow &&
-          <div>
+          <div className="tabs1">
             <Menu
               mode="horizontal"
               theme="dark"

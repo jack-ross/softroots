@@ -1,10 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Questrial|Source+Sans');
-
 .createEditPage {
   width: 400px;
   margin: auto;
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
   font-size: 15px;
 }
 

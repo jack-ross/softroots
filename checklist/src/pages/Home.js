@@ -50,8 +50,8 @@ export default class Home extends Component {
     return (
       <div>
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/home" />
-        <div className="checklist" style={{ textAlign: "center" }}>
-          <img src={background} />
+        <div className="checkimg">
+          {" "}<img src={background} />{" "}
         </div>
       </div>
     );

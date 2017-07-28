@@ -1,4 +1,8 @@
-.checklist {
+.checkimg {
   text-align: center;
-  background-color: #ecf0f1;
+  background: #ffb67e;
+}
+
+img {
+  border-radius: 200%;
 }
