@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Input, Button } from "antd";
-import { Link } from "react-router-dom";
-import ViewChecklist from "../components/ViewChecklist.js";
+import { Input, Button, notification } from "antd";
+import { Link, Redirect } from "react-router-dom";
+import ViewSingleChecklist from "../components/ViewSingleChecklist.js";
 import loginValidation from "../validation/loginValidation.js";
+import firebase from "../configs/firebaseConfig.js";
 
 const testData = {
   title: "Night With Viper",
@@ -53,7 +54,28 @@ export default class Login extends Component {
   onClickSubmit() {
     // TODO verify input, then try firebase login
     if (loginValidation(this.state.userInfo)) {
-      // Login with firebase auth
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(
+          this.state.userInfo.email,
+          this.state.userInfo.password
+        )
+        .then(response => {
+          notification.success({
+            message: "SUCCESS",
+            description: "User logged in.",
+            duration: 2
+          });
+        })
+        .catch(error => {
+          // if login is unsuccessful, display firebase error message
+          var errorMessage = error.message;
+          notification.error({
+            message: "ERROR",
+            description: errorMessage,
+            duration: 3
+          });
+        });
     }
   }
 
@@ -67,14 +89,21 @@ export default class Login extends Component {
   }
 
   render() {
+    // if already logged in, redirect to view checklists page
+    if (this.props.userInfo) {
+      return <Redirect to="/" />;
+    }
     return (
       <div style={{ padding: "10%" }}>
-        <h3> Email: </h3>
+        <h4> Email: </h4>
         <Input onChange={e => this.onChange("email", e.target.value)} />
         <div style={{ margin: "12px 0" }} />
 
-        <h3> Password: </h3>
-        <Input onChange={e => this.onChange("password", e.target.value)} />
+        <h4> Password: </h4>
+        <Input
+          type="password"
+          onChange={e => this.onChange("password", e.target.value)}
+        />
         <div style={{ margin: "12px 0" }} />
 
         <Link to="/">
@@ -83,7 +112,6 @@ export default class Login extends Component {
         <Button type="primary" onClick={() => this.onClickSubmit()}>
           {" "}Login{" "}
         </Button>
-        <ViewChecklist checklist={testData} />
       </div>
     );
   }
