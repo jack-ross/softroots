@@ -127,7 +127,7 @@ export default class CreateOrEditChecklist extends Component {
           tabs={tabs}
           currentURL="/createchecklist"
         />
-        <div className="createEditPage">
+        <div className="createEditPage" style={{ padding: "30px 0" }}>
           <ChecklistForm
             checklistData={this.state}
             updateField={(field, value) => this.updateField(field, value)}

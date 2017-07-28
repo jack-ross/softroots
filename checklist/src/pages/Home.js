@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
 import Checklist from "../components/Checklist.js";
 import PleaseLogin from "../components/PleaseLogin.js";
-import background from "../images/softroots.jpg";
+import background from "../images/checklist.jpg";
 import Header from "../components/Header.js";
+import "../css/Home.css";
 
 const tabs = [
   {
@@ -49,8 +50,8 @@ export default class Home extends Component {
     return (
       <div>
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/home" />
-        <div className="albertoPic">
-          <img src={background} />
+        <div className="checkimg">
+          {" "}<img src={background} />{" "}
         </div>
       </div>
     );

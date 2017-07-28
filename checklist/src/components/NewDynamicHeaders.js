@@ -47,14 +47,14 @@ export default class NewDynamicHeaders extends Component {
     const headerInputs = this.props.data.map((dataObj, index) => {
       return (
         <div>
-          <h2> Subsection Title </h2>
+          <h3> Subsection Title </h3>
           <Input
             style={{ width: 200 }}
             value={dataObj.title}
             onChange={e => this.onHeaderChange(e, index)}
           />
           <div style={{ margin: "16px 0" }} />
-          <h2> Tasks </h2>
+          <h3> Tasks </h3>
           <DraggableInputs
             values={this.props.data[index].subtasks}
             fields={this.props.fields}

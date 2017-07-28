@@ -1,6 +1,7 @@
 import { Menu } from "antd";
 import React from "react";
 import { Redirect } from "react-router-dom";
+import "../css/TopNavBar.css";
 
 /* PROPS:
     className: string; MUST be either "horizontal" or "vertical" to display properly
@@ -64,7 +65,7 @@ export default class TopNavBar extends React.Component {
       narrow = true;
     }
     return (
-      <div>
+      <div className="tabs">
         {narrow &&
           <div>
             <Menu
@@ -78,7 +79,7 @@ export default class TopNavBar extends React.Component {
             </Menu>
           </div>}
         {!narrow &&
-          <div>
+          <div className="tabs1">
             <Menu
               mode="horizontal"
               theme="dark"

@@ -42,7 +42,7 @@ const SortableItem = SortableElement(
             {" "}{prompt}{" "}
           </h3>
           <Input
-            style={{ width: 200 }}
+            style={{ width: 300 }}
             type="textarea"
             autosize
             value={dataObject[field]}
@@ -55,7 +55,7 @@ const SortableItem = SortableElement(
     // return those inputs and a DragHandle inside a list item
     return (
       <li>
-        <Card style={{ width: 300 }}>
+        <Card style={{ width: 400 }}>
           <DragHandle />
           {inputs}
           <div style={{ margin: "10px 0" }} />

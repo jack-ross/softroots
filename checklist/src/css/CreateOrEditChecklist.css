@@ -1,4 +1,13 @@
 .createEditPage {
   width: 400px;
   margin: auto;
+  text-align: center;
+  font-size: 15px;
+}
+
+.ant-checkbox-group {
+}
+
+h2 {
+  font-size: 25px;
 }

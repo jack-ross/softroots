@@ -1,3 +1,8 @@
-.albertoPic {
+.checkimg {
   text-align: center;
+  background: #ffb67e;
+}
+
+img {
+  border-radius: 200%;
 }
