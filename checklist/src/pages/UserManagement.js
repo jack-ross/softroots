@@ -4,6 +4,7 @@ import ApproveOrDenyUserList from "../components/ApproveOrDenyUserList.js";
 import ChangePrivilegeList from "../components/ChangePrivilegeList.js";
 import PleaseLogin from "../components/PleaseLogin.js";
 import "../css/UserManagement.css";
+import roleHierarchy from "../roles/roleHierarchy.js";
 
 const tabs = [
   {
@@ -47,16 +48,6 @@ const fields = [
     visibleDescription: "Location"
   }
 ];
-const roles = [
-  "GM",
-  "Assistant GM",
-  "Kitchen Manager",
-  "Shift Manager",
-  "Grill",
-  "Prep",
-  "Line",
-  "Dish"
-];
 
 export default class UserManagement extends Component {
   render() {
@@ -64,12 +55,14 @@ export default class UserManagement extends Component {
       return <PleaseLogin />;
     }
 
+    const roles = roleHierarchy[this.props.userInfo.role];
+
     return (
       <div>
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/users" />
         <div className="userManagement">
           <h1> Unverified Users </h1>
-          <ApproveOrDenyUserList />
+          <ApproveOrDenyUserList userInfo={this.props.userInfo} />
           <div style={{ margin: "24px 0" }} />
 
           <h1> Verified Users </h1>
@@ -77,6 +70,7 @@ export default class UserManagement extends Component {
             fieldsToDisplay={fields}
             arrayOfPrivileges={roles}
             firebasePath="/users/verified"
+            userInfo={this.props.userInfo}
           />
         </div>
       </div>

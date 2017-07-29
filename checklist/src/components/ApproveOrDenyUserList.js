@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ApproveOrDenyUserListItem from "./ApproveOrDenyUserListItem.js";
 import firebase from "../configs/firebaseConfig.js";
+import roleHierarchy from "../roles/roleHierarchy.js";
 
 const fieldInfo = [
   {
@@ -25,6 +26,11 @@ const fieldInfo = [
   }
 ];
 
+/* PROPS
+    userInfo: obj; the userInfo that's passed down from firebase; used to determine
+      position in role hierarchy and display users accordingly
+*/
+
 export default class ApproveOrDenyUserList extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +43,7 @@ export default class ApproveOrDenyUserList extends Component {
   componentWillMount() {
     let usersListener = firebase.database().ref("users/unverified");
     usersListener.on("value", snapshot => {
-      let userInfo = snapshot.val();
+      let usersInfo = snapshot.val();
       if (!snapshot.val()) {
         this.setState({
           ...this.state,
@@ -47,8 +53,8 @@ export default class ApproveOrDenyUserList extends Component {
         return;
       }
       let arrayOfUsers = [];
-      Object.keys(userInfo).map(userID => {
-        arrayOfUsers.push(userInfo[userID]);
+      Object.keys(usersInfo).map(userID => {
+        arrayOfUsers.push(usersInfo[userID]);
       });
       this.setState({
         users: arrayOfUsers,
@@ -67,7 +73,16 @@ export default class ApproveOrDenyUserList extends Component {
   }
 
   render() {
+    // use role hierarchy & logged-in user to determine which users to display
+    let rolesUserCanSee = roleHierarchy[this.props.userInfo.role];
+
     let listItems = this.state.users.map(user => {
+      // only return users whose roles are in rolesUserCanSee
+      if (!rolesUserCanSee.includes(user.role)) {
+        console.log("this happened");
+        console.log(user);
+        return <div />;
+      }
       return (
         <div key={user.name}>
           <ApproveOrDenyUserListItem

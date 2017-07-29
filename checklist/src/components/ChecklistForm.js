@@ -6,10 +6,12 @@ import NewDynamicHeaders from "../components/NewDynamicHeaders.js";
 import Checklist from "../components/Checklist.js";
 import DropdownSelection from "../components/DropdownSelection.js";
 import TimeDropdowns from "../components/TimeDropdowns.js";
+import roleHierarchy from "../roles/roleHierarchy.js";
 
 /* PROPS
     checklistData: obj; has all the relevant fields for checklists (managed by parent component)
     updateField: function; updates the relevant field in the parent's state
+    userInfo: obj; the logged-in user's info (used to determine which roles to display)
 */
 
 const testFields = [
@@ -33,12 +35,15 @@ const daysOfWeek = [
   "Saturday"
 ];
 
-const roles = ["GM", "Grill", "Line", "Prep"];
-
 const locations = ["Charlottesville, VA", "Newark, DE"];
 
 export default class ChecklistForm extends Component {
   render() {
+    // grab the relevant roles based on user's position in the hierarchy
+    const roles = roleHierarchy[this.props.userInfo.role];
+    console.log(this.props.userInfo);
+    console.log(roleHierarchy);
+    console.log(roles);
     return (
       <div>
         <h1> Title </h1>
