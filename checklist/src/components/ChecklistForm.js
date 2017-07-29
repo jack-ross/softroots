@@ -41,9 +41,6 @@ export default class ChecklistForm extends Component {
   render() {
     // grab the relevant roles based on user's position in the hierarchy
     const roles = roleHierarchy[this.props.userInfo.role];
-    console.log(this.props.userInfo);
-    console.log(roleHierarchy);
-    console.log(roles);
     return (
       <div>
         <h1> Title </h1>

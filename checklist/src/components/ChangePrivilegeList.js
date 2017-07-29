@@ -64,7 +64,6 @@ class ChangePrivilegeList extends Component {
   }
 
   onDelete(objectToDelete) {
-    console.log("You called delete!!");
     /*
     firebase
       .database()
@@ -74,7 +73,6 @@ class ChangePrivilegeList extends Component {
   }
 
   onChangeField(newValue, objectToEdit) {
-    console.log("You changed privilege to " + newValue);
     firebase
       .database()
       .ref(this.props.firebasePath + "/" + objectToEdit.uid + "/role")
