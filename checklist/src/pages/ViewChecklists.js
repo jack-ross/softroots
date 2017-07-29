@@ -10,6 +10,7 @@ import submitChecklist from "../firebase/submitChecklist.js";
 import Validation from "../validation/ChecklistValidation.js";
 import submitEditedChecklist from "../firebase/submitEditedChecklist.js";
 import deleteChecklist from "../firebase/deleteChecklist.js";
+import roleHierarchy from "../roles/roleHierarchy.js";
 import "../css/ViewChecklists.css";
 
 const tabs = [
@@ -183,10 +184,24 @@ export default class ViewChecklists extends Component {
       return <PleaseLogin />;
     }
 
+    // grab the roles below the user in the hierarchy to know which ones to render
+    const roles = roleHierarchy[this.props.userInfo.role];
+
     const checklistDisplays = Object.keys(this.state.data).map(location => {
       let roleInfoAtLocation = this.state.data[location];
-      const roleChecklists = Object.keys(roleInfoAtLocation).map(role => {
+      const roleChecklists = roles.map(role => {
         let roleChecklists = roleInfoAtLocation[role];
+        if (!roleChecklists) {
+          return (
+            <div>
+              <h3>
+                {" "}{role}{" "}
+              </h3>
+              <p> No checklists for this role. </p>
+              <div style={{ margin: "24px 0" }} />
+            </div>
+          );
+        }
         const checklists = Object.keys(roleChecklists).map(key => {
           return roleChecklists[key];
         });
@@ -240,7 +255,7 @@ export default class ViewChecklists extends Component {
             checklistData={this.state.checklistToEdit}
             updateField={(field, value) =>
               this.updateChecklistField(field, value)}
-            onSubmit={() => this.confirmSubmit()}
+            userInfo={this.props.userInfo}
           />
         </Modal>
       </div>

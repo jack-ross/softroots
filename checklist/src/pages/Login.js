@@ -4,6 +4,7 @@ import DropdownSelection from "../components/DropdownSelection.js";
 import "../css/Login.css";
 import firebase from "../configs/firebaseConfig.js";
 import { Redirect } from "react-router-dom";
+import roles from "../roles/roles.js";
 
 /* PROPS
     userInfo: user info pulled from firebase after logging in; if logged in, redirect to home page
@@ -41,16 +42,6 @@ const blankCreateAccountInfo = {
 
 // arrays for the dropdowns when creating an account
 const locations = ["Charlottesville", "Newark"];
-const roles = [
-  "GM",
-  "Assistant GM",
-  "Kitchen Manager",
-  "Shift Manager",
-  "Grill",
-  "Prep",
-  "Line",
-  "Dish"
-];
 
 export default class Login extends Component {
   constructor(props) {

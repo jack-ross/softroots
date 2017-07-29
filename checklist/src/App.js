@@ -29,7 +29,7 @@ class App extends Component {
         firebase
           .database()
           .ref("/users/verified/" + user.uid)
-          .once("value", snapshot => {
+          .on("value", snapshot => {
             this.setState({
               ...this.state,
               userInfo: snapshot.val()

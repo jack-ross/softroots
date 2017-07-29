@@ -32,31 +32,6 @@ const tabs = [
   }
 ];
 
-const testFields = [
-  {
-    field: "shortDescription",
-    prompt: "Short Description:"
-  },
-  {
-    field: "longDescription",
-    prompt: "Detailed Description:"
-  }
-];
-
-const daysOfWeek = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday"
-];
-
-const roles = ["GM", "Grill", "Line", "Prep"];
-
-const locations = ["Charlottesville, VA", "Newark, DE"];
-
 export default class CreateOrEditChecklist extends Component {
   constructor(props) {
     super(props);
@@ -131,6 +106,7 @@ export default class CreateOrEditChecklist extends Component {
           <ChecklistForm
             checklistData={this.state}
             updateField={(field, value) => this.updateField(field, value)}
+            userInfo={this.props.userInfo}
           />
           <Button type="primary" onClick={() => this.confirmSubmit()}>
             {" "}Submit!{" "}
