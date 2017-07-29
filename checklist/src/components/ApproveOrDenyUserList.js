@@ -69,7 +69,7 @@ export default class ApproveOrDenyUserList extends Component {
   }
 
   onDeny(user) {
-    console.log(user);
+    // TODO delete from firebase auth
   }
 
   render() {
@@ -79,8 +79,6 @@ export default class ApproveOrDenyUserList extends Component {
     let listItems = this.state.users.map(user => {
       // only return users whose roles are in rolesUserCanSee
       if (!rolesUserCanSee.includes(user.role)) {
-        console.log("this happened");
-        console.log(user);
         return <div />;
       }
       return (

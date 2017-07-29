@@ -17,10 +17,6 @@ const Panel = Collapse.Panel;
 */
 
 export default class CollapseableList extends Component {
-  callback(key) {
-    console.log(key);
-  }
-
   render() {
     //prework
     let panels = this.props.listInfo.map((list, index) => {
@@ -64,7 +60,7 @@ export default class CollapseableList extends Component {
       );
     });
     return (
-      <Collapse onChange={key => this.callback(key)}>
+      <Collapse>
         {panels}
       </Collapse>
     );

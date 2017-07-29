@@ -93,8 +93,6 @@ export default class CreateOrEditChecklist extends Component {
       return <PleaseLogin />;
     }
 
-    console.log(this.state);
-
     return (
       <div>
         <TopNavBar
