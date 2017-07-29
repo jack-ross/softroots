@@ -12,6 +12,7 @@ import ListOfChecklists from "../components/ListOfChecklists.js";
       checklists in all roles below them in the hierarchy.  set to either "mine" or "all"
 */
 
+// test data
 let grillData = require("../test/grillLists.json");
 grillData = Object.keys(grillData).map(key => {
   return grillData[key];
