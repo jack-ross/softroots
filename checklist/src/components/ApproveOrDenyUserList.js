@@ -81,6 +81,14 @@ export default class ApproveOrDenyUserList extends Component {
       if (!rolesUserCanSee.includes(user.role)) {
         return <div />;
       }
+
+      // if user is not an admin, only return users in logged-in user's location
+      if (this.props.userInfo.role !== "Admin") {
+        if (user.location !== this.props.userInfo.location) {
+          return <div />;
+        }
+      }
+
       return (
         <div key={user.name}>
           <ApproveOrDenyUserListItem

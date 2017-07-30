@@ -35,12 +35,18 @@ const daysOfWeek = [
   "Saturday"
 ];
 
-const locations = ["Charlottesville, VA", "Newark, DE"];
+let locations = ["Charlottesville, VA", "Newark, DE"];
 
 export default class ChecklistForm extends Component {
   render() {
     // grab the relevant roles based on user's position in the hierarchy
     const roles = roleHierarchy[this.props.userInfo.role];
+
+    // if user not an admin, restrict locations to just that user's location
+    if (this.props.userInfo.role !== "Admin") {
+      locations = [this.props.userInfo.location];
+    }
+
     return (
       <div>
         <h1> Title </h1>

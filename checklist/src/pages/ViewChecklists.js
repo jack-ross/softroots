@@ -187,8 +187,28 @@ export default class ViewChecklists extends Component {
     // grab the roles below the user in the hierarchy to know which ones to render
     const roles = roleHierarchy[this.props.userInfo.role];
 
-    const checklistDisplays = Object.keys(this.state.data).map(location => {
+    // if user is admin, we want ALL locations; otherwise, just that user's location
+    let locations = ["Charlottesville, VA", "Newark, DE"];
+    if (this.props.userInfo.role !== "Admin") {
+      locations = [this.props.userInfo.location];
+    }
+
+    const checklistDisplays = locations.map(location => {
       let roleInfoAtLocation = this.state.data[location];
+      // if there are NO checklists at that location, render this
+      if (!roleInfoAtLocation) {
+        return (
+          <div>
+            <h1>
+              {" "}{location}{" "}
+            </h1>
+            <p> No checklists at this location. </p>
+          </div>
+        );
+      }
+
+      // otherwise, go through that location's roles and render each
+      // checklist within that role
       const roleChecklists = roles.map(role => {
         let roleChecklists = roleInfoAtLocation[role];
         if (!roleChecklists) {

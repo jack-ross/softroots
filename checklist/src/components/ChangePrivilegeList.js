@@ -93,6 +93,20 @@ class ChangePrivilegeList extends Component {
         if (!rolesUserCanSee.includes(dataObject.role)) {
           return <div />;
         }
+
+        // if user not an admin, can only see users from their location
+        if (!this.props.userInfo.role === "Admin") {
+          if (dataObject.location !== this.props.userInfo.location) {
+            return <div />;
+          }
+        }
+
+        // finally, don't display the user currently logged in, as they can't
+        // change their own role
+        if (dataObject.uid === this.props.userInfo.uid) {
+          return <div />;
+        }
+
         return (
           <ChangePrivilegeListItem
             onDelete={() => this.onDelete(dataObject)}
