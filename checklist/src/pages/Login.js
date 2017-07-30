@@ -41,7 +41,7 @@ const blankCreateAccountInfo = {
 };
 
 // arrays for the dropdowns when creating an account
-const locations = ["Charlottesville", "Newark"];
+const locations = ["Charlottesville, VA", "Newark, DE"];
 
 export default class Login extends Component {
   constructor(props) {

@@ -10,13 +10,7 @@ export default function submitEditedChecklist(
 ) {
   // first, clean up locations to the proper strings (i.e. charlottesville_va)
   // still hardcoded in for Roots
-  let locationKeys = checklist.locations.map(location => {
-    return convertLocationForFirebasePath(location);
-  });
-
-  initialLocations = initialLocations.map(location => {
-    return convertLocationForFirebasePath(location);
-  });
+  let locationKeys = checklist.locations;
 
   // first, use helper function to create three disjoint arrays: original locations
   // no longer relevant, overlap between original locations and new locations, and finally
