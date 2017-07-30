@@ -47,6 +47,8 @@ const SortableItem = SortableElement(
             autosize
             value={dataObject[field]}
             onChange={e => handleInputChange(e, field, indexForChange)}
+            maxLength={2000}
+            placeholder="(max 2000 characters)"
           />
         </div>
       );
