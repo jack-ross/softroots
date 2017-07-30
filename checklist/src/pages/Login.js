@@ -250,22 +250,30 @@ export default class Login extends Component {
           <h3> First Name </h3>
           <Input
             onChange={e => this.onChange(e.target.value, "firstName", "create")}
+            placeholder="First Name (max 100 characters)"
+            maxLength={100}
           />
 
           <h3> Last Name </h3>
           <Input
             onChange={e => this.onChange(e.target.value, "lastName", "create")}
+            placeholder="Last Name (max 100 characters)"
+            maxLength={100}
           />
 
           <h3> Email </h3>
           <Input
             onChange={e => this.onChange(e.target.value, "email", "create")}
+            placeholder="Email (max 100 characters)"
+            maxLength={100}
           />
 
           <h3> Password </h3>
           <Input
             type="password"
             onChange={e => this.onChange(e.target.value, "password", "create")}
+            placeholder="Password (between 6-100 characters)"
+            maxLength={100}
           />
 
           <h3> Repeat Password </h3>
@@ -273,6 +281,8 @@ export default class Login extends Component {
             type="password"
             onChange={e =>
               this.onChange(e.target.value, "passwordRepeated", "create")}
+            placeholder="Repeat Password (between 6-100 characters)"
+            maxLength={100}
           />
 
           <h3> Location </h3>

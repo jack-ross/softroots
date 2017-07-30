@@ -48,6 +48,8 @@ export default class ChecklistForm extends Component {
           style={{ width: 200 }}
           value={this.props.checklistData.title}
           onChange={e => this.props.updateField("title", e.target.value)}
+          maxLength={50}
+          placeholder={"Title (max 50 characters)"}
         />
         <div style={{ margin: "30px" }} />
 
@@ -56,6 +58,8 @@ export default class ChecklistForm extends Component {
           style={{ width: 300 }}
           value={this.props.checklistData.description}
           onChange={e => this.props.updateField("description", e.target.value)}
+          maxLength={500}
+          placeholder={"Description (max 500 characters)"}
           type="textarea"
           autosize
         />

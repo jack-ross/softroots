@@ -52,6 +52,8 @@ export default class NewDynamicHeaders extends Component {
             style={{ width: 200 }}
             value={dataObj.title}
             onChange={e => this.onHeaderChange(e, index)}
+            placeholder={"Title (max 100 characters)"}
+            maxLength={100}
           />
           <div style={{ margin: "16px 0" }} />
           <h3> Tasks </h3>
