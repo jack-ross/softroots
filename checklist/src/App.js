@@ -9,6 +9,7 @@ import Home from "./pages/Home.js";
 import UserManagement from "./pages/UserManagement.js";
 import ViewChecklists from "./pages/ViewChecklists.js";
 import Login from "./pages/Login.js";
+import Profile from "./pages/Profile.js";
 
 import firebase from "./configs/firebaseConfig.js";
 
@@ -116,6 +117,11 @@ class App extends Component {
                 path="/users"
                 component={() =>
                   <UserManagement userInfo={this.state.userInfo} />}
+              />
+              <Route
+                exact
+                path="/profile"
+                component={() => <Profile userInfo={this.state.userInfo} />}
               />
 
               <Route
