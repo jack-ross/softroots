@@ -83,12 +83,12 @@ class App extends Component {
     }
 
     return (
-      <div>
+      <div className="App">
         {userInfo}
         {this.state.userInfo !== undefined &&
           <Button onClick={() => this.onClickSignOut()}> Sign Out </Button>}
         <BrowserRouter>
-          <div className="App">
+          <div style={{ height: "100%", width: "100%" }}>
             <Switch>
               <Route
                 exact
