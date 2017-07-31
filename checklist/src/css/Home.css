@@ -1,6 +1,8 @@
-.checkimg {
+.checkImage {
   text-align: center;
-  background: #ffb67e;
+  width: 100%;
+  height: 100%;
+  padding: 50px;
 }
 
 img {

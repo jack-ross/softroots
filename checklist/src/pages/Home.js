@@ -50,7 +50,7 @@ export default class Home extends Component {
     return (
       <div>
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/home" />
-        <div className="checkimg">
+        <div className="checkImage">
           {" "}<img src={background} />{" "}
         </div>
       </div>

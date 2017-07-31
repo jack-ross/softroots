@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Collapse, Button } from "antd";
+import "../css/CollapseableList.css";
 const Panel = Collapse.Panel;
 /* PROPS:
     listInfo: [obj]; array of list objects to be rendered with the following fields:
@@ -36,6 +37,7 @@ export default class CollapseableList extends Component {
               {" "}{subsection.title}{" "}
             </h3>
             {subtaskArray}
+            <div style={{ margin: "15px 0" }} />
           </div>
         );
       });
@@ -46,6 +48,7 @@ export default class CollapseableList extends Component {
           <p>
             {" "}{list.description}{" "}
           </p>
+          <div style={{ margin: "20px 0" }} />
           {subsectionRender}
           <Button onClick={() => this.props.onClickEdit(list)}> Edit </Button>
           <Button> Ad Hoc </Button>
