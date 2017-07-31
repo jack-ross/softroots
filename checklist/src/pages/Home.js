@@ -3,7 +3,6 @@ import TopNavBar from "../components/TopNavBar.js";
 import Checklist from "../components/Checklist.js";
 import PleaseLogin from "../components/PleaseLogin.js";
 import background from "../images/checklist.jpg";
-import Header from "../components/Header.js";
 import "../css/Home.css";
 
 const tabs = [
