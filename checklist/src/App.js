@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Switch, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { Modal, Button, notification } from "antd";
+import Header from "./components/Header.js";
 
 // the different pages that can be rendered
 import CreateOrEditChecklist from "./pages/CreateOrEditChecklist.js";
@@ -73,22 +74,15 @@ class App extends Component {
   }
 
   render() {
-    let userInfo = <p />;
-    if (this.state.userInfo) {
-      userInfo = (
-        <p>
-          {" "}Welcome {this.state.userInfo.firstName}{" "}
-        </p>
-      );
-    }
-
     return (
       <div className="App">
-        {userInfo}
-        {this.state.userInfo !== undefined &&
-          <Button onClick={() => this.onClickSignOut()}> Sign Out </Button>}
         <BrowserRouter>
           <div style={{ height: "100%", width: "100%" }}>
+            {this.state.userInfo &&
+              <Header
+                userFirstName={this.state.userInfo.firstName}
+                onClickSignOut={() => this.onClickSignOut()}
+              />}
             <Switch>
               <Route
                 exact

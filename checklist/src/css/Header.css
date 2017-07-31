@@ -1,9 +1,28 @@
-.header {
+.headerContainer {
+  background-color: #d7e5f2;
   display: flex;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
 }
 
-.firstName {
+.profileAndSignOut {
+  flex: 1;
+}
+
+.rootsLogo {
+  flex: 1;
+}
+
+.title {
+  flex: 6;
+  font-size: 20px;
+}
+
+.profile {
+  flex: 1;
 }
 
 .signOutButton {
+  flex: 1;
 }
