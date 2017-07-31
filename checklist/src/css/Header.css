@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 .headerContainer {
   background-color: #d7e5f2;
   display: flex;
@@ -16,7 +18,8 @@
 
 .title {
   flex: 6;
-  font-size: 20px;
+  font-size: 25px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .profile {

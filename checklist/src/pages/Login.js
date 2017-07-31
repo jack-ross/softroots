@@ -5,6 +5,7 @@ import "../css/Login.css";
 import firebase from "../configs/firebaseConfig.js";
 import { Redirect } from "react-router-dom";
 import roles from "../roles/roles.js";
+import rootsLogo from "../images/rootsLogo.jpg";
 
 /* PROPS
     userInfo: user info pulled from firebase after logging in; if logged in, redirect to home page
@@ -209,98 +210,109 @@ export default class Login extends Component {
     }
 
     return (
-      <div className="LoginPage">
-        <h1> SOFTROOTS </h1>
-        <h3> Checklists For Dayz </h3>
-        <Button.Group>
-          <Button onClick={() => this.onClickCreateAccount()}>
-            {" "}Create Account{" "}
-          </Button>
-          <Button onClick={() => this.onClickLogin()}> Login </Button>
-        </Button.Group>
+      <div className="LoginContainer" style={{ width: "100%", height: "100%" }}>
+        <div className="LoginPage">
+          <div className="rootsLogo">
+            <img src={rootsLogo} height="80px" width="80px" />
+            <div style={{ margin: "20px 0" }} />
+          </div>
+          <h1> SOFTROOTS </h1>
+          <div style={{ margin: "20px 0" }} />
+          <Button.Group>
+            <Button onClick={() => this.onClickCreateAccount()}>
+              {" "}Create Account{" "}
+            </Button>
+            <Button type="primary" onClick={() => this.onClickLogin()}>
+              {" "}Login{" "}
+            </Button>
+          </Button.Group>
 
-        <Modal
-          title="Login"
-          visible={this.state.isLoginVisible}
-          onOk={() => this.onLoginSubmit()}
-          onCancel={() => this.onCancel()}
-          okText="Login"
-          cancelText="Cancel"
-        >
-          <h3> Email: </h3>
-          <Input
-            onChange={e => this.onChange(e.target.value, "email", "login")}
-          />
+          <Modal
+            title="Login"
+            visible={this.state.isLoginVisible}
+            onOk={() => this.onLoginSubmit()}
+            onCancel={() => this.onCancel()}
+            okText="Login"
+            cancelText="Cancel"
+          >
+            <h3> Email: </h3>
+            <Input
+              onChange={e => this.onChange(e.target.value, "email", "login")}
+            />
 
-          <h3> Password: </h3>
-          <Input
-            type="password"
-            onChange={e => this.onChange(e.target.value, "password", "login")}
-          />
-        </Modal>
+            <h3> Password: </h3>
+            <Input
+              type="password"
+              onChange={e => this.onChange(e.target.value, "password", "login")}
+            />
+          </Modal>
 
-        <Modal
-          title="Create Account"
-          visible={this.state.isCreateAccountVisible}
-          onOk={() => this.onCreateAccountSubmit()}
-          onCancel={() => this.onCancel()}
-          okText="Create Account"
-          cancelText="Cancel"
-        >
-          <h3> First Name </h3>
-          <Input
-            onChange={e => this.onChange(e.target.value, "firstName", "create")}
-            placeholder="First Name (max 100 characters)"
-            maxLength={100}
-          />
+          <Modal
+            title="Create Account"
+            visible={this.state.isCreateAccountVisible}
+            onOk={() => this.onCreateAccountSubmit()}
+            onCancel={() => this.onCancel()}
+            okText="Create Account"
+            cancelText="Cancel"
+          >
+            <h3> First Name </h3>
+            <Input
+              onChange={e =>
+                this.onChange(e.target.value, "firstName", "create")}
+              placeholder="First Name (max 100 characters)"
+              maxLength={100}
+            />
 
-          <h3> Last Name </h3>
-          <Input
-            onChange={e => this.onChange(e.target.value, "lastName", "create")}
-            placeholder="Last Name (max 100 characters)"
-            maxLength={100}
-          />
+            <h3> Last Name </h3>
+            <Input
+              onChange={e =>
+                this.onChange(e.target.value, "lastName", "create")}
+              placeholder="Last Name (max 100 characters)"
+              maxLength={100}
+            />
 
-          <h3> Email </h3>
-          <Input
-            onChange={e => this.onChange(e.target.value, "email", "create")}
-            placeholder="Email (max 100 characters)"
-            maxLength={100}
-          />
+            <h3> Email </h3>
+            <Input
+              onChange={e => this.onChange(e.target.value, "email", "create")}
+              placeholder="Email (max 100 characters)"
+              maxLength={100}
+            />
 
-          <h3> Password </h3>
-          <Input
-            type="password"
-            onChange={e => this.onChange(e.target.value, "password", "create")}
-            placeholder="Password (between 6-100 characters)"
-            maxLength={100}
-          />
+            <h3> Password </h3>
+            <Input
+              type="password"
+              onChange={e =>
+                this.onChange(e.target.value, "password", "create")}
+              placeholder="Password (between 6-100 characters)"
+              maxLength={100}
+            />
 
-          <h3> Repeat Password </h3>
-          <Input
-            type="password"
-            onChange={e =>
-              this.onChange(e.target.value, "passwordRepeated", "create")}
-            placeholder="Repeat Password (between 6-100 characters)"
-            maxLength={100}
-          />
+            <h3> Repeat Password </h3>
+            <Input
+              type="password"
+              onChange={e =>
+                this.onChange(e.target.value, "passwordRepeated", "create")}
+              placeholder="Repeat Password (between 6-100 characters)"
+              maxLength={100}
+            />
 
-          <h3> Location </h3>
-          <DropdownSelection
-            promptText="Select Location"
-            selectedValue={this.state.createAccountInfo.location}
-            dropdownValues={locations}
-            onClickField={val => this.onChange(val, "location", "create")}
-          />
+            <h3> Location </h3>
+            <DropdownSelection
+              promptText="Select Location"
+              selectedValue={this.state.createAccountInfo.location}
+              dropdownValues={locations}
+              onClickField={val => this.onChange(val, "location", "create")}
+            />
 
-          <h3> Roles </h3>
-          <DropdownSelection
-            promptText="Select Role"
-            selectedValue={this.state.createAccountInfo.role}
-            dropdownValues={roles}
-            onClickField={val => this.onChange(val, "role", "create")}
-          />
-        </Modal>
+            <h3> Roles </h3>
+            <DropdownSelection
+              promptText="Select Role"
+              selectedValue={this.state.createAccountInfo.role}
+              dropdownValues={roles}
+              onClickField={val => this.onChange(val, "role", "create")}
+            />
+          </Modal>
+        </div>
       </div>
     );
   }
