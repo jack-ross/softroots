@@ -3,5 +3,6 @@
 }
 
 .ant-menu-item {
-  float: right;
+  font-size: 15px;
+  font-weight: 500;
 }

@@ -1,4 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 .LoginPage {
   margin: auto;
+  position: absolute;
+  width: 300px;
+  z-index: 15;
+  top: 50%;
+  left: 50%;
+  margin: -100px 0 0 -150px;
   text-align: center;
+  font-size: 25px;
+}
+
+.LoginContainer {
+  background-color: #e6e6ff;
+  font-family: 'Montserrat', sans-serif;
 }
