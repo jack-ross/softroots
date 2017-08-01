@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Collapse, Button } from "antd";
+import { Collapse, Button, Modal } from "antd";
 import "../css/CollapseableList.css";
 const Panel = Collapse.Panel;
 /* PROPS:
@@ -18,14 +18,50 @@ const Panel = Collapse.Panel;
 */
 
 export default class CollapseableList extends Component {
+  displayLongDescriptionModal(subtask) {
+    Modal.info({
+      title: subtask.shortDescription,
+      content: subtask.longDescription,
+      onOk: () => {},
+      okText: "Close"
+    });
+  }
+
   render() {
     //prework
     let panels = this.props.listInfo.map((list, index) => {
+      // create the strings and <p>'s with the repeat times
+      let endTimes = list.endTimes.map(endTime => {
+        let endTimeString =
+          endTime.hours + ":" + endTime.minutes + " " + endTime.amPm;
+        return (
+          <p>
+            {" "}{endTimeString}{" "}
+          </p>
+        );
+      });
+
+      // create the <p>'s with the days to repeat
+      let daysToRepeatString = "";
+      let daysToRepeat = list.daysToRepeat.map(day => {
+        daysToRepeatString += day;
+        daysToRepeatString += ", ";
+      });
+      // splice off the last ", "
+      daysToRepeatString = daysToRepeatString.substring(
+        0,
+        daysToRepeatString.length - 2
+      );
+
+      // create how each subsection gets rendered
       let subsectionRender = list.subsections.map(subsection => {
         let subtaskArray = subsection.subtasks.map(subtask => {
           // return statements
           return (
-            <p>
+            <p
+              onClick={() => this.displayLongDescriptionModal(subtask)}
+              style={{ cursor: "pointer" }}
+            >
               {" "}{subtask.shortDescription}{" "}
             </p>
           );
@@ -37,19 +73,33 @@ export default class CollapseableList extends Component {
               {" "}{subsection.title}{" "}
             </h3>
             {subtaskArray}
-            <div style={{ margin: "15px 0" }} />
+            <div style={{ margin: "10px 0" }} />
           </div>
         );
       });
 
       return (
         <Panel header={list.title} key={index}>
-          <h2> Description </h2>
+          <h1 style={{ fontSize: "20px" }}> Description </h1>
           <p>
             {" "}{list.description}{" "}
           </p>
-          <div style={{ margin: "20px 0" }} />
+          <div style={{ margin: "30px 0" }} />
+
+          <h1 style={{ fontSize: "20px" }}> Subsections </h1>
           {subsectionRender}
+          <div style={{ margin: "30px 0" }} />
+
+          <h1 style={{ fontSize: "20px" }}> Days to Repeat </h1>
+          <p>
+            {" "}{daysToRepeatString}{" "}
+          </p>
+          <div style={{ margin: "15px 0" }} />
+
+          <h1 style={{ fontSize: "20px" }}> End Time(s) </h1>
+          {endTimes}
+          <div style={{ margin: "15px 0" }} />
+
           <Button onClick={() => this.props.onClickEdit(list)}> Edit </Button>
           <Button> Ad Hoc </Button>
           <Button
