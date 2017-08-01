@@ -72,19 +72,33 @@ export default class CreateAccount extends Component {
     return (
       <div className="CreateAccount">
         <h3> First Name </h3>
-        <Input onChange={e => this.onChange(e.target.value, "firstName")} />
+        <Input
+          placeholder="(max 100 characters)"
+          maxLength={100}
+          onChange={e => this.onChange(e.target.value, "firstName")}
+        />
         <div style={{ margin: "12px 0" }} />
 
         <h3> Last Name </h3>
-        <Input onChange={e => this.onChange(e.target.value, "lastName")} />
+        <Input
+          placeholder="(max 100 characters)"
+          maxLength={100}
+          onChange={e => this.onChange(e.target.value, "lastName")}
+        />
         <div style={{ margin: "12px 0" }} />
 
         <h3> Email </h3>
-        <Input onChange={e => this.onChange(e.target.value, "email")} />
+        <Input
+          placeholder="(max 100 characters)"
+          maxLength={100}
+          onChange={e => this.onChange(e.target.value, "email")}
+        />
         <div style={{ margin: "12px 0" }} />
 
         <h3> Password </h3>
         <Input
+          placeholder="(between 6-100 characters)"
+          maxLength={100}
           type="password"
           onChange={e => this.onChange(e.target.value, "password")}
         />
@@ -92,6 +106,8 @@ export default class CreateAccount extends Component {
 
         <h3> Repeat Password </h3>
         <Input
+          placeholder="(between 6-100 characters)"
+          maxLength={100}
           type="password"
           onChange={e => this.onChange(e.target.value, "passwordRepeated")}
         />

@@ -6,6 +6,7 @@ import firebase from "../configs/firebaseConfig.js";
 import { Redirect } from "react-router-dom";
 import roles from "../roles/roles.js";
 import rootsLogo from "../images/rootsLogo.jpg";
+import background from "../images/splashPageBackground.jpg";
 
 /* PROPS
     userInfo: user info pulled from firebase after logging in; if logged in, redirect to home page
@@ -210,13 +211,27 @@ export default class Login extends Component {
     }
 
     return (
-      <div className="LoginContainer" style={{ width: "100%", height: "100%" }}>
+      <div
+        className="LoginContainer"
+        style={{
+          width: "100%",
+          height: "100%",
+          backgroundImage: "url(" + background + ")",
+          backgroundSize: "100% 100%"
+        }}
+      >
         <div className="LoginPage">
           <div className="rootsLogo">
             <img src={rootsLogo} height="80px" width="80px" />
             <div style={{ margin: "20px 0" }} />
           </div>
-          <h1> SOFTROOTS </h1>
+          <h1
+            style={{
+              color: "white"
+            }}
+          >
+            {" "}ListTalk{" "}
+          </h1>
           <div style={{ margin: "20px 0" }} />
           <Button.Group>
             <Button onClick={() => this.onClickCreateAccount()}>

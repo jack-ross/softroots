@@ -19,7 +19,7 @@ export default class Header extends Component {
         </div>
 
         <div className="title">
-          <h1> SoftRoots </h1>
+          <h1> ListTalk </h1>
         </div>
 
         <div className="profileAndSignOut">
