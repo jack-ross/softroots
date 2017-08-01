@@ -63,6 +63,8 @@ export default class NewDynamicHeaders extends Component {
             updateParent={subtasks => this.onSubtasksChange(subtasks, index)}
           />
           <Button
+            icon="close-circle-o"
+            type="danger"
             onClick={() =>
               displayConfirmDeleteModal(() => this.removeHeader(index))}
           >
