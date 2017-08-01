@@ -122,7 +122,7 @@ export default class Profile extends Component {
     return (
       <div>
         <TopNavBar className="horizontal" tabs={tabs} />
-        <div style={{ textAlign: "center" }}>
+        <div style={{ textAlign: "center", padding: "30px" }}>
           <h1> User Profile </h1>
           <h3> Name </h3>
           <p>
