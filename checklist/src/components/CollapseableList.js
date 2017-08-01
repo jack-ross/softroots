@@ -94,21 +94,32 @@ export default class CollapseableList extends Component {
           <p>
             {" "}{daysToRepeatString}{" "}
           </p>
-          <div style={{ margin: "15px 0" }} />
+          <div style={{ margin: "30px 0" }} />
 
           <h1 style={{ fontSize: "20px" }}> End Time(s) </h1>
           {endTimes}
           <div style={{ margin: "15px 0" }} />
 
-          <Button onClick={() => this.props.onClickEdit(list)}> Edit </Button>
-          <Button> Ad Hoc </Button>
-          <Button
-            type="danger"
-            icon="close-circle-o"
-            onClick={() => this.props.onClickDelete(list)}
-          >
-            {" "}Delete{" "}
-          </Button>
+          <div className="buttonCenter" style={{ textAlign: "center" }}>
+            <Button
+              type="primary"
+              style={{ marginRight: "10px" }}
+              icon="edit"
+              onClick={() => this.props.onClickEdit(list)}
+            >
+              {" "}Edit{" "}
+            </Button>
+
+            <Button style={{ marginRight: "10px" }}> Ad Hoc </Button>
+            <Button
+              style={{ marginRight: "10px" }}
+              type="danger"
+              icon="close-circle-o"
+              onClick={() => this.props.onClickDelete(list)}
+            >
+              {" "}Delete{" "}
+            </Button>
+          </div>
         </Panel>
       );
     });

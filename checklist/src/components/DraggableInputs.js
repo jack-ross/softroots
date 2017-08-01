@@ -62,6 +62,8 @@ const SortableItem = SortableElement(
           {inputs}
           <div style={{ margin: "10px 0" }} />
           <Button
+            icon="close-circle-o"
+            type="danger"
             onClick={() =>
               displayConfirmDeleteModal(() => removeInputs(indexForChange))}
           >

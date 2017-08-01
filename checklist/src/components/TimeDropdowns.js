@@ -69,7 +69,15 @@ export default class TimeDropdowns extends Component {
             dropdownValues={["AM", "PM"]}
             onClickField={val => this.updateField(index, "amPm", val)}
           />
-          <Button onClick={() => this.removeTime(index)}> Remove </Button>
+          <div style={{ margin: "10px 0" }} />
+          <Button
+            icon="close-circle-o"
+            type="danger"
+            onClick={() => this.removeTime(index)}
+          >
+            {" "}Remove{" "}
+          </Button>
+          <div style={{ margin: "15px 0" }} />
         </div>
       );
     });
@@ -77,7 +85,9 @@ export default class TimeDropdowns extends Component {
     return (
       <div>
         {dropdowns}
-        <Button onClick={() => this.addTime()}> Add Time </Button>
+        <Button type="primary" onClick={() => this.addTime()}>
+          {" "}+ Add Time{" "}
+        </Button>
       </div>
     );
   }
