@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Button, Modal, Input, notification } from "antd";
+import { Button, Modal, Input, notification, Card } from "antd";
 import DropdownSelection from "../components/DropdownSelection.js";
+import ChangePasswordModal from "../components/ChangePasswordModal.js";
 import "../css/Login.css";
 import firebase from "../configs/firebaseConfig.js";
 import { Redirect } from "react-router-dom";
@@ -25,6 +26,7 @@ import background from "../images/splashPageBackground.jpg";
       role: string
     isLoginVisible: boolean, controls whether the Login Modal is displayed or not
     isCreateAccountVisible: boolean, controls whether the Create Account Modal is displayed or not
+    isResetPasswordVisible: boolean, controls whether the Reset Password Modal is displayed or not
 */
 
 const blankLoginInfo = {
@@ -51,14 +53,17 @@ export default class Login extends Component {
     this.state = {
       isLoginVisible: false,
       isCreateAccountVisible: false,
+      isResetPasswordVisible: false,
       loginInfo: blankLoginInfo,
-      createAccountInfo: blankCreateAccountInfo
+      createAccountInfo: blankCreateAccountInfo,
+      resetEmail: ""
     };
   }
 
   onClickLogin() {
     this.setState({
       ...this.state,
+      isResetPasswordVisible: false,
       isCreateAccountVisible: false,
       isLoginVisible: true
     });
@@ -67,8 +72,24 @@ export default class Login extends Component {
   onClickCreateAccount() {
     this.setState({
       ...this.state,
+      isResetPasswordVisible: false,
       isCreateAccountVisible: true,
       isLoginVisible: false
+    });
+  }
+
+  onClickResetPassword() {
+    this.setState({
+      isResetPasswordVisible: true,
+      isCreateAccountVisible: false,
+      isLoginVisible: false
+    });
+  }
+
+  onChangeEmailToReset(email) {
+    this.setState({
+      ...this.state,
+      resetEmail: email
     });
   }
 
@@ -76,7 +97,8 @@ export default class Login extends Component {
     this.setState({
       ...this.state,
       isCreateAccountVisible: false,
-      isLoginVisible: false
+      isLoginVisible: false,
+      isResetPasswordVisible: false
     });
   }
 
@@ -210,6 +232,7 @@ export default class Login extends Component {
       return <Redirect to="/home" />;
     }
 
+    console.log(this.state);
     return (
       <div
         className="LoginContainer"
@@ -241,6 +264,13 @@ export default class Login extends Component {
               {" "}Login{" "}
             </Button>
           </Button.Group>
+
+          <p
+            style={{ color: "white", cursor: "pointer" }}
+            onClick={() => this.onClickResetPassword()}
+          >
+            {" "}Forget your password?{" "}
+          </p>
 
           <Modal
             title="Login"
@@ -327,6 +357,13 @@ export default class Login extends Component {
               onClickField={val => this.onChange(val, "role", "create")}
             />
           </Modal>
+
+          <ChangePasswordModal
+            isVisible={this.state.isResetPasswordVisible}
+            emailToReset={this.state.resetEmail}
+            onChange={email => this.onChangeEmailToReset(email)}
+            closeModal={() => this.closeModals()}
+          />
         </div>
       </div>
     );
