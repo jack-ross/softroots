@@ -12,6 +12,8 @@ import roleHierarchy from "../roles/roleHierarchy.js";
     checklistData: obj; has all the relevant fields for checklists (managed by parent component)
     updateField: function; updates the relevant field in the parent's state
     userInfo: obj; the logged-in user's info (used to determine which roles to display)
+    hideLocations: boolean, determines whether to render the locations or not (for now, they should
+      be hidden when you go to edit a checklist)
 */
 
 const testFields = [
@@ -106,14 +108,17 @@ export default class ChecklistForm extends Component {
         />
         <div style={{ margin: "30px 0" }} />
 
-        <h1> Location(s) </h1>
-        <Checklist
-          checklistValues={locations}
-          checkedValues={this.props.checklistData.locations}
-          onCheck={checkedItems =>
-            this.props.updateField("locations", checkedItems)}
-        />
-        <div style={{ margin: "30px 0" }} />
+        {!this.props.hideLocations &&
+          <div>
+            <h1> Location(s) </h1>
+            <Checklist
+              checklistValues={locations}
+              checkedValues={this.props.checklistData.locations}
+              onCheck={checkedItems =>
+                this.props.updateField("locations", checkedItems)}
+            />
+            <div style={{ margin: "30px 0" }} />
+          </div>}
       </div>
     );
   }

@@ -1,3 +1,7 @@
+// this method is already deprecated.  despite being one of the cooler problems to solve, after
+// further consultation, once a checklist has been created for multiple locations, each one will
+// now be edited as a single entity rather than across multiple locations
+
 import createDisjointArrays from "../helperFunctions/createDisjointArrays.js";
 import convertLocationForFirebasePath from "../helperFunctions/convertLocationForFirebasePath";
 import firebase from "../configs/firebaseConfig.js";

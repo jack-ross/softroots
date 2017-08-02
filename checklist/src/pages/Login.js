@@ -269,7 +269,7 @@ export default class Login extends Component {
             style={{ color: "white", cursor: "pointer" }}
             onClick={() => this.onClickResetPassword()}
           >
-            {" "}Forget your password?{" "}
+            {" "}Forgot your password?{" "}
           </p>
 
           <Modal

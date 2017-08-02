@@ -234,6 +234,7 @@ export default class ViewChecklists extends Component {
               listInfo={checklists}
               onClickEdit={checklist => this.onClickEdit(checklist)}
               onClickDelete={checklist => this.onClickDelete(checklist)}
+              canEditDelete={this.props.userInfo.role === "Admin"}
             />
             <div style={{ margin: "30px 0" }} />
           </div>
@@ -277,6 +278,7 @@ export default class ViewChecklists extends Component {
             updateField={(field, value) =>
               this.updateChecklistField(field, value)}
             userInfo={this.props.userInfo}
+            hideLocations={true}
           />
         </Modal>
       </div>
