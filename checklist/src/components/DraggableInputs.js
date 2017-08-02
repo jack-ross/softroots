@@ -8,6 +8,7 @@ import {
 import { Input, Icon, Button, Card } from "antd";
 import dragIcon from "../images/drag.png";
 import displayConfirmDeleteModal from "../helperFunctions/displayConfirmDeleteModal.js";
+import "../css/DraggableInputs.css";
 
 /* PROPS
     fields: [obj]
@@ -37,12 +38,11 @@ const SortableItem = SortableElement(
       let prompt = fieldObject.prompt;
       let field = fieldObject.field;
       return (
-        <div>
+        <div className="singleInput">
           <h3>
             {" "}{prompt}{" "}
           </h3>
           <Input
-            style={{ width: 300 }}
             type="textarea"
             autosize
             value={dataObject[field]}
@@ -57,9 +57,13 @@ const SortableItem = SortableElement(
     // return those inputs and a DragHandle inside a list item
     return (
       <li>
-        <Card style={{ width: 400 }}>
+        <Card>
           <DragHandle />
-          {inputs}
+
+          <div className="inputs">
+            {inputs}
+          </div>
+
           <div style={{ margin: "10px 0" }} />
           <Button
             icon="close-circle-o"

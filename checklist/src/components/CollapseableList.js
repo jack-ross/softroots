@@ -11,6 +11,8 @@ const Panel = Collapse.Panel;
         subtasks: [string]; the different tasks for that subsection (i.e. "Mop the back")
     onClickEdit: function; called when Edit button is clicked
     onClickDelete: function; called when Delete button is clicked
+    canEditDelete: boolean; info about the logged-in user; used to determine whether or not they have
+      access to the edit/delete buttons
 */
 
 /* STATE:
@@ -101,24 +103,27 @@ export default class CollapseableList extends Component {
           <div style={{ margin: "15px 0" }} />
 
           <div className="buttonCenter" style={{ textAlign: "center" }}>
-            <Button
-              type="primary"
-              style={{ marginRight: "10px" }}
-              icon="edit"
-              onClick={() => this.props.onClickEdit(list)}
-            >
-              {" "}Edit{" "}
-            </Button>
+            {this.props.canEditDelete &&
+              <Button
+                type="primary"
+                style={{ marginRight: "10px" }}
+                icon="edit"
+                onClick={() => this.props.onClickEdit(list)}
+              >
+                {" "}Edit{" "}
+              </Button>}
 
             <Button style={{ marginRight: "10px" }}> Ad Hoc </Button>
-            <Button
-              style={{ marginRight: "10px" }}
-              type="danger"
-              icon="close-circle-o"
-              onClick={() => this.props.onClickDelete(list)}
-            >
-              {" "}Delete{" "}
-            </Button>
+
+            {this.props.canEditDelete &&
+              <Button
+                style={{ marginRight: "10px" }}
+                type="danger"
+                icon="close-circle-o"
+                onClick={() => this.props.onClickDelete(list)}
+              >
+                {" "}Delete{" "}
+              </Button>}
           </div>
         </Panel>
       );
