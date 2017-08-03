@@ -2,13 +2,23 @@ import React, { Component } from "react";
 import { Switch, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { Icon, Modal, notification } from "antd";
+
+import Header from "./components/Header.js";
+
+// pages for routing
 import Home from "./pages/Home.js";
 import CreateAccount from "./pages/CreateAccount.js";
 import Login from "./pages/Login.js";
 import ViewChecklists from "./pages/ViewChecklists.js";
+import Profile from "./pages/Profile.js";
+
 import "./App.css";
 
 import firebase from "./configs/firebaseConfig.js";
+
+// functions for day of the week and Date Key for firebase
+import getDayOfWeek from "./helperFunctions/getDayOfWeek.js";
+import createKeyFromDate from "./helperFunctions/createKeyFromDate.js";
 
 const testUser = {
   role: "Grill"
@@ -43,6 +53,10 @@ class App extends Component {
         });
       }
     });
+
+    // get today's date for use as a Firebase key
+    console.log(createKeyFromDate("America/New_York"));
+    console.log(getDayOfWeek("America/New_York"));
   }
 
   onClickSignOut() {
@@ -91,31 +105,40 @@ class App extends Component {
     }
     return (
       <div className="App">
-        {signOut}
         <BrowserRouter>
-          <Switch>
-            <Route
-              exact
-              path="/"
-              component={() => <Home userInfo={this.state.userInfo} />}
-            />
-            <Route
-              exact
-              path="/create-account"
-              component={() => <CreateAccount userInfo={this.state.userInfo} />}
-            />
-            <Route
-              exact
-              path="/login"
-              component={() => <Login userInfo={this.state.userInfo} />}
-            />
-            <Route
-              exact
-              path="/viewchecklists"
-              component={() =>
-                <ViewChecklists userInfo={this.state.userInfo} />}
-            />
-          </Switch>
+          <div style={{ height: "100%", width: "100%" }}>
+            {this.state.userInfo &&
+              <Header onClickSignOut={() => this.onClickSignOut()} />}
+            <Switch>
+              <Route
+                exact
+                path="/"
+                component={() => <Home userInfo={this.state.userInfo} />}
+              />
+              <Route
+                exact
+                path="/create-account"
+                component={() =>
+                  <CreateAccount userInfo={this.state.userInfo} />}
+              />
+              <Route
+                exact
+                path="/login"
+                component={() => <Login userInfo={this.state.userInfo} />}
+              />
+              <Route
+                exact
+                path="/viewchecklists"
+                component={() =>
+                  <ViewChecklists userInfo={this.state.userInfo} />}
+              />
+              <Route
+                exact
+                path="/profile"
+                component={() => <Profile userInfo={this.state.userInfo} />}
+              />
+            </Switch>
+          </div>
         </BrowserRouter>
       </div>
     );

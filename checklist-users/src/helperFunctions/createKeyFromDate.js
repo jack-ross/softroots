@@ -6,8 +6,8 @@ let moment = require("moment-timezone");
       "America/New_York")
 */
 
-function createKeyFromDate(timeZone) {
-  dateISOString = moment().tz(timeZone).format();
-  dayMonthYearString = dateISOString.substring(0, 10); // formatted as YYYY-MM-DD
+export default function(timeZone) {
+  let dateISOString = moment().tz(timeZone).format();
+  let dayMonthYearString = dateISOString.substring(0, 10); // formatted as YYYY-MM-DD
   return dayMonthYearString;
 }
