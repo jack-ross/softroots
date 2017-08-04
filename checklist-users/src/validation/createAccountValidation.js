@@ -41,6 +41,10 @@ export default function createAccountValidation(userInfo) {
           errors.push("Role is required.");
         }
         break;
+      default:
+        errors.push(
+          "There was an unexpected error in processing your request."
+        );
     }
   });
 

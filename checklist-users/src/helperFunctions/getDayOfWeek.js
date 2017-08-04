@@ -12,9 +12,9 @@ export default function(timeZone) {
 
   // grab the year, month, and day
   let yearMonthDayArray = dayMonthYearString.split("-");
-  let year = parseInt(yearMonthDayArray[0]);
-  let month = parseInt(yearMonthDayArray[1]);
-  let day = parseInt(yearMonthDayArray[2]);
+  let year = parseInt(yearMonthDayArray[0], 10);
+  let month = parseInt(yearMonthDayArray[1], 10);
+  let day = parseInt(yearMonthDayArray[2], 10);
 
   // create a date object (note month's are offset by 1 the Date constructor)
   let date = new Date(year, month - 1, day);
@@ -36,5 +36,7 @@ export default function(timeZone) {
       return "Friday";
     case 6:
       return "Saturday";
+    default:
+      return null;
   }
 }

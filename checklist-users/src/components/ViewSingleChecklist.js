@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Modal } from "antd";
 import { Grid } from "react-bootstrap";
 import ChecklistRow from "./ChecklistRow.js";
 

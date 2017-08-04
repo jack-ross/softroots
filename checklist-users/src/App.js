@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
-import { Icon, Modal, notification } from "antd";
+import { Modal, notification } from "antd";
 
 import Header from "./components/Header.js";
 
@@ -19,10 +19,6 @@ import firebase from "./configs/firebaseConfig.js";
 // functions for day of the week and Date Key for firebase
 import getDayOfWeek from "./helperFunctions/getDayOfWeek.js";
 import createKeyFromDate from "./helperFunctions/createKeyFromDate.js";
-
-const testUser = {
-  role: "Grill"
-};
 
 class App extends Component {
   constructor(props) {
@@ -90,19 +86,6 @@ class App extends Component {
   }
 
   render() {
-    // if user is logged in, always have a signout button up top
-    let signOut = <div />;
-    if (this.state.userInfo) {
-      signOut = (
-        <div style={{ textAlign: "right", padding: "5%" }}>
-          <Icon
-            style={{ cursor: "pointer", fontSize: 30 }}
-            type="logout"
-            onClick={() => this.onClickSignOut()}
-          />
-        </div>
-      );
-    }
     return (
       <div className="App">
         <BrowserRouter>
