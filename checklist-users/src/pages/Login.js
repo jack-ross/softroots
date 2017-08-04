@@ -1,44 +1,8 @@
 import React, { Component } from "react";
 import { Input, Button, notification } from "antd";
 import { Link, Redirect } from "react-router-dom";
-import ViewSingleChecklist from "../components/ViewSingleChecklist.js";
 import loginValidation from "../validation/loginValidation.js";
 import firebase from "../configs/firebaseConfig.js";
-
-const testData = {
-  title: "Night With Viper",
-  description: "What to do on a long night with your favorite dog.",
-  subsections: [
-    {
-      title: "Feeding Viper",
-      subtasks: [
-        {
-          shortDescription: "Put food in bowl",
-          longDescription: "Use 100% fresh doggo food."
-        },
-        {
-          shortDescription: "Clean bowl.",
-          longDescription:
-            "Don't use bleach unless you want a doggo with a very sick tummy :("
-        }
-      ]
-    },
-    {
-      title: "Clothing Viper",
-      subtasks: [
-        {
-          shortDescription: "Buy a suit",
-          longDescription: "Make sure it's Barney Stinson approved."
-        },
-        {
-          shortDescription: "Suit up.",
-          longDescription:
-            "Viper needs to look classy, so be sure that he can squeeze in.  Make sure it accentuates those muscles - we wouldn't want all of Mike's training to go to waste now, would we?"
-        }
-      ]
-    }
-  ]
-};
 
 export default class Login extends Component {
   constructor(props) {

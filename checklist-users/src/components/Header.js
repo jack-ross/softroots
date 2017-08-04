@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Icon, Dropdown, Menu } from "antd";
+import { Dropdown, Menu } from "antd";
 import { Link } from "react-router-dom";
 import rootsImage from "../images/rootsImage.jpg";
 import settingsGear from "../images/settingsGear.png";
@@ -26,6 +26,7 @@ export default class Header extends Component {
             height="30px"
             width="30px"
             src={rootsImage}
+            alt="Roots Logo"
           />
         </div>
 
@@ -35,7 +36,7 @@ export default class Header extends Component {
 
         <div className="settingsIcon">
           <Dropdown overlay={settingsOptions} trigger={["click"]}>
-            <img src={settingsGear} height="30px" width="30px" />
+            <img src={settingsGear} height="30px" width="30px" alt="Settings" />
           </Dropdown>
         </div>
       </div>

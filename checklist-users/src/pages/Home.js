@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "antd";
 import { Link, Redirect } from "react-router-dom";
-import rootsLogo from "../images/roots-logo.jpg";
+import loginBackground from "../images/loginBackground.jpg";
 import "../css/Home.css";
 
 /* PROPS
@@ -15,8 +15,17 @@ export default class Home extends Component {
     }
 
     return (
-      <div className="Home" style={{ height: "100%", width: "100%" }}>
-        <img style={{ width: "100%" }} src={rootsLogo} />
+      <div
+        className="Home"
+        style={{
+          height: "100%",
+          width: "100%",
+          backgroundImage: "url(" + loginBackground + ")",
+          backgroundSize: "100% 100%"
+        }}
+      >
+        <div style={{ height: "50%" }} />
+        <h1 style={{ fontSize: "30px", color: "white" }}> ListTalk </h1>
         <Link to="/create-account">
           <Button> Sign Up </Button>
         </Link>
