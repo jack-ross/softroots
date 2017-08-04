@@ -17,8 +17,7 @@ import "./App.css";
 import firebase from "./configs/firebaseConfig.js";
 
 // functions for day of the week and Date Key for firebase
-import getDayOfWeek from "./helperFunctions/getDayOfWeek.js";
-import createKeyFromDate from "./helperFunctions/createKeyFromDate.js";
+import checkAndUpdateDailyLists from "./firebase/checkAndUpdateDailyLists.js";
 
 class App extends Component {
   constructor(props) {
@@ -50,9 +49,8 @@ class App extends Component {
       }
     });
 
-    // get today's date for use as a Firebase key
-    console.log(createKeyFromDate("America/New_York"));
-    console.log(getDayOfWeek("America/New_York"));
+    // also, update daily lists if needed
+    checkAndUpdateDailyLists();
   }
 
   onClickSignOut() {
