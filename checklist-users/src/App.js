@@ -11,6 +11,7 @@ import CreateAccount from "./pages/CreateAccount.js";
 import Login from "./pages/Login.js";
 import ViewChecklists from "./pages/ViewChecklists.js";
 import Profile from "./pages/Profile.js";
+import ForgotPassword from "./pages/ForgotPassword.js";
 
 import "./App.css";
 
@@ -117,6 +118,13 @@ class App extends Component {
                 exact
                 path="/profile"
                 component={() => <Profile userInfo={this.state.userInfo} />}
+              />
+
+              <Route
+                exact
+                path="/forgotpassword"
+                component={() =>
+                  <ForgotPassword userInfo={this.state.userInfo} />}
               />
             </Switch>
           </div>

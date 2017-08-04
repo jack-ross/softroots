@@ -33,6 +33,10 @@ export default class Home extends Component {
         <Link to="/login">
           <Button type="primary"> Log In </Button>
         </Link>
+
+        <Link to="/forgotpassword">
+          <p> Forgot your password? </p>
+        </Link>
       </div>
     );
   }
