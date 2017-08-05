@@ -7,6 +7,7 @@ import { Row, Col } from "react-bootstrap";
     subtask: object with the following fields
       shortDescription: description to be displayed initially
       longDescription: more detailed description to be displayed in a Modal when the task is clicked on
+      isCompleted: boolean, whether the subtask should be checked or not
 */
 
 export default class ChecklistRow extends Component {
@@ -30,6 +31,7 @@ export default class ChecklistRow extends Component {
         <Col xs={2}>
           <input
             type="checkbox"
+            checked={this.props.subtask.isCompleted}
             onChange={e => this.props.onCheck(e.target.checked)}
           />
         </Col>

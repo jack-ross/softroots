@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Radio } from "antd";
 import { Redirect } from "react-router-dom";
+import firebase from "../configs/firebaseConfig.js";
+import createKeyFromDate from "../helperFunctions/createKeyFromDate.js";
 import ListOfChecklists from "../components/ListOfChecklists.js";
 
 /* PROPS:
@@ -26,9 +28,37 @@ lineData = Object.keys(lineData).map(key => {
 export default class ViewChecklists extends Component {
   constructor(props) {
     super(props);
+    // create the daily key ONCE to avoid weird instances where different keys
+    // are used across different parts of the app
+    let dailyKey = createKeyFromDate("America/New_York");
     this.state = {
-      viewMode: "mine"
+      viewMode: "mine",
+      firebaseChecklists: undefined,
+      status: "Loading...",
+      dailyKey: dailyKey
     };
+  }
+
+  componentWillMount() {
+    // grab today's lists from firebase
+    firebase
+      .database()
+      .ref("/dailyLists/" + this.state.dailyKey)
+      .on("value", snapshot => {
+        // if no data, let the user know by updating the status
+        if (!snapshot.val()) {
+          this.setState({
+            ...this.state,
+            status: "None"
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            firebaseChecklists: snapshot.val(),
+            status: ""
+          });
+        }
+      });
   }
 
   onChangeToggle(value) {
@@ -43,18 +73,32 @@ export default class ViewChecklists extends Component {
     if (!this.props.userInfo) {
       return <Redirect to="/" />;
     }
+
     let lists = <div />;
-    if (this.state.viewMode === "mine") {
+    if (this.state.firebaseChecklists && this.state.viewMode === "mine") {
+      let role = this.props.userInfo.role;
+      let location = this.props.userInfo.location;
+      let checklistsForUserRole = this.state.firebaseChecklists[location][role];
+      let firebasePath =
+        "/dailyLists/" + this.state.dailyKey + "/" + location + "/" + role;
+      // render user's role's checklists for the day if any, otherwise tell
+      // them none exist
       lists = (
         <div>
           <h5>
             {" "}{this.props.userInfo.role}{" "}
           </h5>
           <div style={{ margin: "8px 0" }} />
-          <ListOfChecklists checklists={grillData} />
+          {checklistsForUserRole &&
+            <ListOfChecklists
+              firebasePath={firebasePath}
+              checklists={checklistsForUserRole}
+            />}
+
+          {!checklistsForUserRole && <p> None </p>}
         </div>
       );
-    } else if (this.state.viewMode === "all") {
+    } else if (this.state.firebaseChecklists && this.state.viewMode === "all") {
       lists = (
         <div>
           <h5> Grill </h5>
@@ -81,6 +125,9 @@ export default class ViewChecklists extends Component {
           </Radio.Group>
           <div style={{ margin: "8px 0" }} />
         </div>
+        <p>
+          {" "}{this.state.status}{" "}
+        </p>
         {lists}
       </div>
     );

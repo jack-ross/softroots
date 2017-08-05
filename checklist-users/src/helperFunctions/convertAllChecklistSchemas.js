@@ -21,7 +21,7 @@ export default function(allChecklists) {
       let checklistKeys = Object.keys(allChecklists[location][role]);
       checklistKeys.map(checklistKey => {
         let checklist = allChecklists[location][role][checklistKey];
-        if (checklist.daysToRepeat.includes("Friday")) {
+        if (checklist.daysToRepeat.includes(dayOfWeek)) {
           allChecklists[location][role][checklistKey] = convertChecklistSchema(
             checklist
           );
