@@ -19,12 +19,14 @@ import firebase from "./configs/firebaseConfig.js";
 
 // functions for day of the week and Date Key for firebase
 import checkAndUpdateDailyLists from "./firebase/checkAndUpdateDailyLists.js";
+import createKeyFromDate from "./helperFunctions/createKeyFromDate.js";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userInfo: undefined
+      userInfo: undefined,
+      dateKey: createKeyFromDate("America/New_York")
     };
   }
 
@@ -51,7 +53,7 @@ class App extends Component {
     });
 
     // also, update daily lists if needed
-    checkAndUpdateDailyLists();
+    checkAndUpdateDailyLists(this.state.dateKey);
   }
 
   onClickSignOut() {
@@ -112,7 +114,10 @@ class App extends Component {
                 exact
                 path="/viewchecklists"
                 component={() =>
-                  <ViewChecklists userInfo={this.state.userInfo} />}
+                  <ViewChecklists
+                    userInfo={this.state.userInfo}
+                    dateKey={this.state.dateKey}
+                  />}
               />
               <Route
                 exact
