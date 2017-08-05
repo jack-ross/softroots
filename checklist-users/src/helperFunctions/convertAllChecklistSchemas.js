@@ -5,9 +5,9 @@ import getDayOfWeek from "./getDayOfWeek.js";
 // and searches through them to check which ones should repeat
 // based on today's day (i.e. "Monday")
 
-export default function(allChecklists) {
+export default function(allChecklists, dateKey) {
   // get the day of the week (i.e. "Monday")
-  let dayOfWeek = getDayOfWeek("America/New_York");
+  let dayOfWeek = getDayOfWeek("America/New_York", dateKey);
 
   // go through each location
   let locations = Object.keys(allChecklists);

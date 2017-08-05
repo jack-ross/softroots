@@ -1,15 +1,10 @@
-import createKeyFromDate from "./createKeyFromDate.js";
-
 /* PARAMETERS
     timeZone: string; the desired timezone as permitted by moment-timezone; used to find the current
       time in the relevant time zone to decide what date to return (for now, all locations are EST, or
       "America/New_York")
 */
 
-export default function(timeZone) {
-  // get the day in YYYY-MM-DD format
-  let dayMonthYearString = createKeyFromDate(timeZone);
-
+export default function(timeZone, dayMonthYearString) {
   // grab the year, month, and day
   let yearMonthDayArray = dayMonthYearString.split("-");
   let year = parseInt(yearMonthDayArray[0], 10);

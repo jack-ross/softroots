@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Radio } from "antd";
 import { Redirect } from "react-router-dom";
 import firebase from "../configs/firebaseConfig.js";
-import createKeyFromDate from "../helperFunctions/createKeyFromDate.js";
 import ListOfChecklists from "../components/ListOfChecklists.js";
 
 /* PROPS:
@@ -30,12 +29,10 @@ export default class ViewChecklists extends Component {
     super(props);
     // create the daily key ONCE to avoid weird instances where different keys
     // are used across different parts of the app
-    let dailyKey = createKeyFromDate("America/New_York");
     this.state = {
       viewMode: "mine",
       firebaseChecklists: undefined,
-      status: "Loading...",
-      dailyKey: dailyKey
+      status: "Loading..."
     };
   }
 
@@ -43,7 +40,7 @@ export default class ViewChecklists extends Component {
     // grab today's lists from firebase
     firebase
       .database()
-      .ref("/dailyLists/" + this.state.dailyKey)
+      .ref("/dailyLists/" + this.props.dateKey)
       .on("value", snapshot => {
         // if no data, let the user know by updating the status
         if (!snapshot.val()) {
@@ -80,7 +77,7 @@ export default class ViewChecklists extends Component {
       let location = this.props.userInfo.location;
       let checklistsForUserRole = this.state.firebaseChecklists[location][role];
       let firebasePath =
-        "/dailyLists/" + this.state.dailyKey + "/" + location + "/" + role;
+        "/dailyLists/" + this.props.dateKey + "/" + location + "/" + role;
       // render user's role's checklists for the day if any, otherwise tell
       // them none exist
       lists = (
