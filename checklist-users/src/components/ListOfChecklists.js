@@ -4,14 +4,23 @@ import ViewSingleChecklist from "./ViewSingleChecklist.js";
 
 /* PROPS:
     checklists: [obj], the checklist objects pulled from firebase to render
+    firebasePath: string, the path where these checklists are coming from in
+      the form "/dailyLists/<YYYY-MM-DD>/<location>/<role>"
 */
 
 export default class ListOfChecklists extends Component {
   render() {
-    const renderedChecklists = this.props.checklists.map(checklist => {
+    const checklistArray = Object.keys(this.props.checklists).map(key => {
+      return this.props.checklists[key];
+    });
+
+    const renderedChecklists = checklistArray.map(checklist => {
       return (
         <Collapse.Panel header={checklist.title}>
-          <ViewSingleChecklist checklist={checklist} />
+          <ViewSingleChecklist
+            checklist={checklist}
+            firebasePath={this.props.firebasePath}
+          />
         </Collapse.Panel>
       );
     });
