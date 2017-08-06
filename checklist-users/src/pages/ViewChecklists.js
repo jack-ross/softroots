@@ -3,6 +3,7 @@ import { Radio } from "antd";
 import { Redirect } from "react-router-dom";
 import firebase from "../configs/firebaseConfig.js";
 import ListOfChecklists from "../components/ListOfChecklists.js";
+import roleHierarchy from "../roles/roleHierarchy.js";
 
 /* PROPS:
     userInfo: object; the logged in user's information pulled from firebase
@@ -96,18 +97,32 @@ export default class ViewChecklists extends Component {
         </div>
       );
     } else if (this.state.firebaseChecklists && this.state.viewMode === "all") {
-      lists = (
-        <div>
-          <h5> Grill </h5>
-          <div style={{ margin: "8px 0" }} />
-          <ListOfChecklists checklists={grillData} />
-          <div style={{ margin: "16px 0" }} />
+      // grab location and lower roles from hierarchy
+      let location = this.props.userInfo.location;
+      let roles = roleHierarchy[this.props.userInfo.role];
 
-          <h5> Line </h5>
-          <div style={{ margin: "8px 0" }} />
-          <ListOfChecklists checklists={grillData} />
-        </div>
-      );
+      // map through the roles, creating a list of tasks for each one in that location
+      lists = roles.map(role => {
+        let checklistsForRole = this.state.firebaseChecklists[location][role];
+        let firebasePath =
+          "/dailyLists/" + this.props.dateKey + "/" + location + "/" + role;
+        return (
+          <div>
+            <h5>
+              {" "}{role}{" "}
+            </h5>
+            <div style={{ margin: "8px 0" }} />
+            {checklistsForRole &&
+              <ListOfChecklists
+                firebasePath={firebasePath}
+                checklists={checklistsForRole}
+              />}
+
+            {!checklistsForRole && <p> None </p>}
+            <div style={{ margin: "8px 0" }} />
+          </div>
+        );
+      });
     }
 
     return (
