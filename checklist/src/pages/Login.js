@@ -128,6 +128,15 @@ export default class Login extends Component {
           delete userInfo.passwordRepeated;
           firebase.database().ref("users/unverified/" + uid).set(userInfo);
         })
+        .then(response => {
+          Modal.info({
+            title: "Account Created.",
+            content:
+              "Please wait for an admin to verify your account before trying to log in.",
+            okText: "Close"
+          });
+          firebase.auth().signOut();
+        })
         .catch(function(error) {
           notification.error({
             title: "ERROR",
