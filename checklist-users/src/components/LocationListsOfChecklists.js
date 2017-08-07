@@ -52,8 +52,10 @@ export default class LocationListsOfChecklists extends Component {
         <h1>
           {" "}{this.props.location}{" "}
         </h1>
+        <div style={{ height: "8px" }} />
+
         {listsByRole}
-        <div style={{ margin: "16px 0" }} />
+        <div style={{ height: "16px" }} />
       </div>
     );
   }

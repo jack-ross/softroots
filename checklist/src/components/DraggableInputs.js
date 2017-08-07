@@ -60,13 +60,16 @@ const SortableItem = SortableElement(
     return (
       <li>
         <Card>
-          <DragHandle />
+          <div className="flexContainer">
+            <div className="dragHandle">
+              <DragHandle />
+            </div>
 
-          <div className="inputs">
             {inputs}
           </div>
 
           <div style={{ margin: "10px 0" }} />
+
           <Button
             icon="close-circle-o"
             type="danger"
