@@ -64,7 +64,9 @@ export default class ForgotPassword extends Component {
           an email to reset your password.{" "}
         </p>
 
+        <div style={{ height: "10px" }} />
         <Input onChange={e => this.onInputChange(e.target.value)} />
+        <div style={{ height: "10px" }} />
 
         <Link to="/">
           <Button> Cancel </Button>

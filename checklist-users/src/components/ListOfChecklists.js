@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Collapse } from "antd";
 import ViewSingleChecklist from "./ViewSingleChecklist.js";
+import createEndTimeString from "../helperFunctions/createEndTimeString.js";
+import sortEndTimes from "../helperFunctions/sortEndTimes.js";
 
 /* PROPS:
     checklists: [obj], the checklist objects pulled from firebase to render
@@ -10,13 +12,21 @@ import ViewSingleChecklist from "./ViewSingleChecklist.js";
 
 export default class ListOfChecklists extends Component {
   render() {
-    const checklistArray = Object.keys(this.props.checklists).map(key => {
+    let checklistArray = Object.keys(this.props.checklists).map(key => {
       return this.props.checklists[key];
     });
 
+    let sortedChecklistArray = checklistArray.sort(function(a, b) {
+      return sortEndTimes(a.endTime, b.endTime);
+    });
     const renderedChecklists = checklistArray.map(checklist => {
+      let headerWithEndTime =
+        checklist.title +
+        " (due by " +
+        createEndTimeString(checklist.endTime) +
+        ")";
       return (
-        <Collapse.Panel header={checklist.title}>
+        <Collapse.Panel header={headerWithEndTime}>
           <ViewSingleChecklist
             checklist={checklist}
             firebasePath={this.props.firebasePath}
