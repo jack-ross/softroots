@@ -1,13 +1,7 @@
 import React, { Component } from "react";
-import { Input, Button, Modal, notification } from "antd";
+import { Button, Modal, notification } from "antd";
 import TopNavBar from "../components/TopNavBar.js";
-import DynamicInput from "../components/DynamicInput.js";
-import DraggableInputs from "../components/DraggableInputs.js";
-import NewDynamicHeaders from "../components/NewDynamicHeaders.js";
-import Checklist from "../components/Checklist.js";
-import DropdownSelection from "../components/DropdownSelection.js";
 import PleaseLogin from "../components/PleaseLogin.js";
-import TimeDropdowns from "../components/TimeDropdowns.js";
 import ChecklistValidation from "../validation/ChecklistValidation.js";
 import ChecklistForm from "../components/ChecklistForm.js";
 import submitChecklist from "../firebase/submitChecklist.js";

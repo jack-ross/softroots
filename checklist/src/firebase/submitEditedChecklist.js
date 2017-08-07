@@ -3,7 +3,6 @@
 // now be edited as a single entity rather than across multiple locations
 
 import createDisjointArrays from "../helperFunctions/createDisjointArrays.js";
-import convertLocationForFirebasePath from "../helperFunctions/convertLocationForFirebasePath";
 import firebase from "../configs/firebaseConfig.js";
 import { notification } from "antd";
 

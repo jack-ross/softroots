@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import TopNavBar from "../components/TopNavBar.js";
-import Checklist from "../components/Checklist.js";
 import PleaseLogin from "../components/PleaseLogin.js";
 import background from "../images/checklist.jpg";
 import "../css/Home.css";
@@ -24,18 +23,6 @@ const tabs = [
   }
 ];
 
-const daysOfWeek = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday"
-];
-
-const checkedItems = ["Monday", "Thursday"];
-
 export default class Home extends Component {
   forChild(a, b) {
     console.log(a + " " + b);
@@ -50,7 +37,7 @@ export default class Home extends Component {
       <div>
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/home" />
         <div className="checkImage">
-          {" "}<img src={background} />{" "}
+          {" "}<img src={background} alt="Background" />{" "}
         </div>
       </div>
     );

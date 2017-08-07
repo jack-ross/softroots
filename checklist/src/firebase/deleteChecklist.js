@@ -1,4 +1,3 @@
-import convertLocationForFirebasePath from "../helperFunctions/convertLocationForFirebasePath.js";
 import firebase from "../configs/firebaseConfig.js";
 import { notification } from "antd";
 

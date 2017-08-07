@@ -15,7 +15,7 @@ export default class Header extends Component {
     return (
       <div className="headerContainer">
         <div className="rootsLogo">
-          <img src={rootsLogo} height="80px" width="80px" />
+          <img src={rootsLogo} alt="Roots Logo" height="80px" width="80px" />
         </div>
 
         <div className="title">
@@ -25,7 +25,12 @@ export default class Header extends Component {
         <div className="profileAndSignOut">
           <div className="profile">
             <Link to="/profile">
-              <img src={profileIcon} height="50px" width="50px" />
+              <img
+                src={profileIcon}
+                alt="Profile Icon"
+                height="50px"
+                width="50px"
+              />
             </Link>
 
             <p style={{ fontWeight: "bold" }}>

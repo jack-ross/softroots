@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { Input, Button, Modal, notification } from "antd";
-import DynamicInput from "../components/DynamicInput.js";
-import DraggableInputs from "../components/DraggableInputs.js";
+import { Input } from "antd";
 import NewDynamicHeaders from "../components/NewDynamicHeaders.js";
 import Checklist from "../components/Checklist.js";
 import DropdownSelection from "../components/DropdownSelection.js";

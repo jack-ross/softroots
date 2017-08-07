@@ -3,10 +3,8 @@ import { Modal, notification } from "antd";
 import TopNavBar from "../components/TopNavBar.js";
 import CollapseableList from "../components/CollapseableList.js";
 import PleaseLogin from "../components/PleaseLogin.js";
-import { Redirect } from "react-router-dom";
 import firebase from "../configs/firebaseConfig.js";
 import ChecklistForm from "../components/ChecklistForm.js";
-import submitChecklist from "../firebase/submitChecklist.js";
 import Validation from "../validation/ChecklistValidation.js";
 import submitEditedChecklist from "../firebase/submitEditedChecklist.js";
 import deleteChecklist from "../firebase/deleteChecklist.js";
@@ -29,37 +27,6 @@ const tabs = [
   {
     name: "Manage Users",
     url: "/users"
-  }
-];
-
-let testdata = [
-  {
-    title: "Closing List",
-    description: "Things to be done when store is closing",
-    subsections: [
-      {
-        title: "Back of the store",
-        subtasks: ["Mop the floor", "Clean the grill"]
-      },
-      {
-        title: "Front of the store",
-        subtasks: ["Mop the front", "Change the water", "Clean tables"]
-      }
-    ]
-  },
-  {
-    title: "Opening List",
-    description: "Finish these before 10:30 when store opens",
-    subsections: [
-      {
-        title: "Grill Duty",
-        subtasks: ["Make sure it's hot", "Sanitize"]
-      },
-      {
-        title: "Food Prep",
-        subtasks: ["Cut chicken", "Wash lettuce", "Eat laugh love"]
-      }
-    ]
   }
 ];
 
@@ -96,7 +63,7 @@ export default class ViewChecklists extends Component {
   }
 
   onClickEdit(checklist) {
-    let checklistToEdit = checklist;
+    let checklistToEdit = Object.assign({}, checklist);
     // if checklist doesn't have end times, initalize those fields
     if (!checklistToEdit.endTimes) {
       checklistToEdit.endTimes = [];
@@ -106,7 +73,7 @@ export default class ViewChecklists extends Component {
     }
     this.setState({
       ...this.state,
-      checklistToEdit: checklist,
+      checklistToEdit: checklistToEdit,
       isModalVisible: true,
       initialRole: checklist.role,
       initialLocations: checklist.locations
