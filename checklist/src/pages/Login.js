@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Modal, Input, notification, Card } from "antd";
+import { Button, Modal, Input, notification } from "antd";
 import DropdownSelection from "../components/DropdownSelection.js";
 import ChangePasswordModal from "../components/ChangePasswordModal.js";
 import "../css/Login.css";
@@ -245,7 +245,7 @@ export default class Login extends Component {
       >
         <div className="LoginPage">
           <div className="rootsLogo">
-            <img src={rootsLogo} height="80px" width="80px" />
+            <img src={rootsLogo} alt="Roots Logo" height="80px" width="80px" />
             <div style={{ margin: "20px 0" }} />
           </div>
           <h1

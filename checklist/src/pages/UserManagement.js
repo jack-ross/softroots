@@ -25,7 +25,6 @@ const tabs = [
   }
 ];
 
-let fieldsToDisplay = ["firstName", "lastName", "role"];
 const fields = [
   {
     field: "firstName",

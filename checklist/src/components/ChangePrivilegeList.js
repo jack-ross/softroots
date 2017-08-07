@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Button } from "antd";
 import ChangePrivilegeListItem from "./ChangePrivilegeListItem.js";
 import firebase from "../configs/firebaseConfig";
 import roleHierarchy from "../roles/roleHierarchy.js";

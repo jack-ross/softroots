@@ -5,7 +5,7 @@ import {
   SortableHandle,
   arrayMove
 } from "react-sortable-hoc";
-import { Input, Icon, Button, Card } from "antd";
+import { Input, Button, Card } from "antd";
 import dragIcon from "../images/drag.png";
 import displayConfirmDeleteModal from "../helperFunctions/displayConfirmDeleteModal.js";
 import "../css/DraggableInputs.css";
@@ -22,7 +22,9 @@ import "../css/DraggableInputs.css";
 */
 
 // the drag handle made from Higher Order Component
-const DragHandle = SortableHandle(() => <img src={dragIcon} height="15" />); // This can be any component you want
+const DragHandle = SortableHandle(() =>
+  <img src={dragIcon} alt="DragIcon" height="15" />
+);
 
 // the Higher Order Component we'll use to create these inputs
 const SortableItem = SortableElement(
@@ -132,8 +134,6 @@ export default class DraggableInputs extends Component {
   }
 
   render() {
-    let values = this.props.values;
-
     return (
       <div>
         <SortableList

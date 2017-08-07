@@ -1,4 +1,4 @@
-import { Checkbox, Button } from "antd";
+import { Checkbox } from "antd";
 import React, { Component } from "react";
 
 /* PROPS:
@@ -18,7 +18,7 @@ checkAll = Boolean also for checkAll logic
 
 const CheckboxGroup = Checkbox.Group;
 
-export default class Checklist extends React.Component {
+export default class Checklist extends Component {
   constructor(props) {
     super(props);
 

@@ -45,7 +45,7 @@ export default class CollapseableList extends Component {
 
       // create the <p>'s with the days to repeat
       let daysToRepeatString = "";
-      let daysToRepeat = list.daysToRepeat.map(day => {
+      list.daysToRepeat.map(day => {
         daysToRepeatString += day;
         daysToRepeatString += ", ";
       });
