@@ -19,7 +19,7 @@ export default class LocationListsOfChecklists extends Component {
             {" "}{this.props.location}{" "}
           </h1>
           <p> No checklists at this location today. </p>
-          <div style={{ margin: "8px 0" }} />
+          <div style={{ margin: "16px 0" }} />
         </div>
       );
     }
@@ -42,7 +42,7 @@ export default class LocationListsOfChecklists extends Component {
             />}
 
           {!checklistsForRole && <p> None </p>}
-          <div style={{ margin: "8px 0" }} />
+          <div style={{ margin: "16px 0" }} />
         </div>
       );
     });
@@ -55,7 +55,7 @@ export default class LocationListsOfChecklists extends Component {
         <div style={{ height: "8px" }} />
 
         {listsByRole}
-        <div style={{ height: "16px" }} />
+        <div style={{ height: "8px" }} />
       </div>
     );
   }

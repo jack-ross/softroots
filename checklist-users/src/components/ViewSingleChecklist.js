@@ -54,11 +54,6 @@ export default class ViewSingleChecklist extends Component {
     );
     return (
       <div>
-        <h4>
-          {" "}{this.props.checklist.title}{" "}
-        </h4>
-        <div style={{ margin: "8px 0" }} />
-
         <h5>
           {" "}{this.props.checklist.description}{" "}
         </h5>
