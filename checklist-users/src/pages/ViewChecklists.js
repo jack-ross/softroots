@@ -108,7 +108,7 @@ export default class ViewChecklists extends Component {
             <Radio.Button value="mine">My Role</Radio.Button>
             <Radio.Button value="all">All Roles</Radio.Button>
           </Radio.Group>
-          <div style={{ margin: "8px 0" }} />
+          <div style={{ margin: "10px 0" }} />
         </div>
         <p>
           {" "}{this.state.status}{" "}
