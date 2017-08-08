@@ -105,7 +105,10 @@ export default class FindPreexistingListModal extends Component {
           dropdownValues={this.props.roles}
           onClickField={role => this.onChange("selectedRole", role)}
         />
-        <Button onClick={() => this.onChange("isSearchClicked", true)}>
+        <Button
+          icon="search"
+          onClick={() => this.onChange("isSearchClicked", true)}
+        >
           {" "}Search{" "}
         </Button>
 

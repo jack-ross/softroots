@@ -11,15 +11,17 @@ export default function(dailyKey) {
       checklistSchemas = snapshot.val();
     })
     .then(response => {
-      // next, check if today's lists exist in firebase
-      firebase
-        .database()
-        .ref("dailyLists/" + dailyKey)
-        .once("value", snapshot => {
-          // if no data at that location, then put them in there
-          if (!snapshot.val()) {
-            submitChecklistsForTheDay(checklistSchemas, dailyKey);
-          }
-        });
+      // if some checklist schemas exist, submit the checklists for the day
+      if (checklistSchemas) {
+        firebase
+          .database()
+          .ref("dailyLists/" + dailyKey)
+          .once("value", snapshot => {
+            // if no data at that location, then put them in there
+            if (!snapshot.val()) {
+              submitChecklistsForTheDay(checklistSchemas, dailyKey);
+            }
+          });
+      }
     });
 }
