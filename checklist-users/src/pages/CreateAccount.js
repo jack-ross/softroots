@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import DropdownSelection from "../components/DropdownSelection.js";
-import { Input, Button, notification } from "antd";
+import { Input, Button, Modal, notification } from "antd";
 import createAccountValidation from "../validation/createAccountValidation.js";
 import { Link } from "react-router-dom";
 import firebase from "../configs/firebaseConfig.js";
@@ -48,9 +48,11 @@ export default class CreateAccount extends Component {
         .auth()
         .createUserWithEmailAndPassword(email, password)
         .then(user => {
-          notification.success({
-            title: "SUCCESS",
-            description: "Account created."
+          Modal.info({
+            title: "Account Created",
+            content:
+              "Please wait for an admin to verify your account before logging in again.",
+            okText: "Ok"
           });
           let uid = user.uid;
           let userInfo = this.state;

@@ -132,7 +132,11 @@ export default class CreateOrEditChecklist extends Component {
         </p>
         <FindPreexistingListModal
           checklists={this.state.allChecklists}
-          locations={["Charlottesville, VA", "Newark, DE"]}
+          locations={
+            this.props.userInfo.role === "Admin"
+              ? ["Charlottesville, VA", "Newark, DE"]
+              : [this.props.userInfo.location]
+          }
           roles={roleHierarchy[this.props.userInfo.role]}
           onClickSelect={checklist =>
             this.onSelectPreexistingChecklist(checklist)}

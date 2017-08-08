@@ -21,12 +21,12 @@ import roleHierarchy from "../roles/roleHierarchy.js";
                 {
                   name: "mike",
                   birthday: "july 4",
-                  key: "1234"
+                  uid: "1234"
                 },
                 {
                   name: "kevin",
                   birthday: "oct 9",
-                  key: "4321"
+                  uid: "4321"
                 }
               };
 */
@@ -94,7 +94,7 @@ class ChangePrivilegeList extends Component {
         }
 
         // if user not an admin, can only see users from their location
-        if (!this.props.userInfo.role === "Admin") {
+        if (!(this.props.userInfo.role === "Admin")) {
           if (dataObject.location !== this.props.userInfo.location) {
             return <div />;
           }
