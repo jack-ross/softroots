@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Grid } from "react-bootstrap";
+import { notification } from "antd";
 import ChecklistRow from "./ChecklistRow.js";
 import firebase from "../configs/firebaseConfig.js";
 
@@ -20,7 +21,49 @@ export default class ViewSingleChecklist extends Component {
       "/subtasks/" +
       subtaskIndex +
       "/isCompleted";
-    firebase.database().ref(firebasePath).set(isChecked);
+    firebase.database().ref(firebasePath).set(isChecked).catch(error => {
+      notification.error({
+        message: "ERROR",
+        description: error.message
+      });
+    });
+  }
+
+  onSubmitInput(subtask, newValue, subsectionIndex, subtaskIndex) {
+    let firebasePath =
+      this.props.firebasePath +
+      "/" +
+      this.props.checklist.key +
+      "/subsections/" +
+      subsectionIndex +
+      "/subtasks/" +
+      subtaskIndex;
+    let inputValuePath = firebasePath + "/inputValue";
+    let isCompletedPath = firebasePath + "/isCompleted";
+    let firebaseUpdates = {};
+    firebaseUpdates[inputValuePath] = newValue;
+    if (newValue === "") {
+      firebaseUpdates[isCompletedPath] = false;
+    } else {
+      firebaseUpdates[isCompletedPath] = true;
+    }
+    firebase
+      .database()
+      .ref()
+      .update(firebaseUpdates)
+      .then(response => {
+        notification.success({
+          message: "SUCCESS",
+          description: "Submission saved successfully.",
+          duration: 2
+        });
+      })
+      .catch(error => {
+        notification.error({
+          message: "ERROR",
+          description: error.message
+        });
+      });
   }
 
   render() {
@@ -38,6 +81,13 @@ export default class ViewSingleChecklist extends Component {
                     subsectionIndex,
                     subtaskIndex
                   )}
+                onSubmitInput={newValue =>
+                  this.onSubmitInput(
+                    subtask,
+                    newValue,
+                    subsectionIndex,
+                    subtaskIndex
+                  )}
               />
             </Grid>
           );
@@ -48,6 +98,7 @@ export default class ViewSingleChecklist extends Component {
               {" "}{subsection.title}{" "}
             </h6>
             {subtasks}
+            <div style={{ margin: "8px 0" }} />
           </div>
         );
       }

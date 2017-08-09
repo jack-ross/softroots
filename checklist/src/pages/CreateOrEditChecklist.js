@@ -120,8 +120,6 @@ export default class CreateOrEditChecklist extends Component {
       return <PleaseLogin />;
     }
 
-    console.log(this.state.allChecklists);
-
     const preexistingListModal = (
       <div>
         <p

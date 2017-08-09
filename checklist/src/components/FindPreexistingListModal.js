@@ -56,7 +56,6 @@ export default class FindPreexistingListModal extends Component {
   }
 
   render() {
-    console.log(this.state);
     // styling for the radio buttons
     const radioStyle = {
       display: "block",

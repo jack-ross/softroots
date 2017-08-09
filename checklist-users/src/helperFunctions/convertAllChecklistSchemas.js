@@ -31,21 +31,13 @@ export default function(checklistSchemas, dateKey) {
       checklistKeys.map(checklistKey => {
         let checklistSchema = checklistSchemas[location][role][checklistKey];
         if (checklistSchema.daysToRepeat.includes(dayOfWeek)) {
-          /*
-          checklistSchemas[location][role][checklistKey] = convertChecklistSchema(
-            checklist
-          );
-          */
           let checklistCopies = createChecklistsUsingEndTimes(checklistSchema);
           checklistCopies.map(checklist => {
-            allChecklistCopies[location][role][checklist.key] = checklist;
+            allChecklistCopies[location][role][
+              checklist.key
+            ] = convertChecklistSchema(checklist);
           });
         }
-        /*
-        else {
-          checklistSchemas[location][role][checklistKey] = null;
-        }
-        */
       });
     });
   });
