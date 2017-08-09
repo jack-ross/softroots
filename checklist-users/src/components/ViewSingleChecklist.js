@@ -88,6 +88,7 @@ export default class ViewSingleChecklist extends Component {
                     subsectionIndex,
                     subtaskIndex
                   )}
+                endTime={this.props.checklist.endTime}
               />
             </Grid>
           );
