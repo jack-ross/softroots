@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Modal, Button, Input } from "antd";
 import { Row, Col } from "react-bootstrap";
 import SubtaskInputModal from "./SubtaskInputModal.js";
+import isPastEndTime from "../helperFunctions/isPastEndTime.js";
 
 /* PROPS:
     onCheck: function to call when an item is checked/unchecked
@@ -10,6 +11,7 @@ import SubtaskInputModal from "./SubtaskInputModal.js";
       shortDescription: description to be displayed initially
       longDescription: more detailed description to be displayed in a Modal when the task is clicked on
       isCompleted: boolean, whether the subtask should be checked or not
+    endTime: when the subtask (and list as a whole) needs to be completed by
 */
 
 export default class ChecklistRow extends Component {
@@ -36,13 +38,18 @@ export default class ChecklistRow extends Component {
   }
 
   render() {
+    isPastEndTime(this.props.endTime, "America/New_York");
     // displayType is either "input" or "checkbox" to know which to render
     let displayType = this.props.subtask.displayType;
 
-    // style the row so it's red if task not completed, green if it is
+    // style the row so it's yellow if task not completed, green if it is,
+    // and red if not completed AND late
     let style = { backgroundColor: "#f7cad5" };
+
     if (this.props.subtask.isCompleted) {
       style = { backgroundColor: "#bff2c3" };
+    } else if (!isPastEndTime(this.props.endTime, "America/New_York")) {
+      style = { backgroundColor: "#fafcb5" };
     }
 
     return (
