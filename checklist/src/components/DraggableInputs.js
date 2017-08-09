@@ -5,7 +5,7 @@ import {
   SortableHandle,
   arrayMove
 } from "react-sortable-hoc";
-import { Input, Button, Card } from "antd";
+import { Input, Button, Card, Select } from "antd";
 import dragIcon from "../images/drag.png";
 import displayConfirmDeleteModal from "../helperFunctions/displayConfirmDeleteModal.js";
 import "../css/DraggableInputs.css";
@@ -48,7 +48,8 @@ const SortableItem = SortableElement(
             type="textarea"
             autosize
             value={dataObject[field]}
-            onChange={e => handleInputChange(e, field, indexForChange)}
+            onChange={e =>
+              handleInputChange(e.target.value, field, indexForChange)}
             maxLength={2000}
             placeholder="(max 2000 characters)"
           />
@@ -69,6 +70,16 @@ const SortableItem = SortableElement(
           </div>
 
           <div style={{ margin: "10px 0" }} />
+
+          <Select
+            value={dataObject.displayType}
+            style={{ width: "90px" }}
+            onChange={value =>
+              handleInputChange(value, "displayType", indexForChange)}
+          >
+            <Select.Option value="checkbox"> Checkbox </Select.Option>
+            <Select.Option value="input"> Input </Select.Option>
+          </Select>
 
           <Button
             icon="close-circle-o"
@@ -114,9 +125,9 @@ export default class DraggableInputs extends Component {
     this.props.updateParent(values);
   };
 
-  handleInputChange(event, field, index) {
+  handleInputChange(newValue, field, index) {
     let values = this.props.values;
-    values[index][field] = event.target.value;
+    values[index][field] = newValue;
     this.props.updateParent(values);
   }
 
@@ -126,6 +137,7 @@ export default class DraggableInputs extends Component {
     this.props.fields.map(field => {
       newValue[field.field] = "";
     });
+    newValue.displayType = "checkbox";
     values.push(newValue);
     this.props.updateParent(values);
   }
@@ -142,8 +154,8 @@ export default class DraggableInputs extends Component {
         <SortableList
           dataObjects={this.props.values}
           fieldObjects={this.props.fields}
-          handleInputChange={(e, field, index) =>
-            this.handleInputChange(e, field, index)}
+          handleInputChange={(newValue, field, index) =>
+            this.handleInputChange(newValue, field, index)}
           removeInputs={index => this.removeInputs(index)}
           onSortEnd={this.onSortEnd}
           useDragHandle={true}
