@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Button, Input } from "antd";
+import { Modal, Button } from "antd";
 import { Row, Col } from "react-bootstrap";
 import SubtaskInputModal from "./SubtaskInputModal.js";
 import isPastEndTime from "../helperFunctions/isPastEndTime.js";

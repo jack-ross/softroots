@@ -16,7 +16,7 @@ export default class ListOfChecklists extends Component {
       return this.props.checklists[key];
     });
 
-    let sortedChecklistArray = checklistArray.sort(function(a, b) {
+    checklistArray.sort(function(a, b) {
       return sortEndTimes(a.endTime, b.endTime);
     });
     const renderedChecklists = checklistArray.map(checklist => {

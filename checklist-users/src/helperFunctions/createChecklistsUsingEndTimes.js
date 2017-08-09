@@ -1,5 +1,4 @@
 import firebase from "../configs/firebaseConfig.js";
-import convertChecklistSchema from "./convertChecklistSchema.js";
 
 export default function(checklistSchema) {
   // map through the checklists's endTimes and create copies of original checklist

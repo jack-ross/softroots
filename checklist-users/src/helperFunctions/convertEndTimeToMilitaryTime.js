@@ -3,8 +3,8 @@
 
 export default function(endTimeObject) {
   let amPm = endTimeObject.amPm;
-  let hours = parseInt(endTimeObject.hours);
-  let minutes = parseInt(endTimeObject.minutes);
+  let hours = parseInt(endTimeObject.hours, 10);
+  let minutes = parseInt(endTimeObject.minutes, 10);
 
   if (amPm === "AM") {
     // for AM case, just need to convert 12 to 0, otherwise we're good
