@@ -76,6 +76,10 @@ export default class UserManagement extends Component {
     }
 
     const roles = roleHierarchy[this.props.userInfo.role];
+    let locations = ["Charlottesville, VA", "Newark, DE"];
+    if (this.props.userInfo.role !== "Admin") {
+      locations = [this.props.userInfo.location];
+    }
 
     return (
       <div>
@@ -87,6 +91,8 @@ export default class UserManagement extends Component {
             <div className="approveDenyTable">
               <ApproveOrDenyUserTable
                 firebaseUsers={this.state.firebaseUsers.unverified}
+                roles={roles}
+                locations={locations}
               />
             </div>}
           <div style={{ margin: "12px" }} />
