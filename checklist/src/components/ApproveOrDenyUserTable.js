@@ -79,14 +79,20 @@ export default class ApproveOrDenyUserTable extends Component {
   }
 
   approveUsers() {
+    // create the necessary updates for firebase
     let userKeys = this.state.selectedRowKeys;
     let firebaseUpdates = {};
     userKeys.map(userKey => {
       let firebaseVerifiedPath = "/users/verified/" + userKey;
       let firebaseUnverifiedPath = "/users/unverified/" + userKey;
-      firebaseUpdates[firebaseVerifiedPath] = this.props.firebaseUsers[userKey];
+      // make a copy of the user and remove the "key" field
+      let userCopy = Object.assign({}, this.props.firebaseUsers[userKey]);
+      delete userCopy.key;
+      firebaseUpdates[firebaseVerifiedPath] = userCopy;
       firebaseUpdates[firebaseUnverifiedPath] = null;
     });
+
+    // make the firebase call
     firebase
       .database()
       .ref()
@@ -156,6 +162,8 @@ export default class ApproveOrDenyUserTable extends Component {
           rowSelection={rowSelection}
           pagination={false}
         />
+        <div style={{ margin: "12px" }} />
+
         <Button
           onClick={() => this.onClickApproveUsers()}
           icon="check-circle-o"
@@ -163,6 +171,7 @@ export default class ApproveOrDenyUserTable extends Component {
         >
           {" "}Approve Selected Users{" "}
         </Button>
+        <div style={{ margin: "24px" }} />
       </div>
     );
   }
