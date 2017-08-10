@@ -24,10 +24,6 @@ const tabs = [
 ];
 
 export default class Home extends Component {
-  forChild(a, b) {
-    console.log(a + " " + b);
-  }
-
   render() {
     if (!this.props.userInfo) {
       return <PleaseLogin />;

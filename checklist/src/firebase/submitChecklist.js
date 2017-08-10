@@ -26,8 +26,6 @@ export default function submitChecklist(checklist) {
     firebaseUpdates[path] = newChecklist;
   });
 
-  console.log(firebaseUpdates);
-
   // make the firebase call
   firebase
     .database()

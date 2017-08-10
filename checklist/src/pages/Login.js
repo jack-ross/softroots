@@ -103,7 +103,6 @@ export default class Login extends Component {
   }
 
   onCancel() {
-    console.log("Cancelled");
     this.setState({
       ...this.state,
       isCreateAccountVisible: false,
@@ -142,7 +141,6 @@ export default class Login extends Component {
             title: "ERROR",
             description: error.message
           });
-          console.log(error.message);
         });
       this.closeModals();
     }
@@ -162,7 +160,6 @@ export default class Login extends Component {
           title: "ERROR",
           description: error.message
         });
-        console.log(error.message);
       });
     this.closeModals();
   }
@@ -241,7 +238,6 @@ export default class Login extends Component {
       return <Redirect to="/home" />;
     }
 
-    console.log(this.state);
     return (
       <div
         className="LoginContainer"
