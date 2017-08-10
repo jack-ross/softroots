@@ -82,11 +82,13 @@ export default class UserManagement extends Component {
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/users" />
         <div className="userManagement">
           <h1> Unverified Users </h1>
-          <div className="approveDenyTable">
-            <ApproveOrDenyUserTable
-              firebaseUsers={this.state.firebaseUsers.unverified}
-            />
-          </div>
+          {!this.state.firebaseUsers && <p> Loading... </p>}
+          {this.state.firebaseUsers &&
+            <div className="approveDenyTable">
+              <ApproveOrDenyUserTable
+                firebaseUsers={this.state.firebaseUsers.unverified}
+              />
+            </div>}
           <div style={{ margin: "12px" }} />
 
           <h1> Verified Users </h1>
