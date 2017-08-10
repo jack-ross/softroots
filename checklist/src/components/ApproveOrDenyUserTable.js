@@ -112,8 +112,6 @@ export default class ApproveOrDenyUserTable extends Component {
   }
 
   render() {
-    console.log(this.state);
-
     // render a loading screen if the firebase data has not been loaded in yet
     if (!this.props.firebaseUsers) {
       return <p> None </p>;
@@ -121,11 +119,23 @@ export default class ApproveOrDenyUserTable extends Component {
 
     // otherwise, take the firebase users, make an array out of them, and
     // render them in a table
-    let usersArray = Object.keys(this.props.firebaseUsers).map(key => {
+    let usersArray = [];
+    Object.keys(this.props.firebaseUsers).map(key => {
       let userObj = this.props.firebaseUsers[key];
-      userObj.key = userObj.uid;
-      return this.props.firebaseUsers[key];
+      // only show users from the role hiearchy and approved locations
+      if (
+        this.props.roles.includes(userObj.role) &&
+        this.props.locations.includes(userObj.location)
+      ) {
+        userObj.key = userObj.uid;
+        usersArray.push(userObj);
+      }
     });
+
+    // if there were no users the logged-in user has access to, render None
+    if (usersArray.length === 0) {
+      return <p> None </p>;
+    }
 
     // rowSelection object indicates the need for row selection
     const rowSelection = {
