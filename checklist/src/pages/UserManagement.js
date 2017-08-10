@@ -6,6 +6,7 @@ import PleaseLogin from "../components/PleaseLogin.js";
 import "../css/UserManagement.css";
 import roleHierarchy from "../roles/roleHierarchy.js";
 import ApproveOrDenyUserTable from "../components/ApproveOrDenyUserTable.js";
+import ChangePrivilegeTable from "../components/ChangePrivilegeTable.js";
 import firebase from "../configs/firebaseConfig.js";
 
 const tabs = [
@@ -86,7 +87,10 @@ export default class UserManagement extends Component {
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/users" />
         <div className="userManagement">
           <h1> Unverified Users </h1>
+          <div style={{ margin: "6px" }} />
+
           {!this.state.firebaseUsers && <p> Loading... </p>}
+
           {this.state.firebaseUsers &&
             <div className="approveDenyTable">
               <ApproveOrDenyUserTable
@@ -98,13 +102,16 @@ export default class UserManagement extends Component {
           <div style={{ margin: "12px" }} />
 
           <h1> Verified Users </h1>
+          <div style={{ margin: "6px" }} />
+
           {!this.state.firebaseUsers && <p> Loading... </p>}
+
           {this.state.firebaseUsers &&
-            <ChangePrivilegeList
-              fieldsToDisplay={fields}
-              arrayOfPrivileges={roles}
-              firebasePath="/users/verified"
-              userInfo={this.props.userInfo}
+            <ChangePrivilegeTable
+              firebaseUsers={this.state.firebaseUsers.verified}
+              roles={roles}
+              locations={locations}
+              loggedInUserUID={this.props.userInfo.uid}
             />}
         </div>
       </div>
