@@ -5,6 +5,8 @@ import ChangePrivilegeList from "../components/ChangePrivilegeList.js";
 import PleaseLogin from "../components/PleaseLogin.js";
 import "../css/UserManagement.css";
 import roleHierarchy from "../roles/roleHierarchy.js";
+import ApproveOrDenyUserTable from "../components/ApproveOrDenyUserTable.js";
+import firebase from "../configs/firebaseConfig.js";
 
 const tabs = [
   {
@@ -49,6 +51,25 @@ const fields = [
 ];
 
 export default class UserManagement extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      firebaseUsers: undefined
+    };
+  }
+
+  componentWillMount() {
+    firebase.database().ref("/users").on("value", snapshot => {
+      // if snapshot exists, store in the state
+      if (snapshot.val()) {
+        this.setState({
+          ...this.state,
+          firebaseUsers: snapshot.val()
+        });
+      }
+    });
+  }
+
   render() {
     if (!this.props.userInfo) {
       return <PleaseLogin />;
@@ -61,16 +82,24 @@ export default class UserManagement extends Component {
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/users" />
         <div className="userManagement">
           <h1> Unverified Users </h1>
-          <ApproveOrDenyUserList userInfo={this.props.userInfo} />
-          <div style={{ margin: "24px 0" }} />
+          {!this.state.firebaseUsers && <p> Loading... </p>}
+          {this.state.firebaseUsers &&
+            <div className="approveDenyTable">
+              <ApproveOrDenyUserTable
+                firebaseUsers={this.state.firebaseUsers.unverified}
+              />
+            </div>}
+          <div style={{ margin: "12px" }} />
 
           <h1> Verified Users </h1>
-          <ChangePrivilegeList
-            fieldsToDisplay={fields}
-            arrayOfPrivileges={roles}
-            firebasePath="/users/verified"
-            userInfo={this.props.userInfo}
-          />
+          {!this.state.firebaseUsers && <p> Loading... </p>}
+          {this.state.firebaseUsers &&
+            <ChangePrivilegeList
+              fieldsToDisplay={fields}
+              arrayOfPrivileges={roles}
+              firebasePath="/users/verified"
+              userInfo={this.props.userInfo}
+            />}
         </div>
       </div>
     );
