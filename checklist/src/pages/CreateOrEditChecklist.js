@@ -123,11 +123,12 @@ export default class CreateOrEditChecklist extends Component {
     const preexistingListModal = (
       <div>
         <p
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", color: "#108ee9" }}
           onClick={() => this.switchModalVisibility()}
         >
           {" "}Click here to import a pre-existing checklist.{" "}
         </p>
+        <div style={{ margin: "20px" }} />
         <FindPreexistingListModal
           checklists={this.state.allChecklists}
           locations={
