@@ -21,7 +21,6 @@ export default class Profile extends Component {
   }
 
   onClickChangeEmail() {
-    let user = firebase.auth().currentUser;
     Modal.confirm({
       title:
         "Are you sure you want to change your email to " +
