@@ -43,6 +43,16 @@ export default class Profile extends Component {
           message: "SUCCESS",
           description: "Your email was successfully updated!"
         });
+        firebase
+          .database()
+          .ref("/users/verified/" + user.uid + "/email")
+          .set(this.state.newEmail)
+          .catch(error => {
+            notification.error({
+              message: "ERROR",
+              description: error.message
+            });
+          });
       })
       .catch(error => {
         notification.error({
