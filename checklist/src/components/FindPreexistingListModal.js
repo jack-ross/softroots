@@ -68,7 +68,14 @@ export default class FindPreexistingListModal extends Component {
     if (this.state.isSearchClicked) {
       let location = this.state.selectedLocation;
       let role = this.state.selectedRole;
-      if (!this.props.checklists[location][role]) {
+
+      // check if any checklists exist at location, then check at role
+      // (first check necessary in case no checklists at that location,
+      // causes second check to look for undefined[role] )
+      if (
+        !this.props.checklists[location] ||
+        !this.props.checklists[location][role]
+      ) {
         radioButtons = <p> No such checklists exist. </p>;
       } else {
         Object.keys(this.props.checklists[location][role]).map(key => {
