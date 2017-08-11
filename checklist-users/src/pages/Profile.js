@@ -21,6 +21,7 @@ export default class Profile extends Component {
   }
 
   onClickChangeEmail() {
+    let user = firebase.auth().currentUser;
     Modal.confirm({
       title:
         "Are you sure you want to change your email to " +
@@ -43,6 +44,16 @@ export default class Profile extends Component {
           message: "SUCCESS",
           description: "Your email was successfully updated!"
         });
+        firebase
+          .database()
+          .ref("/users/verified/" + user.uid + "/email")
+          .set(this.state.newEmail)
+          .catch(error => {
+            notification.error({
+              message: "ERROR",
+              description: error.message
+            });
+          });
       })
       .catch(error => {
         notification.error({
