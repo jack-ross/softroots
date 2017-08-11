@@ -35,7 +35,7 @@ export default class Home extends Component {
         </Link>
 
         <Link to="/forgotpassword">
-          <p> Forgot your password? </p>
+          <p style={{color: "white"}}> Forgot your password? </p>
         </Link>
       </div>
     );
