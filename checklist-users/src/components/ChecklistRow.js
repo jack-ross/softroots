@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Button } from "antd";
+import { Modal, Button, Icon } from "antd";
 import { Row, Col } from "react-bootstrap";
 import SubtaskInputModal from "./SubtaskInputModal.js";
 import isPastEndTime from "../helperFunctions/isPastEndTime.js";
@@ -56,9 +56,15 @@ export default class ChecklistRow extends Component {
       <div>
         <Row style={style} className="show-grid">
           <Col xs={10}>
-            <p onClick={() => this.displayMoreInfo(this.props.subtask)}>
+            <p>
               {this.props.subtask.shortDescription}{" "}
             </p>
+            {this.props.subtask.longDescription &&
+              <Icon
+                type="plus-circle-o"
+                style={{ fontSize: "10px" }}
+                onClick={() => this.displayMoreInfo(this.props.subtask)}
+              />}
           </Col>
 
           <Col xs={2}>

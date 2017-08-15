@@ -84,12 +84,7 @@ export default class ChecklistValidation {
 
       // map over subtasks and make sure their fields are non-empty as well
       subsection.subtasks.map(subtask => {
-        if (
-          !this.areObjectFieldsNonEmpty(subtask, [
-            "shortDescription",
-            "longDescription"
-          ])
-        ) {
+        if (!this.areObjectFieldsNonEmpty(subtask, ["shortDescription"])) {
           areSubsectionsNonEmpty = false;
         }
       });
