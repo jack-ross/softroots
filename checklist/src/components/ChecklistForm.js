@@ -21,7 +21,7 @@ const testFields = [
   },
   {
     field: "longDescription",
-    prompt: "Detailed Description:"
+    prompt: "(Optional) Detailed Description:"
   }
 ];
 

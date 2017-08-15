@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Collapse, Button, Modal } from "antd";
+import { Collapse, Button, Modal, Icon } from "antd";
 import "../css/CollapseableList.css";
 const Panel = Collapse.Panel;
 /* PROPS:
@@ -64,12 +64,17 @@ export default class CollapseableList extends Component {
         let subtaskArray = subsection.subtasks.map(subtask => {
           // return statements
           return (
-            <p
-              onClick={() => this.displayLongDescriptionModal(subtask)}
-              style={{ cursor: "pointer" }}
-            >
-              {" "}{subtask.shortDescription}{" "}
-            </p>
+            <div>
+              <p>
+                {" "}{subtask.shortDescription}{" "}
+              </p>
+              {subtask.longDescription &&
+                <Icon
+                  style={{ cursor: "pointer" }}
+                  type="plus-circle-o"
+                  onClick={() => this.displayLongDescriptionModal(subtask)}
+                />}
+            </div>
           );
         });
 
