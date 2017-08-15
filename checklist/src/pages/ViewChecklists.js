@@ -239,6 +239,7 @@ export default class ViewChecklists extends Component {
           onCancel={() => this.onCancel()}
           okText="Save Changes"
           cancelText="Cancel"
+          width="80%"
         >
           <ChecklistForm
             checklistData={this.state.checklistToEdit}
