@@ -29,6 +29,20 @@ export default class ViewSingleChecklist extends Component {
     });
   }
 
+  onMarkChecklistAsCompleted(isChecked) {
+    let firebasePath =
+      this.props.firebasePath +
+      "/" +
+      this.props.checklist.key +
+      "/isMarkedCompleted";
+    firebase.database().ref(firebasePath).set(isChecked).catch(error => {
+      notification.error({
+        message: "ERROR",
+        description: error.message
+      });
+    });
+  }
+
   onSubmitInput(subtask, newValue, subsectionIndex, subtaskIndex) {
     let firebasePath =
       this.props.firebasePath +
@@ -110,7 +124,16 @@ export default class ViewSingleChecklist extends Component {
           {" "}{this.props.checklist.description}{" "}
         </h5>
         <div style={{ margin: "8px 0" }} />
+
         {subsections}
+        <div style={{ margin: "8px 0" }} />
+
+        <p> Mark checklist as completed? </p>
+        <input
+          checked={this.props.checklist.isMarkedCompleted}
+          type="checkbox"
+          onChange={e => this.onMarkChecklistAsCompleted(e.target.checked)}
+        />
       </div>
     );
   }

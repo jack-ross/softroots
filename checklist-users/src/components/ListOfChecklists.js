@@ -28,6 +28,7 @@ export default class ListOfChecklists extends Component {
     const red = "red";
     const green = "green";
     const darkOrange = "#bf833b";
+    const blue = "blue";
 
     // render each checklist as a Collapse from antd, where the inner panel
     // displays the checklist itself as a ViewSingleChecklist component.
@@ -38,13 +39,18 @@ export default class ListOfChecklists extends Component {
         checklist.title + " (" + createEndTimeString(checklist.endTime) + ")";
 
       // determine the header color
-      let headerStyle = { color: green };
-      if (!isChecklistCompleted(checklist)) {
-        if (isPastEndTime(checklist.endTime, "America/New_York")) {
-          headerStyle.color = red;
-        } else {
-          headerStyle.color = darkOrange;
-        }
+      let areSubtasksCompleted = isChecklistCompleted(checklist);
+      let isMarkedCompleted = checklist.isMarkedCompleted;
+      let isLate = isPastEndTime(checklist.endTime, "America/New_York");
+
+      let headerStyle = { color: darkOrange };
+
+      if (areSubtasksCompleted && isMarkedCompleted) {
+        headerStyle.color = green;
+      } else if (isMarkedCompleted) {
+        headerStyle.color = blue;
+      } else if (isLate) {
+        headerStyle.color = red;
       }
 
       headerWithEndTime = (
