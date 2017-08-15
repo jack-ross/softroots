@@ -48,7 +48,7 @@ export default class ChecklistForm extends Component {
     }
 
     return (
-      <div>
+      <div style={{ textAlign: "center" }}>
         <h1> Title </h1>
         <Input
           style={{ width: 200 }}

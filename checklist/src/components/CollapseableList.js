@@ -32,16 +32,20 @@ export default class CollapseableList extends Component {
   render() {
     //prework
     let panels = this.props.listInfo.map((list, index) => {
-      // create the strings and <p>'s with the repeat times
-      let endTimes = list.endTimes.map(endTime => {
+      // create the strings for the list's end times
+      let allEndTimesString = "";
+      list.endTimes.map(endTime => {
         let endTimeString =
           endTime.hours + ":" + endTime.minutes + " " + endTime.amPm;
-        return (
-          <p>
-            {" "}{endTimeString}{" "}
-          </p>
-        );
+        allEndTimesString += endTimeString + ", ";
       });
+      // remove the last comma
+      allEndTimesString = allEndTimesString.slice(
+        0,
+        allEndTimesString.length - 2
+      );
+      // add parentheses around the whole thing
+      allEndTimesString = "(" + allEndTimesString + ")";
 
       // create the <p>'s with the days to repeat
       let daysToRepeatString = "";
@@ -81,26 +85,19 @@ export default class CollapseableList extends Component {
       });
 
       return (
-        <Panel header={list.title} key={index}>
-          <h1 style={{ fontSize: "20px" }}> Description </h1>
+        <Panel header={list.title + " " + allEndTimesString} key={index}>
           <p>
             {" "}{list.description}{" "}
           </p>
-          <div style={{ margin: "30px 0" }} />
+          <div style={{ margin: "20px 0" }} />
 
-          <h1 style={{ fontSize: "20px" }}> Subsections </h1>
           {subsectionRender}
-          <div style={{ margin: "30px 0" }} />
+          <div style={{ margin: "20px 0" }} />
 
-          <h1 style={{ fontSize: "20px" }}> Days to Repeat </h1>
           <p>
             {" "}{daysToRepeatString}{" "}
           </p>
-          <div style={{ margin: "30px 0" }} />
-
-          <h1 style={{ fontSize: "20px" }}> End Time(s) </h1>
-          {endTimes}
-          <div style={{ margin: "15px 0" }} />
+          <div style={{ margin: "20px 0" }} />
 
           <div className="buttonCenter" style={{ textAlign: "center" }}>
             {this.props.canEditDelete &&

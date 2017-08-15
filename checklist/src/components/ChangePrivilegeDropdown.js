@@ -40,7 +40,7 @@ export default class ChangePrivilegeDropdown extends Component {
           newRole +
           " role?",
         okText: "Change Role",
-        cancelText: "Cancel Text",
+        cancelText: "Cancel",
         onOk: () => updateUserRole(this.props.user.uid, newRole),
         onCancel: () => {}
       });
@@ -64,7 +64,7 @@ export default class ChangePrivilegeDropdown extends Component {
         >
           {roles}
         </Select>
-        <Button icon="edit" onClick={() => this.onClickButton()} />
+        <Button onClick={() => this.onClickButton()}> Save </Button>
       </div>
     );
   }
