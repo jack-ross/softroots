@@ -12,5 +12,6 @@ export default function(checklist) {
     return subsection;
   });
   checklist.subsections = convertedSubsections;
+  checklist.isMarkedCompleted = false;
   return checklist;
 }
