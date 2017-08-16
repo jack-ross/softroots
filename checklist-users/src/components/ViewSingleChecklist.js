@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Grid } from "react-bootstrap";
 import { notification } from "antd";
-import ChecklistRow from "./ChecklistRow.js";
+import SubtaskRow from "./SubtaskRow.js";
 import firebase from "../configs/firebaseConfig.js";
+import ChecklistComments from "./ChecklistComments.js";
 
 /* PROPS
     checklist: object, the standard checklist object used throughout this project
     firebasePath: string, the path where these checklists are coming from in
       the form "/dailyLists/<YYYY-MM-DD>/<location>/<role>"
+    userInfo: object, needed for user's name when submitting a comment
 */
 
 export default class ViewSingleChecklist extends Component {
@@ -86,7 +88,7 @@ export default class ViewSingleChecklist extends Component {
         const subtasks = subsection.subtasks.map((subtask, subtaskIndex) => {
           return (
             <Grid>
-              <ChecklistRow
+              <SubtaskRow
                 subtask={subtask}
                 onCheck={isChecked =>
                   this.onCheck(
@@ -123,6 +125,15 @@ export default class ViewSingleChecklist extends Component {
         <h5>
           {" "}{this.props.checklist.description}{" "}
         </h5>
+        <div style={{ margin: "8px 0" }} />
+
+        <ChecklistComments
+          comments={this.props.checklist.comments}
+          firebasePath={
+            this.props.firebasePath + "/" + this.props.checklist.key
+          }
+          userInfo={this.props.userInfo}
+        />
         <div style={{ margin: "8px 0" }} />
 
         {subsections}

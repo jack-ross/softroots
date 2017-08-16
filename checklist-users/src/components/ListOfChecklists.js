@@ -10,6 +10,7 @@ import isPastEndTime from "../helperFunctions/isPastEndTime.js";
     checklists: [obj], the checklist objects pulled from firebase to render
     firebasePath: string, the path where these checklists are coming from in
       the form "/dailyLists/<YYYY-MM-DD>/<location>/<role>"
+    userInfo: object, needed for user's name when submitting a comment
 */
 
 export default class ListOfChecklists extends Component {
@@ -64,6 +65,7 @@ export default class ListOfChecklists extends Component {
           <ViewSingleChecklist
             checklist={checklist}
             firebasePath={this.props.firebasePath}
+            userInfo={this.props.userInfo}
           />
         </Collapse.Panel>
       );

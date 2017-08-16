@@ -6,6 +6,7 @@ import ListOfChecklists from "./ListOfChecklists.js";
     roles: [string], which roles to loop through (pulled from role hierarchy)
     checklistDataAtLocation: the data pulled from /dailyLists/<dateKey>/location
     firebaseLocationPath: string, in format "/dailyLists/<dateKey>/<location>"
+    userInfo: object, needed for user's name when submitting a comment
 */
 
 export default class LocationListsOfChecklists extends Component {
@@ -39,6 +40,7 @@ export default class LocationListsOfChecklists extends Component {
             <ListOfChecklists
               firebasePath={firebasePath}
               checklists={checklistsForRole}
+              userInfo={this.props.userInfo}
             />}
 
           {!checklistsForRole && <p> None </p>}
