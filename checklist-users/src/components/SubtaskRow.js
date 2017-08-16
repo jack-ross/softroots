@@ -14,7 +14,7 @@ import isPastEndTime from "../helperFunctions/isPastEndTime.js";
     endTime: when the subtask (and list as a whole) needs to be completed by
 */
 
-export default class ChecklistRow extends Component {
+export default class SubtaskRow extends Component {
   constructor(props) {
     super(props);
     this.state = {

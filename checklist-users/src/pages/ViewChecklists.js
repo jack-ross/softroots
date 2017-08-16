@@ -93,6 +93,7 @@ export default class ViewChecklists extends Component {
             roles={roles}
             checklistDataAtLocation={checklistDataAtLocation}
             firebaseLocationPath={firebasePath}
+            userInfo={this.props.userInfo}
           />
         );
       });
