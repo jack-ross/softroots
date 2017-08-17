@@ -233,6 +233,7 @@ export default class ViewChecklists extends Component {
         </div>
 
         <Modal
+          style={{ top: "30px" }}
           title="Edit Checklist"
           visible={this.state.isModalVisible}
           onOk={() => this.onClickSubmit(this.state.checklistToEdit)}

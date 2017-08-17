@@ -29,14 +29,13 @@ export default class ChecklistComments extends Component {
   }
 
   render() {
-    // take the comments object, store in an array, and reverse them chronologically
+    // take the comments object, store in an array
     let commentArray = [];
     if (this.props.comments) {
       commentArray = Object.keys(this.props.comments).map(key => {
         return this.props.comments[key];
       });
     }
-    commentArray.reverse();
 
     // create the CommentChat component for the Modal
     let commentChat = (
@@ -50,7 +49,7 @@ export default class ChecklistComments extends Component {
     return (
       <div>
         <p onClick={() => this.switchModalVisibility()}>
-          {" "}View Comments ({commentArray.length}) {" "}
+          {" "}Comments ({commentArray.length}) {" "}
         </p>
 
         {this.state.isModalVisible &&
@@ -60,7 +59,7 @@ export default class ChecklistComments extends Component {
             cancelText="Cancel"
             onOk={() => this.switchModalVisibility()}
             onCancel={() => this.switchModalVisibility()}
-            style={{ top: "20px" }}
+            style={{ top: "0px" }}
             footer={false}
           >
             {commentChat}
