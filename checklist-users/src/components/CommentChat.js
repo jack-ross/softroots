@@ -76,10 +76,10 @@ export default class CommentChat extends Component {
     }
 
     return (
-      <div>
+      <div style={{ height: "100%", width: "100%" }}>
         <div
           className="renderedComments"
-          style={{ overflow: "auto", height: "400px" }}
+          style={{ overflow: "auto", height: "80%" }}
         >
           {renderedComments}
         </div>

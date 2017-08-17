@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import firebase from "../configs/firebaseConfig.js";
 import LocationListsOfChecklists from "../components/LocationListsOfChecklists.js";
 import roleHierarchy from "../roles/roleHierarchy.js";
+import "../css/ViewChecklists.css";
 
 /* PROPS:
     userInfo: object; the logged in user's information pulled from firebase
@@ -100,7 +101,8 @@ export default class ViewChecklists extends Component {
     }
 
     return (
-      <div style={{ paddingLeft: "10%", paddingRight: "10%" }}>
+      <div className="ViewChecklistsPage">
+        <div style={{ margin: "10px" }} />
         <div style={{ textAlign: "center" }}>
           <Radio.Group
             value={this.state.viewMode}
@@ -111,9 +113,11 @@ export default class ViewChecklists extends Component {
           </Radio.Group>
           <div style={{ margin: "10px 0" }} />
         </div>
+
         <p>
           {" "}{this.state.status}{" "}
         </p>
+
         {listsByLocations}
       </div>
     );

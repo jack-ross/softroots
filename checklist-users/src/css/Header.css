@@ -2,8 +2,8 @@
   display: flex;
   padding: 10px;
   border-bottom: solid grey 1px;
-  margin-bottom: 10px;
   background-color: #daeced;
+  height: 8%;
 }
 
 .rootsIcon {
