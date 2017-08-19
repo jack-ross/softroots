@@ -60,7 +60,7 @@ export default class ChangePrivilegeDropdown extends Component {
         <Select
           onChange={val => this.onChangeValue(val)}
           style={{ width: "150px" }}
-          placeholder="Select Privilege"
+          placeholder="Select Role"
         >
           {roles}
         </Select>

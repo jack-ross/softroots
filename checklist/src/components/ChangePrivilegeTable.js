@@ -74,9 +74,9 @@ export default class ChangePrivilegeTable extends Component {
         }
       },
       {
-        title: "Change Privilege",
-        dataIndex: "changePrivilege",
-        key: "changePrivilege",
+        title: "Change Role",
+        dataIndex: "changeRole",
+        key: "changeRole",
         render: (text, record) =>
           <ChangePrivilegeDropdown user={record} roles={this.props.roles} />
       }
