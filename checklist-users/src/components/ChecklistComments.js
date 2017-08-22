@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Modal } from "antd";
 import CommentChat from "./CommentChat.js";
+import "../css/ChecklistComments.css";
 
 /* STATE
     isModalVisible: boolean, determines whether or not to show the Modal with the CommentChat
