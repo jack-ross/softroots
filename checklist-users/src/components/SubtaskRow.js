@@ -3,6 +3,7 @@ import { Modal, Button, Icon } from "antd";
 import { Row, Col } from "react-bootstrap";
 import SubtaskInputModal from "./SubtaskInputModal.js";
 import isPastEndTime from "../helperFunctions/isPastEndTime.js";
+import "../css/SubtaskRow.css";
 
 /* PROPS:
     onCheck: function to call when an item is checked/unchecked
@@ -56,15 +57,20 @@ export default class SubtaskRow extends Component {
       <div>
         <Row style={style} className="show-grid">
           <Col xs={10}>
-            <p>
-              {this.props.subtask.shortDescription}{" "}
-            </p>
+            <div className="shortDescription">
+              <p>
+                {this.props.subtask.shortDescription}{" "}
+              </p>
+            </div>
+
             {this.props.subtask.longDescription &&
-              <Icon
-                type="plus-circle-o"
-                style={{ fontSize: "10px" }}
-                onClick={() => this.displayMoreInfo(this.props.subtask)}
-              />}
+              <div className="longDescription">
+                <Icon
+                  type="plus-circle-o"
+                  style={{ fontSize: "10px" }}
+                  onClick={() => this.displayMoreInfo(this.props.subtask)}
+                />
+              </div>}
           </Col>
 
           <Col xs={2}>

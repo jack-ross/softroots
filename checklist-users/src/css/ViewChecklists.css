@@ -5,16 +5,3 @@
   width: 100%;
   overflow: auto;
 }
-
-.ant-modal {
-  height: 92%;
-  padding-bottom: 0px;
-}
-
-.ant-modal-body {
-  height: 100%;
-}
-
-.ant-modal-content {
-  height: 100%;
-}

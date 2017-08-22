@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import { Input, Button, notification } from "antd";
 import submitComment from "../firebase/submitComment.js";
 import getCurrentTime from "../helperFunctions/getCurrentTime.js";
@@ -21,6 +22,16 @@ export default class CommentChat extends Component {
     this.state = {
       inputValue: ""
     };
+  }
+
+  scrollToBottom() {
+    const node = ReactDOM.findDOMNode(this.messagesEnd);
+    node.scrollIntoView({ behavior: "smooth" });
+  }
+
+  componentDidMount() {
+    // chat should start at bottom everytime you open the Modal
+    this.scrollToBottom();
   }
 
   onInputChange(newValue) {
@@ -59,7 +70,7 @@ export default class CommentChat extends Component {
   render() {
     // map through the comments and render them accordingly
     let renderedComments = [];
-    if (this.props.sortedComments) {
+    if (this.props.sortedComments.length !== 0) {
       renderedComments = this.props.sortedComments.map(comment => {
         return (
           <div>
@@ -73,15 +84,30 @@ export default class CommentChat extends Component {
           </div>
         );
       });
+    } else {
+      renderedComments = (
+        <div>
+          <p> No Comments </p>
+          <div style={{ marginBottom: "10px" }} />
+        </div>
+      );
     }
 
     return (
       <div style={{ height: "100%", width: "100%" }}>
         <div
+          id="renderedComments"
           className="renderedComments"
-          style={{ overflow: "auto", height: "80%" }}
+          style={{ overflow: "auto", maxHeight: "400px" }}
         >
           {renderedComments}
+
+          <div
+            style={{ float: "left", clear: "both" }}
+            ref={el => {
+              this.messagesEnd = el;
+            }}
+          />
         </div>
 
         <Input
