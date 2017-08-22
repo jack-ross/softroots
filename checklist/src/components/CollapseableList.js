@@ -64,16 +64,21 @@ export default class CollapseableList extends Component {
         let subtaskArray = subsection.subtasks.map(subtask => {
           // return statements
           return (
-            <div>
-              <p>
-                {" "}{subtask.shortDescription}{" "}
-              </p>
+            <div className="subtaskContainer">
+              <div className="shortDescription">
+                <p>
+                  {" "}{subtask.shortDescription}{" "}
+                </p>
+              </div>
+
               {subtask.longDescription &&
-                <Icon
-                  style={{ cursor: "pointer" }}
-                  type="plus-circle-o"
-                  onClick={() => this.displayLongDescriptionModal(subtask)}
-                />}
+                <div className="longDescription">
+                  <Icon
+                    style={{ cursor: "pointer" }}
+                    type="plus-circle-o"
+                    onClick={() => this.displayLongDescriptionModal(subtask)}
+                  />
+                </div>}
             </div>
           );
         });
