@@ -58,10 +58,9 @@ class App extends Component {
 
   onClickSignOut() {
     Modal.confirm({
-      title: "Sign Out?",
-      content: "Are you sure you want to sign out?",
-      okText: "Sign Out",
-      cancelText: "Cancel",
+      title: "Log Out?",
+      okText: "Yes",
+      cancelText: "No",
       onOk: () => this.signOut(),
       onCancel: () => {}
     });
