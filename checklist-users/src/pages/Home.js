@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "antd";
 import { Link, Redirect } from "react-router-dom";
-import loginBackground from "../images/loginBackground.jpg";
+import loginBackground from "../images/newLoginBackground.jpg";
 import "../css/Home.css";
 
 /* PROPS
@@ -24,7 +24,7 @@ export default class Home extends Component {
           backgroundSize: "100% 100%"
         }}
       >
-        <div style={{ height: "50%" }} />
+        <div style={{ height: "40%" }} />
         <h1 style={{ fontSize: "30px", color: "white" }}> ListTalk </h1>
         <Link to="/create-account">
           <Button> Sign Up </Button>
@@ -35,7 +35,7 @@ export default class Home extends Component {
         </Link>
 
         <Link to="/forgotpassword">
-          <p style={{color: "white"}}> Forgot your password? </p>
+          <p style={{ color: "white" }}> Forgot your password? </p>
         </Link>
       </div>
     );

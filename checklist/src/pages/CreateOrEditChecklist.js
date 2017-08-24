@@ -97,9 +97,8 @@ export default class CreateOrEditChecklist extends Component {
     // confirm submit with a modal
     Modal.confirm({
       title: "Submit Checklist?",
-      content: "Make sure everything is correct!",
-      okText: "Submit",
-      cancelText: "Cancel",
+      okText: "Yes",
+      cancelText: "No",
       onOk: () => {
         submitChecklist(this.state.newChecklist);
       },

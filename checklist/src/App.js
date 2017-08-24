@@ -49,11 +49,10 @@ class App extends Component {
   onClickSignOut() {
     Modal.confirm({
       title: "Log Out?",
-      content: "Are you sure you want to log out?",
       onOk: () => this.signOut(),
       onCancel: () => {},
-      okText: "Log Out",
-      cancelText: "Cancel"
+      okText: "Yes",
+      cancelText: "No"
     });
   }
 
@@ -68,7 +67,7 @@ class App extends Component {
         // An error happened.
         notification.open({
           message: "ERROR",
-          description: "There was a problem signing you out.  Please try again."
+          description: "There was a problem logging you out.  Please try again."
         });
       });
   }

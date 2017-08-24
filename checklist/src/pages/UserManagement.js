@@ -86,7 +86,7 @@ export default class UserManagement extends Component {
       <div>
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/users" />
         <div className="userManagement">
-          <h1> Unverified Users </h1>
+          <h1> Waiting Approval </h1>
           <div style={{ margin: "6px" }} />
 
           {!this.state.firebaseUsers && <p> Loading... </p>}
@@ -101,7 +101,7 @@ export default class UserManagement extends Component {
             </div>}
           <div style={{ margin: "12px" }} />
 
-          <h1> Verified Users </h1>
+          <h1> Approved </h1>
           <div style={{ margin: "6px" }} />
 
           {!this.state.firebaseUsers && <p> Loading... </p>}

@@ -27,7 +27,7 @@ export default class SubtaskRow extends Component {
     Modal.info({
       title: subtask.shortDescription,
       content: subtask.longDescription,
-      okText: "Got it."
+      okText: "OK"
     });
   }
 

@@ -181,10 +181,10 @@ export default class ViewChecklists extends Component {
         if (!roleChecklists) {
           return (
             <div>
-              <h3>
+              <h3 style={{ fontSize: "16px" }}>
                 {" "}{role}{" "}
               </h3>
-              <p> No checklists for this role. </p>
+              <p> None </p>
               <div style={{ margin: "24px 0" }} />
             </div>
           );
@@ -194,7 +194,7 @@ export default class ViewChecklists extends Component {
         });
         return (
           <div>
-            <h3>
+            <h3 style={{ fontSize: "16px" }}>
               {" "}{role}{" "}
             </h3>
             <CollapseableList

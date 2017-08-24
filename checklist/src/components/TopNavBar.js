@@ -81,6 +81,7 @@ export default class TopNavBar extends React.Component {
         {!narrow &&
           <div className="tabs1">
             <Menu
+              selectable={false}
               mode="horizontal"
               theme="dark"
               onClick={e => this.handleTabClick(e)}

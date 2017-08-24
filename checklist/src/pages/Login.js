@@ -7,7 +7,7 @@ import firebase from "../configs/firebaseConfig.js";
 import { Redirect } from "react-router-dom";
 import roles from "../roles/roles.js";
 import rootsLogo from "../images/rootsLogo.jpg";
-import background from "../images/splashPageBackground.jpg";
+import background from "../images/newSplashPageBackground.jpg";
 
 /* PROPS
     userInfo: user info pulled from firebase after logging in; if logged in, redirect to home page

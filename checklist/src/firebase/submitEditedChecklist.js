@@ -5,6 +5,7 @@
 import createDisjointArrays from "../helperFunctions/createDisjointArrays.js";
 import firebase from "../configs/firebaseConfig.js";
 import { notification } from "antd";
+import sortDaysOfWeek from "../helperFunctions/sortDaysOfWeek.js";
 
 export default function submitEditedChecklist(
   checklist,
@@ -14,6 +15,9 @@ export default function submitEditedChecklist(
   // first, clean up locations to the proper strings (i.e. charlottesville_va)
   // still hardcoded in for Roots
   let locationKeys = checklist.locations;
+
+  // sort the checklist's days of the week
+  checklist.daysToRepeat.sort(sortDaysOfWeek);
 
   // first, use helper function to create three disjoint arrays: original locations
   // no longer relevant, overlap between original locations and new locations, and finally

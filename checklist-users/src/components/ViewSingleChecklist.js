@@ -139,7 +139,7 @@ export default class ViewSingleChecklist extends Component {
         {subsections}
         <div style={{ margin: "8px 0" }} />
 
-        <p> Mark checklist as completed? </p>
+        <p> Complete </p>
         <input
           checked={this.props.checklist.isMarkedCompleted}
           type="checkbox"

@@ -69,9 +69,8 @@ export default class ApproveOrDenyUserTable extends Component {
     } else {
       Modal.confirm({
         title: "Approve Users?",
-        content: "Make sure they're valid employees!",
-        okText: "Approve Users",
-        cancelText: "Cancel",
+        okText: "Yes",
+        cancelText: "No",
         onOk: () => this.approveUsers(),
         onCancel: () => {}
       });

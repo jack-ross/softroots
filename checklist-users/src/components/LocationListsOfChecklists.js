@@ -32,7 +32,7 @@ export default class LocationListsOfChecklists extends Component {
       let firebasePath = this.props.firebaseLocationPath + "/" + role + "/";
       return (
         <div>
-          <h5>
+          <h5 style={{ fontSize: "16px" }}>
             {" "}{role}{" "}
           </h5>
           <div style={{ margin: "8px 0" }} />

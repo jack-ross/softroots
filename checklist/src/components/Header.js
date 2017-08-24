@@ -40,7 +40,7 @@ export default class Header extends Component {
 
           <div className="signOutButton">
             <Button onClick={() => this.props.onClickSignOut()}>
-              {" "}Sign Out{" "}
+              {" "}Log Out{" "}
             </Button>
           </div>
         </div>
