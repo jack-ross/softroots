@@ -1,5 +1,6 @@
 import firebase from "../configs/firebaseConfig.js";
 import { notification } from "antd";
+import sortDaysOfWeek from "../helperFunctions/sortDaysOfWeek.js";
 
 export default function submitChecklist(checklist) {
   let locationKeys = checklist.locations;
@@ -21,6 +22,9 @@ export default function submitChecklist(checklist) {
 
     // this version of the checklist will hold an array with just the ONE location
     newChecklist.locations = [location];
+
+    // sort the days to repeat
+    newChecklist.daysToRepeat.sort(sortDaysOfWeek);
 
     // add to the firebase updates
     firebaseUpdates[path] = newChecklist;

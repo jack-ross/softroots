@@ -26,13 +26,13 @@ const testFields = [
 ];
 
 const daysOfWeek = [
-  "Sunday",
   "Monday",
   "Tuesday",
   "Wednesday",
   "Thursday",
   "Friday",
-  "Saturday"
+  "Saturday",
+  "Sunday"
 ];
 
 let locations = ["Charlottesville, VA", "Newark, DE"];

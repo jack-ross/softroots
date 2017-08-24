@@ -39,8 +39,8 @@ export default class ChangePrivilegeDropdown extends Component {
           " to the " +
           newRole +
           " role?",
-        okText: "Change Role",
-        cancelText: "Cancel",
+        okText: "Yes",
+        cancelText: "No",
         onOk: () => updateUserRole(this.props.user.uid, newRole),
         onCancel: () => {}
       });
