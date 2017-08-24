@@ -10,7 +10,7 @@ export default class Header extends Component {
     const settingsOptions = (
       <Menu>
         <Menu.Item>
-          <p onClick={() => this.props.onClickSignOut()}> Sign Out </p>
+          <p onClick={() => this.props.onClickSignOut()}> Log Out </p>
         </Menu.Item>
 
         <Menu.Item>

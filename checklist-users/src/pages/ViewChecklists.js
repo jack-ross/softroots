@@ -21,7 +21,7 @@ export default class ViewChecklists extends Component {
     // create the daily key ONCE to avoid weird instances where different keys
     // are used across different parts of the app
     this.state = {
-      viewMode: "mine",
+      viewMode: "me",
       firebaseChecklists: undefined,
       status: "Loading..."
     };
@@ -67,9 +67,9 @@ export default class ViewChecklists extends Component {
       // grab the relevant roles as an array, whether it's just the user's singular
       // role OR all the roles below them in the hierarchy based on the viewMode
       let roles = [];
-      if (this.state.viewMode === "mine") {
+      if (this.state.viewMode === "me") {
         roles = [this.props.userInfo.role];
-      } else if (this.state.viewMode === "all") {
+      } else if (this.state.viewMode === "crew") {
         roles = roleHierarchy[this.props.userInfo.role];
       }
 
@@ -108,8 +108,8 @@ export default class ViewChecklists extends Component {
             value={this.state.viewMode}
             onChange={e => this.onChangeToggle(e.target.value)}
           >
-            <Radio.Button value="mine">My Role</Radio.Button>
-            <Radio.Button value="all">All Roles</Radio.Button>
+            <Radio.Button value="me">Me</Radio.Button>
+            <Radio.Button value="crew">Crew</Radio.Button>
           </Radio.Group>
           <div style={{ margin: "10px 0" }} />
         </div>
