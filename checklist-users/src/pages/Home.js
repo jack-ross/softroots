@@ -25,17 +25,13 @@ export default class Home extends Component {
         }}
       >
         <div style={{ height: "40%" }} />
-        <h1 style={{ fontSize: "30px", color: "white" }}> ListTalk </h1>
+        <h1 style={{ fontSize: "30px", color: "white" }}> Lists </h1>
         <Link to="/create-account">
           <Button> Sign Up </Button>
         </Link>
 
         <Link to="/login">
           <Button type="primary"> Log In </Button>
-        </Link>
-
-        <Link to="/forgotpassword">
-          <p style={{ color: "white" }}> Forgot your password? </p>
         </Link>
       </div>
     );

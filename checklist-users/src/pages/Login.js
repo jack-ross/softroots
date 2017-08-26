@@ -37,7 +37,7 @@ export default class Login extends Component {
           notification.error({
             message: "ERROR",
             description: errorMessage,
-            duration: 3
+            duration: 2
           });
         });
     }
@@ -60,22 +60,35 @@ export default class Login extends Component {
     return (
       <div style={{ padding: "10%" }}>
         <h4> Email: </h4>
-        <Input onChange={e => this.onChange("email", e.target.value)} />
+        <Input
+          onChange={e => this.onChange("email", e.target.value)}
+          onPressEnter={() => this.onClickSubmit()}
+        />
         <div style={{ margin: "12px 0" }} />
 
         <h4> Password: </h4>
         <Input
           type="password"
           onChange={e => this.onChange("password", e.target.value)}
+          onPressEnter={() => this.onClickSubmit()}
         />
         <div style={{ margin: "12px 0" }} />
 
         <Link to="/">
           <Button> Cancel </Button>
         </Link>
+
         <Button type="primary" onClick={() => this.onClickSubmit()}>
           {" "}Login{" "}
         </Button>
+
+        <div style={{ padding: "15px" }} />
+
+        <Link to="/forgotpassword">
+          <p style={{ color: "#108ee9", textAlign: "center" }}>
+            {" "}Forgot your password?{" "}
+          </p>
+        </Link>
       </div>
     );
   }

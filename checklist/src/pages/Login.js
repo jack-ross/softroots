@@ -138,7 +138,7 @@ export default class Login extends Component {
         })
         .catch(function(error) {
           notification.error({
-            title: "ERROR",
+            message: "ERROR",
             description: error.message
           });
         });
@@ -157,11 +157,10 @@ export default class Login extends Component {
       })
       .catch(function(error) {
         notification.error({
-          title: "ERROR",
+          message: "ERROR",
           description: error.message
         });
       });
-    this.closeModals();
   }
 
   onChange(value, field, loginOrCreate) {
@@ -258,7 +257,7 @@ export default class Login extends Component {
               color: "white"
             }}
           >
-            {" "}ListTalk{" "}
+            {" "}Lists{" "}
           </h1>
           <div style={{ margin: "20px 0" }} />
           <Button.Group>
@@ -288,12 +287,14 @@ export default class Login extends Component {
             <h3> Email: </h3>
             <Input
               onChange={e => this.onChange(e.target.value, "email", "login")}
+              onPressEnter={() => this.onLoginSubmit()}
             />
 
             <h3> Password: </h3>
             <Input
               type="password"
               onChange={e => this.onChange(e.target.value, "password", "login")}
+              onPressEnter={() => this.onLoginSubmit()}
             />
           </Modal>
 
