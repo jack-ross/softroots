@@ -31,7 +31,7 @@ export default class Header extends Component {
         </div>
 
         <div className="listTalkTitle">
-          <p> ListTalk </p>
+          <p> Lists </p>
         </div>
 
         <div className="settingsIcon">

@@ -68,7 +68,7 @@ export default class ForgotPassword extends Component {
         <Input onChange={e => this.onInputChange(e.target.value)} />
         <div style={{ height: "10px" }} />
 
-        <Link to="/">
+        <Link to="/login">
           <Button> Cancel </Button>
         </Link>
 
