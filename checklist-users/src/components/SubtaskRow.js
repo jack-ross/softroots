@@ -57,12 +57,16 @@ export default class SubtaskRow extends Component {
     }
 
     // if it's a scale, we want the button to change color based on what's currently been
-    // selected
+    // selected.  also want to display the currently selected value on the button
+    // rather than the "select" icon from antd
     let scaleButtonStyle = {};
+    let scaleIcon = "select";
+    let scaleText = "";
     if (this.props.subtask.scaleValue) {
       let scaleColor = getColorOfScale(this.props.subtask.scaleValue);
       scaleButtonStyle.backgroundColor = scaleColor;
-      console.log(scaleButtonStyle);
+      scaleIcon = "";
+      scaleText = this.props.subtask.scaleValue;
     }
 
     return (
@@ -103,11 +107,13 @@ export default class SubtaskRow extends Component {
             {displayType === "scale" && (
               <Button
                 size="small"
-                icon="select"
+                icon={scaleIcon}
                 onClick={() =>
                   this.changeModalVisibility("isScaleModalVisible")}
                 style={scaleButtonStyle}
-              />
+              >
+                {scaleText}
+              </Button>
             )}
           </Col>
         </Row>
