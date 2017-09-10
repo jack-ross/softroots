@@ -2,7 +2,6 @@
 // representing the CSS color associated with that value
 
 export default function(value) {
-  console.log("i was called");
   switch (value) {
     case 1:
       return "#ef7b75";

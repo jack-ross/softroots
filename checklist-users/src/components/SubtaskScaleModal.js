@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Modal, Radio } from "antd";
+import getColorOfScale from "../helperFunctions/getColorOfScale.js";
 
 /* PROPS
     subtask: object, the subtask we're updating
@@ -42,23 +43,7 @@ export default class SubtaskScaleModal extends Component {
     // yet, or 2) if the currently selected value matches the
     // button's value
     if (!this.state.scaleValue || this.state.scaleValue === value) {
-      switch (value) {
-        case 1:
-          return "#ef7b75";
-          break;
-        case 2:
-          return "#dd8a82";
-          break;
-        case 3:
-          return "#d8b168";
-          break;
-        case 4:
-          return "#e0da86";
-          break;
-        case 5:
-          return "#b4f4b0";
-          break;
-      }
+      return getColorOfScale(value);
     }
     return "";
   }
