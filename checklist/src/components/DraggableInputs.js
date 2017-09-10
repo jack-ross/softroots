@@ -22,9 +22,9 @@ import "../css/DraggableInputs.css";
 */
 
 // the drag handle made from Higher Order Component
-const DragHandle = SortableHandle(() =>
+const DragHandle = SortableHandle(() => (
   <img src={dragIcon} alt="DragIcon" height="15" />
-);
+));
 
 // the Higher Order Component we'll use to create these inputs
 const SortableItem = SortableElement(
@@ -41,9 +41,7 @@ const SortableItem = SortableElement(
       let field = fieldObject.field;
       return (
         <div className="singleInput">
-          <h3>
-            {" "}{prompt}{" "}
-          </h3>
+          <h3> {prompt} </h3>
           <Input
             type="textarea"
             autosize
@@ -79,6 +77,7 @@ const SortableItem = SortableElement(
           >
             <Select.Option value="checkbox"> Checkbox </Select.Option>
             <Select.Option value="input"> Input </Select.Option>
+            <Select.Option value="scale"> Scale </Select.Option>
           </Select>
 
           <Button
@@ -87,7 +86,8 @@ const SortableItem = SortableElement(
             onClick={() =>
               displayConfirmDeleteModal(() => removeInputs(indexForChange))}
           >
-            {" "}Remove Task{" "}
+            {" "}
+            Remove Task{" "}
           </Button>
         </Card>
         <div style={{ margin: "24px 0" }} />
@@ -101,7 +101,7 @@ const SortableList = SortableContainer(
   ({ dataObjects, fieldObjects, handleInputChange, removeInputs }) => {
     return (
       <ul>
-        {dataObjects.map((dataObject, index) =>
+        {dataObjects.map((dataObject, index) => (
           <SortableItem
             key={`item-${index}`}
             index={index}
@@ -111,7 +111,7 @@ const SortableList = SortableContainer(
             handleInputChange={handleInputChange}
             removeInputs={removeInputs}
           />
-        )}
+        ))}
       </ul>
     );
   }

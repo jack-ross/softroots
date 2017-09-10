@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { Modal, Button, Icon } from "antd";
 import { Row, Col } from "react-bootstrap";
 import SubtaskInputModal from "./SubtaskInputModal.js";
+import SubtaskScaleModal from "./SubtaskScaleModal.js";
 import isPastEndTime from "../helperFunctions/isPastEndTime.js";
+import updateSubtaskField from "../firebase/updateSubtaskField.js";
+import getColorOfScale from "../helperFunctions/getColorOfScale.js";
 import "../css/SubtaskRow.css";
 
 /* PROPS:
@@ -19,7 +22,8 @@ export default class SubtaskRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isInputModalVisible: false
+      isInputModalVisible: false,
+      isScaleModalVisible: false
     };
   }
 
@@ -31,16 +35,15 @@ export default class SubtaskRow extends Component {
     });
   }
 
-  changeModalVisibility() {
-    this.setState({
-      ...this.state,
-      isInputModalVisible: !this.state.isInputModalVisible
-    });
+  changeModalVisibility(modal) {
+    let newState = this.state;
+    newState[modal] = !newState[modal];
+    this.setState(newState);
   }
 
   render() {
     isPastEndTime(this.props.endTime, "America/New_York");
-    // displayType is either "input" or "checkbox" to know which to render
+    // displayType is either "input" or "checkbox" or "scale" to know which to render
     let displayType = this.props.subtask.displayType;
 
     // style the row so it's yellow if task not completed, green if it is,
@@ -53,48 +56,79 @@ export default class SubtaskRow extends Component {
       style = { backgroundColor: "#fafcb5" };
     }
 
+    // if it's a scale, we want the button to change color based on what's currently been
+    // selected
+    let scaleButtonStyle = {};
+    if (this.props.subtask.scaleValue) {
+      let scaleColor = getColorOfScale(this.props.subtask.scaleValue);
+      scaleButtonStyle.backgroundColor = scaleColor;
+      console.log(scaleButtonStyle);
+    }
+
     return (
       <div>
         <Row style={style} className="show-grid">
           <Col xs={10}>
             <div className="shortDescription">
-              <p>
-                {this.props.subtask.shortDescription}{" "}
-              </p>
+              <p>{this.props.subtask.shortDescription} </p>
             </div>
 
-            {this.props.subtask.longDescription &&
+            {this.props.subtask.longDescription && (
               <div className="longDescription">
                 <Icon
                   type="plus-circle-o"
                   style={{ fontSize: "10px" }}
                   onClick={() => this.displayMoreInfo(this.props.subtask)}
                 />
-              </div>}
+              </div>
+            )}
           </Col>
 
           <Col xs={2}>
-            {displayType === "checkbox" &&
+            {displayType === "checkbox" && (
               <input
                 type="checkbox"
                 checked={this.props.subtask.isCompleted}
                 onChange={e => this.props.onCheck(e.target.checked)}
-              />}
-            {displayType === "input" &&
+              />
+            )}
+            {displayType === "input" && (
               <Button
-                onClick={() => this.changeModalVisibility()}
+                onClick={() =>
+                  this.changeModalVisibility("isInputModalVisible")}
                 size="small"
                 icon="arrows-alt"
-              />}
+              />
+            )}
+            {displayType === "scale" && (
+              <Button
+                size="small"
+                icon="select"
+                onClick={() =>
+                  this.changeModalVisibility("isScaleModalVisible")}
+                style={scaleButtonStyle}
+              />
+            )}
           </Col>
         </Row>
 
-        {this.state.isInputModalVisible &&
+        {this.state.isInputModalVisible && (
           <SubtaskInputModal
-            onSubmitInput={newValue => this.props.onSubmitInput(newValue)}
+            onSubmitInput={newValue =>
+              this.props.onChangeSubtaskField("inputValue", newValue)}
             subtask={this.props.subtask}
-            closeModal={() => this.changeModalVisibility()}
-          />}
+            closeModal={() => this.changeModalVisibility("isInputModalVisible")}
+          />
+        )}
+
+        {this.state.isScaleModalVisible && (
+          <SubtaskScaleModal
+            onSubmitScaleValue={newValue =>
+              this.props.onChangeSubtaskField("scaleValue", newValue)}
+            subtask={this.props.subtask}
+            closeModal={() => this.changeModalVisibility("isScaleModalVisible")}
+          />
+        )}
       </div>
     );
   }

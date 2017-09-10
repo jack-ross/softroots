@@ -106,7 +106,7 @@ export default class ChecklistForm extends Component {
         />
         <div style={{ margin: "30px 0" }} />
 
-        {!this.props.hideLocations &&
+        {!this.props.hideLocations && (
           <div>
             <h1> Location(s) </h1>
             <Checklist
@@ -116,7 +116,8 @@ export default class ChecklistForm extends Component {
                 this.props.updateField("locations", checkedItems)}
             />
             <div style={{ margin: "30px 0" }} />
-          </div>}
+          </div>
+        )}
       </div>
     );
   }
