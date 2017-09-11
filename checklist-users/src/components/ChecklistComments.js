@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal } from "antd";
+import { Modal, Icon } from "antd";
 import CommentChat from "./CommentChat.js";
 import "../css/ChecklistComments.css";
 
@@ -11,7 +11,13 @@ import "../css/ChecklistComments.css";
     comments: obj; comments from the relevant checklist
     firebasePath: string, the path where this checklist is coming from in
       the form "/dailyLists/<YYYY-MM-DD>/<location>/<role>/<checklistKey>"
+      or could go futher to a subtask for subtask specific chat
     userInfo: object, needed for user's name when submitting a comment
+    type: string; either "checklist" or "subtask" depending on which kind of chat this is
+    longDescription: string (optional), if it's a subtask and there's a longer description
+      to be displayed in this modal
+    shortDescription: string (optional), if it's a subtask and there's a short description
+      to be displayed as the modal's title
 */
 
 export default class ChecklistComments extends Component {
@@ -49,11 +55,24 @@ export default class ChecklistComments extends Component {
 
     return (
       <div>
-        <p onClick={() => this.switchModalVisibility()}>
-          {" "}Comments ({commentArray.length}) {" "}
-        </p>
+        {this.props.type === "checklist" && (
+          <p onClick={() => this.switchModalVisibility()}>
+            {" "}
+            Comments ({commentArray.length}) {" "}
+          </p>
+        )}
 
-        {this.state.isModalVisible &&
+        {this.props.type === "subtask" && (
+          <div className="SubtaskChatIcon">
+            <Icon
+              type="message"
+              style={{ fontSize: "15px" }}
+              onClick={() => this.switchModalVisibility()}
+            />
+          </div>
+        )}
+
+        {this.state.isModalVisible && (
           <Modal
             visible={true}
             okText="OK"
@@ -62,9 +81,18 @@ export default class ChecklistComments extends Component {
             onCancel={() => this.switchModalVisibility()}
             style={{ top: "0px" }}
             footer={false}
+            title={this.props.shortDescription}
           >
+            <p style={{ fontWeight: "bold", fontSize: 14 }}>
+              {" "}
+              {this.props.longDescription}{" "}
+            </p>
+
+            <div style={{ margin: "10px" }} />
+
             {commentChat}
-          </Modal>}
+          </Modal>
+        )}
       </div>
     );
   }

@@ -6,6 +6,7 @@ import SubtaskScaleModal from "./SubtaskScaleModal.js";
 import isPastEndTime from "../helperFunctions/isPastEndTime.js";
 import updateSubtaskField from "../firebase/updateSubtaskField.js";
 import getColorOfScale from "../helperFunctions/getColorOfScale.js";
+import ChecklistComments from "./ChecklistComments.js";
 import "../css/SubtaskRow.css";
 
 /* PROPS:
@@ -16,6 +17,14 @@ import "../css/SubtaskRow.css";
       longDescription: more detailed description to be displayed in a Modal when the task is clicked on
       isCompleted: boolean, whether the subtask should be checked or not
     endTime: when the subtask (and list as a whole) needs to be completed by
+    firebasePath: string, the firebase URL to access this subtask
+    userInfo: object, holds the userInfo
+*/
+
+/* STATE:
+    isInputModalVisible: boolean; whether or not we're displaying the input modal
+    isScaleModalVisible: boolean; whether or not we're displaying the scale modal
+    isChatModalVisible: boolean; whether or not we're displaying the chat modal
 */
 
 export default class SubtaskRow extends Component {
@@ -77,15 +86,14 @@ export default class SubtaskRow extends Component {
               <p>{this.props.subtask.shortDescription} </p>
             </div>
 
-            {this.props.subtask.longDescription && (
-              <div className="longDescription">
-                <Icon
-                  type="plus-circle-o"
-                  style={{ fontSize: "10px" }}
-                  onClick={() => this.displayMoreInfo(this.props.subtask)}
-                />
-              </div>
-            )}
+            <ChecklistComments
+              type="subtask"
+              firebasePath={this.props.firebasePath}
+              userInfo={this.props.userInfo}
+              comments={this.props.subtask.comments}
+              longDescription={this.props.subtask.longDescription}
+              shortDescription={this.props.subtask.shortDescription}
+            />
           </Col>
 
           <Col xs={2}>

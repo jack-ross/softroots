@@ -13,6 +13,7 @@ import getCurrentTime from "../helperFunctions/getCurrentTime.js";
       in reverse chronological order by ChecklistComments component
     firebasePath: string, the path where this checklist is coming from in
       the form "/dailyLists/<YYYY-MM-DD>/<location>/<role>/<checklistKey>"
+      or could go futher to a subtask for subtask specific chat
     userInfo: object, needed for user's name when submitting a comment
 */
 
@@ -60,6 +61,8 @@ export default class CommentChat extends Component {
         commentText: this.state.inputValue
       };
       let firebasePath = this.props.firebasePath + "/comments";
+      console.log(firebasePath);
+      console.log(commentObject);
       submitComment(firebasePath, commentObject);
 
       // clear the input
@@ -78,9 +81,7 @@ export default class CommentChat extends Component {
               {comment.username} {comment.timeStamp}
             </p>
 
-            <p>
-              {" "}{comment.commentText}{" "}
-            </p>
+            <p> {comment.commentText} </p>
           </div>
         );
       });
@@ -98,7 +99,7 @@ export default class CommentChat extends Component {
         <div
           id="renderedComments"
           className="renderedComments"
-          style={{ overflow: "auto", maxHeight: "400px" }}
+          style={{ overflow: "auto", maxHeight: "375px" }}
         >
           {renderedComments}
 

@@ -95,6 +95,15 @@ export default class ViewSingleChecklist extends Component {
     const subsections = this.props.checklist.subsections.map(
       (subsection, subsectionIndex) => {
         const subtasks = subsection.subtasks.map((subtask, subtaskIndex) => {
+          let subtaskFirebasePath =
+            this.props.firebasePath +
+            "/" +
+            this.props.checklist.key +
+            "/subsections/" +
+            subsectionIndex +
+            "/subtasks/" +
+            subtaskIndex;
+
           return (
             <Grid>
               <SubtaskRow
@@ -124,6 +133,8 @@ export default class ViewSingleChecklist extends Component {
                     this.props.checklist.key
                   )}
                 endTime={this.props.checklist.endTime}
+                firebasePath={subtaskFirebasePath}
+                userInfo={this.props.userInfo}
               />
             </Grid>
           );
@@ -148,6 +159,7 @@ export default class ViewSingleChecklist extends Component {
             this.props.firebasePath + "/" + this.props.checklist.key
           }
           userInfo={this.props.userInfo}
+          type="checklist"
         />
         <div style={{ margin: "8px 0" }} />
 
