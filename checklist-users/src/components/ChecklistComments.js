@@ -14,8 +14,6 @@ import "../css/ChecklistComments.css";
       or could go futher to a subtask for subtask specific chat
     userInfo: object, needed for user's name when submitting a comment
     type: string; either "checklist" or "subtask" depending on which kind of chat this is
-    longDescription: string (optional), if it's a subtask and there's a longer description
-      to be displayed in this modal
     shortDescription: string (optional), if it's a subtask and there's a short description
       to be displayed as the modal's title
 */
@@ -83,13 +81,6 @@ export default class ChecklistComments extends Component {
             footer={false}
             title={this.props.shortDescription}
           >
-            <p style={{ fontWeight: "bold", fontSize: 14 }}>
-              {" "}
-              {this.props.longDescription}{" "}
-            </p>
-
-            <div style={{ margin: "10px" }} />
-
             {commentChat}
           </Modal>
         )}

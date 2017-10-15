@@ -6,3 +6,7 @@
 .longDescription {
   display: inline-block;
 }
+
+.buttons {
+  display: flex;
+}
