@@ -82,31 +82,17 @@ export default class SubtaskRow extends Component {
       <div>
         <Row style={style} className="show-grid">
           <Col xs={10}>
-            <div className="shortDescription">
+            <div className="textAndButtons">
               <p>{this.props.subtask.shortDescription} </p>
-            </div>
-
-            <div className="buttons">
-              <ChecklistComments
-                type="subtask"
-                firebasePath={this.props.firebasePath}
-                userInfo={this.props.userInfo}
-                comments={this.props.subtask.comments}
-                longDescription={this.props.subtask.longDescription}
-                shortDescription={this.props.subtask.shortDescription}
-              />
 
               {this.props.subtask.longDescription && (
-                <Icon
-                  type="plus-circle-o"
-                  style={{ fontSize: "10px", paddingLeft: "5px" }}
-                  onClick={() =>
-                    Modal.info({
-                      title: this.props.subtask.shortDescription,
-                      content: this.props.subtask.longDescription,
-                      okText: "OK"
-                    })}
-                />
+                <div className="longDescription">
+                  <Icon
+                    type="plus-circle-o"
+                    style={{ fontSize: "10px", paddingLeft: "4px" }}
+                    onClick={() => this.displayMoreInfo(this.props.subtask)}
+                  />
+                </div>
               )}
             </div>
           </Col>
