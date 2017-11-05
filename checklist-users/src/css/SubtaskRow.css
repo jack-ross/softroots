@@ -1,6 +1,5 @@
 .shortDescription {
   display: inline-block;
-  padding-right: 5px;
 }
 
 .longDescription {
@@ -9,4 +8,12 @@
 
 .textAndButtons {
   display: flex;
+}
+
+.textAndButtonsCol {
+}
+
+.checkboxCol {
+  padding-left: 0;
+  padding-right: 0;
 }
