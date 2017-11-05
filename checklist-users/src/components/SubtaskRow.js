@@ -81,7 +81,7 @@ export default class SubtaskRow extends Component {
     return (
       <div>
         <Row style={style} className="show-grid">
-          <Col xs={10}>
+          <Col xs={10} sm={9} className="textAndButtonsCol">
             <div className="textAndButtons">
               <p>{this.props.subtask.shortDescription} </p>
 
@@ -97,7 +97,7 @@ export default class SubtaskRow extends Component {
             </div>
           </Col>
 
-          <Col xs={2}>
+          <Col xs={2} sm={3} className="checkboxCol">
             {displayType === "checkbox" && (
               <input
                 type="checkbox"
