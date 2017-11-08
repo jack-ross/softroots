@@ -10,7 +10,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 350px;
+  padding: 2rem;
+  min-width: 400px;
   min-height: 350px;
   background-color: white;
   border: 1px solid grey;
