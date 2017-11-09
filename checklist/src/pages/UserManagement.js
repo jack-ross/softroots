@@ -15,15 +15,15 @@ const tabs = [
     url: "/home"
   },
   {
-    name: "Create a Checklist",
+    name: "Create",
     url: "/createchecklist"
   },
   {
-    name: "View Current Checklists",
+    name: "View",
     url: "/viewchecklists"
   },
   {
-    name: "Manage Users",
+    name: "Manage",
     url: "/users"
   }
 ];
@@ -60,15 +60,18 @@ export default class UserManagement extends Component {
   }
 
   componentWillMount() {
-    firebase.database().ref("/users").on("value", snapshot => {
-      // if snapshot exists, store in the state
-      if (snapshot.val()) {
-        this.setState({
-          ...this.state,
-          firebaseUsers: snapshot.val()
-        });
-      }
-    });
+    firebase
+      .database()
+      .ref("/users")
+      .on("value", snapshot => {
+        // if snapshot exists, store in the state
+        if (snapshot.val()) {
+          this.setState({
+            ...this.state,
+            firebaseUsers: snapshot.val()
+          });
+        }
+      });
   }
 
   render() {
@@ -91,14 +94,15 @@ export default class UserManagement extends Component {
 
           {!this.state.firebaseUsers && <p> Loading... </p>}
 
-          {this.state.firebaseUsers &&
+          {this.state.firebaseUsers && (
             <div className="approveDenyTable">
               <ApproveOrDenyUserTable
                 firebaseUsers={this.state.firebaseUsers.unverified}
                 roles={roles}
                 locations={locations}
               />
-            </div>}
+            </div>
+          )}
           <div style={{ margin: "12px" }} />
 
           <h1> Approved </h1>
@@ -106,13 +110,14 @@ export default class UserManagement extends Component {
 
           {!this.state.firebaseUsers && <p> Loading... </p>}
 
-          {this.state.firebaseUsers &&
+          {this.state.firebaseUsers && (
             <ChangePrivilegeTable
               firebaseUsers={this.state.firebaseUsers.verified}
               roles={roles}
               locations={locations}
               loggedInUserUID={this.props.userInfo.uid}
-            />}
+            />
+          )}
         </div>
       </div>
     );
