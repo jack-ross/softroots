@@ -1,18 +1,69 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
 
-.LoginPage {
-  margin: auto;
-  position: absolute;
-  width: 300px;
-  z-index: 15;
-  top: 40%;
-  left: 50%;
-  margin: -100px 0 0 -150px;
-  text-align: center;
-  font-size: 25px;
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.LoginContainer {
-  background-color: #e6e6ff;
-  font-family: 'Montserrat', sans-serif;
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  min-width: 400px;
+  min-height: 350px;
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+
+.roots-logo {
+  padding: 1rem 0;
+}
+
+.forgot-password {
+  display: flex;
+  color: rgb(27, 27, 27);
+  padding: 10px 5px;
+}
+
+.email-text,
+.password-text {
+  font-size: 16px;
+}
+
+.email-container,
+.password-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 300px;
+  padding-bottom: 1rem;
+}
+
+.input-password,
+.input-email {
+  border: none !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid grey !important;
+  padding: 0 !important;
+}
+
+.sign-up {
+  display: flex;
+  color: #108ee9;
+  cursor: pointer;
+  align-items: center;
+}
+
+.sign-up-icon {
+  margin-left: 5px;
+  display: block;
+}
+
+.click-here {
+  color: #108ee9;
+  padding-left: 3px;
+  cursor: pointer;
 }

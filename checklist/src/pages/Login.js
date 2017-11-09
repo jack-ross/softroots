@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Modal, Input, notification } from "antd";
+import { Button, Modal, Input, notification, Icon } from "antd";
 import DropdownSelection from "../components/DropdownSelection.js";
 import ChangePasswordModal from "../components/ChangePasswordModal.js";
 import "../css/Login.css";
@@ -60,15 +60,6 @@ export default class Login extends Component {
     };
   }
 
-  onClickLogin() {
-    this.setState({
-      ...this.state,
-      isResetPasswordVisible: false,
-      isCreateAccountVisible: false,
-      isLoginVisible: true
-    });
-  }
-
   onClickCreateAccount() {
     this.setState({
       ...this.state,
@@ -125,7 +116,10 @@ export default class Login extends Component {
           userInfo.uid = uid;
           delete userInfo.password;
           delete userInfo.passwordRepeated;
-          firebase.database().ref("users/unverified/" + uid).set(userInfo);
+          firebase
+            .database()
+            .ref("users/unverified/" + uid)
+            .set(userInfo);
         })
         .then(response => {
           Modal.info({
@@ -239,64 +233,55 @@ export default class Login extends Component {
 
     return (
       <div
-        className="LoginContainer"
+        className="login-page"
         style={{
           width: "100%",
           height: "100%",
-          backgroundImage: "url(" + background + ")",
-          backgroundSize: "100% 100%"
+          background:
+            "url(" + background + ")" + "no-repeat center center fixed",
+          backgroundSize: "cover"
         }}
       >
-        <div className="LoginPage">
-          <div className="rootsLogo">
-            <img src={rootsLogo} alt="Roots Logo" height="80px" width="80px" />
-            <div style={{ margin: "20px 0" }} />
+        <div className="login-form">
+          <div className="roots-logo">
+            <img src={rootsLogo} alt="Roots Logo" height="60px" width="60px" />
           </div>
-          <h1
-            style={{
-              color: "white"
-            }}
-          >
-            {" "}Lists{" "}
-          </h1>
-          <div style={{ margin: "20px 0" }} />
-          <Button.Group>
-            <Button onClick={() => this.onClickCreateAccount()}>
-              {" "}Create Account{" "}
-            </Button>
-            <Button type="primary" onClick={() => this.onClickLogin()}>
-              {" "}Login{" "}
-            </Button>
-          </Button.Group>
-
-          <p
-            style={{ color: "white", cursor: "pointer" }}
-            onClick={() => this.onClickResetPassword()}
-          >
-            {" "}Forgot your password?{" "}
-          </p>
-
-          <Modal
-            title="Login"
-            visible={this.state.isLoginVisible}
-            onOk={() => this.onLoginSubmit()}
-            onCancel={() => this.onCancel()}
-            okText="Login"
-            cancelText="Cancel"
-          >
-            <h3> Email: </h3>
+          <div className="email-container">
+            <p className="email-text">Email</p>
             <Input
+              className="input-email"
+              placeholder="Email"
               onChange={e => this.onChange(e.target.value, "email", "login")}
               onPressEnter={() => this.onLoginSubmit()}
             />
-
-            <h3> Password: </h3>
+          </div>
+          <div className="password-container">
+            <p className="password-text">Password</p>
             <Input
+              className="input-password"
+              placeholder="Password"
               type="password"
               onChange={e => this.onChange(e.target.value, "password", "login")}
               onPressEnter={() => this.onLoginSubmit()}
             />
-          </Modal>
+          </div>
+          <Button type="primary" onClick={() => this.onLoginSubmit()}>
+            Login
+          </Button>
+
+          <div className="forgot-password-container">
+            <p className="forgot-password">
+              Forgot your password?<p
+                className="click-here"
+                onClick={() => this.onClickResetPassword()}
+              >
+                Click Here
+              </p>
+            </p>
+          </div>
+          <p className="sign-up" onClick={() => this.onClickCreateAccount()}>
+            Create Account<Icon className="sign-up-icon" type="right-circle" />
+          </p>
 
           <Modal
             title="Create Account"
@@ -363,7 +348,6 @@ export default class Login extends Component {
               onClickField={val => this.onChange(val, "role", "create")}
             />
           </Modal>
-
           <ChangePasswordModal
             isVisible={this.state.isResetPasswordVisible}
             emailToReset={this.state.resetEmail}
