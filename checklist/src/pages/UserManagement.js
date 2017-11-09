@@ -87,7 +87,11 @@ export default class UserManagement extends Component {
 
     return (
       <div>
-        <TopNavBar className="horizontal" tabs={tabs} currentURL="/users" />
+        <TopNavBar
+          className="horizontal"
+          tabs={tabs}
+          onClickSignOut={this.props.onClickSignOut}
+        />
         <div className="userManagement">
           <h1> Waiting Approval </h1>
           <div style={{ margin: "6px" }} />
