@@ -221,7 +221,7 @@ export default class ViewChecklists extends Component {
         <TopNavBar
           className="horizontal"
           tabs={tabs}
-          currentURL="/viewchecklists"
+          onClickSignOut={this.props.onClickSignOut}
         />
         <p> {this.state.status} </p>
         <div className="viewChecklists">{checklistDisplays}</div>

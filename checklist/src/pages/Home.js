@@ -31,7 +31,11 @@ export default class Home extends Component {
 
     return (
       <div>
-        <TopNavBar className="horizontal" tabs={tabs} currentURL="/home" />
+        <TopNavBar
+          className="horizontal"
+          tabs={tabs}
+          onClickSignOut={this.props.onClickSignOut}
+        />
         <h1 className="welcome-message">
           Welcome, {this.props.userInfo.firstName}!
         </h1>

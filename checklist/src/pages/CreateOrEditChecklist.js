@@ -75,40 +75,6 @@ export default class CreateOrEditChecklist extends Component {
     });
   }
 
-  confirmSubmit() {
-    // validate input; throw errors if found
-    let valid = new ChecklistValidation();
-    let errorsAndWarnings = valid.validateChecklist(this.state.newChecklist);
-    if (errorsAndWarnings.errors.length !== 0) {
-      errorsAndWarnings.errors.map(error => {
-        notification.error({
-          message: "ERROR",
-          description: error
-        });
-      });
-      return;
-    }
-
-    // if no errors, but warnings, display them along with submit modal
-    errorsAndWarnings.warnings.map(warning => {
-      notification.warning({
-        message: "WARNING",
-        description: warning
-      });
-    });
-
-    // confirm submit with a modal
-    Modal.confirm({
-      title: "Submit Checklist?",
-      okText: "Yes",
-      cancelText: "No",
-      onOk: () => {
-        submitChecklist(this.state.newChecklist);
-      },
-      onCancel() {}
-    });
-  }
-
   onSelectPreexistingChecklist(checklist) {
     this.setState({
       ...this.state,
@@ -153,7 +119,7 @@ export default class CreateOrEditChecklist extends Component {
         <TopNavBar
           className="horizontal"
           tabs={tabs}
-          currentURL="/createchecklist"
+          onClickSignOut={this.props.onClickSignOut}
         />
         <div className="createEditPage" style={{ padding: "30px 0" }}>
           {this.state.allChecklists && preexistingListModal}
@@ -163,10 +129,6 @@ export default class CreateOrEditChecklist extends Component {
             updateField={(field, value) => this.updateField(field, value)}
             userInfo={this.props.userInfo}
           />
-          <Button type="primary" onClick={() => this.confirmSubmit()}>
-            {" "}
-            Submit!{" "}
-          </Button>
         </div>
       </div>
     );

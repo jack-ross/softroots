@@ -131,7 +131,11 @@ export default class Profile extends Component {
 
     return (
       <div>
-        <TopNavBar className="horizontal" tabs={tabs} />
+        <TopNavBar
+          className="horizontal"
+          tabs={tabs}
+          onClickSignOut={this.props.onClickSignOut}
+        />
         <div style={{ textAlign: "center", padding: "30px" }}>
           <h1> User Profile </h1>
           <h3> Name </h3>

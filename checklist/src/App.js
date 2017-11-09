@@ -22,6 +22,7 @@ class App extends Component {
     this.state = {
       userInfo: undefined
     };
+    this.onClickSignOut = this.onClickSignOut.bind(this);
   }
 
   componentWillMount() {
@@ -86,33 +87,52 @@ class App extends Component {
               <Route
                 exact
                 path="/home"
-                component={() => <Home userInfo={this.state.userInfo} />}
+                component={() => (
+                  <Home
+                    userInfo={this.state.userInfo}
+                    onClickSignOut={this.onClickSignOut}
+                  />
+                )}
               />
               <Route
                 exact
                 path="/createchecklist"
                 component={() => (
-                  <CreateOrEditChecklist userInfo={this.state.userInfo} />
+                  <CreateOrEditChecklist
+                    userInfo={this.state.userInfo}
+                    onClickSignOut={this.onClickSignOut}
+                  />
                 )}
               />
               <Route
                 exact
                 path="/viewchecklists"
                 component={() => (
-                  <ViewChecklists userInfo={this.state.userInfo} />
+                  <ViewChecklists
+                    userInfo={this.state.userInfo}
+                    onClickSignOut={this.onClickSignOut}
+                  />
                 )}
               />
               <Route
                 exact
                 path="/users"
                 component={() => (
-                  <UserManagement userInfo={this.state.userInfo} />
+                  <UserManagement
+                    userInfo={this.state.userInfo}
+                    onClickSignOut={this.onClickSignOut}
+                  />
                 )}
               />
               <Route
                 exact
                 path="/profile"
-                component={() => <Profile userInfo={this.state.userInfo} />}
+                component={() => (
+                  <Profile
+                    userInfo={this.state.userInfo}
+                    onClickSignOut={this.onClickSignOut}
+                  />
+                )}
               />
 
               <Route
