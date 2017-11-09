@@ -32,8 +32,8 @@ export default class TopNavBar extends React.Component {
         // note we're assiging the url as the key to access later in the handleClick method
 
         <Menu.Item className="tab">
-          <Link to={tab.url}>
-            <p>{tab.name}</p>
+          <Link className="tab-text" to={tab.url}>
+            {tab.name}
           </Link>
         </Menu.Item>
       );

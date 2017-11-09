@@ -8,16 +8,19 @@
 }
 
 .tab {
-  color: white !important;
-  font-size: 1.25rem;
-  font-weight: 500;
   display: flex !important;
   align-items: center;
-  padding: 5px 0 !important;
-  margin: 0 25px !important;
+  margin: 0 10px !important;
 }
 
-.tab:hover {
+.tab-text {
+  color: white !important;
+  padding: 10px 0 !important;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.tab-text:hover {
   color: #f47d37 !important;
 }
 
