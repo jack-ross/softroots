@@ -1,8 +1,50 @@
-.ant-menu-dark {
-  background: pink;
+.ant-menu {
+  line-height: 1rem !important;
 }
 
-.ant-menu-item {
-  font-size: 15px;
+.nav-bar {
+  display: flex !important;
+  align-items: center;
+}
+
+.tab {
+  color: white !important;
+  font-size: 1.25rem;
   font-weight: 500;
+  display: flex !important;
+  align-items: center;
+  padding: 5px 0 !important;
+  margin: 0 25px !important;
+}
+
+.tab:hover {
+  color: #f47d37 !important;
+}
+
+.roots-logo {
+  display: flex !important;
+  padding: 8px !important;
+  padding-left: 16px !important;
+}
+
+.logout-button {
+  display: flex !important;
+  align-items: center;
+  margin-left: auto !important;
+}
+
+.button {
+  margin-left: 1rem;
+}
+
+.button:hover {
+  border-color: #f47d37 !important;
+}
+
+.button-text {
+  color: #404040 !important;
+}
+
+.button-text:hover {
+  color: #f47d37 !important;
 }

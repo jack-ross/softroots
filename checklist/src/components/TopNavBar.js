@@ -1,6 +1,8 @@
-import { Menu } from "antd";
+import { Menu, Button } from "antd";
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
+import rootsLogo from "../images/rootsLogo.jpg";
+import profileIcon from "../images/profileIcon.png";
 import "../css/TopNavBar.css";
 
 /* PROPS:
@@ -32,7 +34,7 @@ export default class TopNavBar extends React.Component {
     const listTabs = tabs.map(tab => {
       return (
         // note we're assiging the url as the key to access later in the handleClick method
-        <Menu.Item key={tab.url}>
+        <Menu.Item className="tab" key={tab.url}>
           {tab.name}
         </Menu.Item>
       );
@@ -60,35 +62,36 @@ export default class TopNavBar extends React.Component {
 
     // else render the navigation bar itself
     const listTabs = this.createTabsList(this.props.tabs);
-    let narrow = false;
-    if (this.props.className === "verticle") {
-      narrow = true;
-    }
     return (
       <div className="tabs">
-        {narrow &&
-          <div>
-            <Menu
-              mode="verticle"
-              className="side"
-              theme="dark"
-              size="large"
-              onClick={e => this.handleTabClick(e)}
+        <Menu
+          className="nav-bar"
+          selectable={false}
+          mode="horizontal"
+          theme="dark"
+          onClick={e => this.handleTabClick(e)}
+        >
+          <Menu.Item className="roots-logo" key="/home">
+            <img src={rootsLogo} height="50px" width="50px" />
+          </Menu.Item>
+          {listTabs}
+          <Menu.Item className="logout-button">
+            <Link to="/profile">
+              <img
+                src={profileIcon}
+                alt="Profile Icon"
+                height="35px"
+                width="35px"
+              />
+            </Link>
+            <Button
+              className="button"
+              onClick={() => this.props.onClickSignOut()}
             >
-              {listTabs}
-            </Menu>
-          </div>}
-        {!narrow &&
-          <div className="tabs1">
-            <Menu
-              selectable={false}
-              mode="horizontal"
-              theme="dark"
-              onClick={e => this.handleTabClick(e)}
-            >
-              {listTabs}
-            </Menu>
-          </div>}
+              <h3 className="button-text">Logout</h3>
+            </Button>
+          </Menu.Item>
+        </Menu>
       </div>
     );
   }

@@ -10,15 +10,15 @@ const tabs = [
     url: "/home"
   },
   {
-    name: "Create a Checklist",
+    name: "Create Checklist",
     url: "/createchecklist"
   },
   {
-    name: "View Current Checklists",
+    name: "View Checklist",
     url: "/viewchecklists"
   },
   {
-    name: "Manage Users",
+    name: "Manage",
     url: "/users"
   }
 ];
@@ -32,8 +32,11 @@ export default class Home extends Component {
     return (
       <div>
         <TopNavBar className="horizontal" tabs={tabs} currentURL="/home" />
+        <h1 className="welcome-message">
+          Welcome, {this.props.userInfo.firstName}!
+        </h1>
         <div className="checkImage">
-          {" "}<img src={background} alt="Background" />{" "}
+          <img src={background} alt="Background" />
         </div>
       </div>
     );

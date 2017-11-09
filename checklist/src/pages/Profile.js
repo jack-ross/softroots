@@ -14,15 +14,15 @@ const tabs = [
     url: "/home"
   },
   {
-    name: "Create a Checklist",
+    name: "Create Checklist",
     url: "/createchecklist"
   },
   {
-    name: "View Current Checklists",
+    name: "View Checklist",
     url: "/viewchecklists"
   },
   {
-    name: "Manage Users",
+    name: "Manage",
     url: "/users"
   }
 ];
@@ -136,22 +136,19 @@ export default class Profile extends Component {
           <h1> User Profile </h1>
           <h3> Name </h3>
           <p>
-            {" "}{this.props.userInfo.firstName +
+            {" "}
+            {this.props.userInfo.firstName +
               " " +
               this.props.userInfo.lastName}{" "}
           </p>
           <div style={{ margin: "12px" }} />
 
           <h3> Location </h3>
-          <p>
-            {" "}{this.props.userInfo.location}{" "}
-          </p>
+          <p> {this.props.userInfo.location} </p>
           <div style={{ margin: "12px" }} />
 
           <h3> Role </h3>
-          <p>
-            {" "}{this.props.userInfo.role}{" "}
-          </p>
+          <p> {this.props.userInfo.role} </p>
           <div style={{ margin: "24px" }} />
         </div>
 
@@ -174,7 +171,8 @@ export default class Profile extends Component {
             type="primary"
             onClick={() => this.onClickChangeEmail()}
           >
-            {" "}Change Email{" "}
+            {" "}
+            Change Email{" "}
           </Button>
           <div style={{ margin: "24px" }} />
 
@@ -206,7 +204,8 @@ export default class Profile extends Component {
             type="primary"
             onClick={() => this.onClickChangePassword()}
           >
-            {" "}Change Password{" "}
+            {" "}
+            Change Password{" "}
           </Button>
         </div>
       </div>

@@ -16,15 +16,15 @@ const tabs = [
     url: "/home"
   },
   {
-    name: "Create a Checklist",
+    name: "Create Checklist",
     url: "/createchecklist"
   },
   {
-    name: "View Current Checklists",
+    name: "View Checklist",
     url: "/viewchecklists"
   },
   {
-    name: "Manage Users",
+    name: "Manage",
     url: "/users"
   }
 ];
@@ -48,12 +48,15 @@ export default class CreateOrEditChecklist extends Component {
   }
 
   componentWillMount() {
-    firebase.database().ref("/checklists/").on("value", snapshot => {
-      this.setState({
-        ...this.state,
-        allChecklists: snapshot.val()
+    firebase
+      .database()
+      .ref("/checklists/")
+      .on("value", snapshot => {
+        this.setState({
+          ...this.state,
+          allChecklists: snapshot.val()
+        });
       });
-    });
   }
 
   updateField(field, value) {
@@ -125,7 +128,8 @@ export default class CreateOrEditChecklist extends Component {
           style={{ cursor: "pointer", color: "#108ee9" }}
           onClick={() => this.switchModalVisibility()}
         >
-          {" "}Import Checklist{" "}
+          {" "}
+          Import Checklist{" "}
         </p>
         <div style={{ margin: "20px" }} />
         <FindPreexistingListModal
@@ -160,7 +164,8 @@ export default class CreateOrEditChecklist extends Component {
             userInfo={this.props.userInfo}
           />
           <Button type="primary" onClick={() => this.confirmSubmit()}>
-            {" "}Submit!{" "}
+            {" "}
+            Submit!{" "}
           </Button>
         </div>
       </div>

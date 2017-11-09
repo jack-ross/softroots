@@ -17,15 +17,15 @@ const tabs = [
     url: "/home"
   },
   {
-    name: "Create a Checklist",
+    name: "Create Checklist",
     url: "/createchecklist"
   },
   {
-    name: "View Current Checklists",
+    name: "View Checklist",
     url: "/viewchecklists"
   },
   {
-    name: "Manage Users",
+    name: "Manage",
     url: "/users"
   }
 ];
@@ -45,21 +45,24 @@ export default class ViewChecklists extends Component {
 
   componentWillMount() {
     // pull all the data from firebase (initially locations are hardcoded just for Roots)
-    firebase.database().ref("/checklists").on("value", snapshot => {
-      if (snapshot.val()) {
-        this.setState({
-          ...this.state,
-          status: "",
-          data: snapshot.val()
-        });
-      } else {
-        this.setState({
-          ...this.state,
-          status: "No checklists found.",
-          data: []
-        });
-      }
-    });
+    firebase
+      .database()
+      .ref("/checklists")
+      .on("value", snapshot => {
+        if (snapshot.val()) {
+          this.setState({
+            ...this.state,
+            status: "",
+            data: snapshot.val()
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            status: "No checklists found.",
+            data: []
+          });
+        }
+      });
   }
 
   onClickEdit(checklist) {
@@ -166,9 +169,7 @@ export default class ViewChecklists extends Component {
       if (!roleInfoAtLocation) {
         return (
           <div>
-            <h1>
-              {" "}{location}{" "}
-            </h1>
+            <h1> {location} </h1>
             <p> No checklists at this location. </p>
           </div>
         );
@@ -181,9 +182,7 @@ export default class ViewChecklists extends Component {
         if (!roleChecklists) {
           return (
             <div>
-              <h3 style={{ fontSize: "16px" }}>
-                {" "}{role}{" "}
-              </h3>
+              <h3 style={{ fontSize: "16px" }}> {role} </h3>
               <p> None </p>
               <div style={{ margin: "24px 0" }} />
             </div>
@@ -194,9 +193,7 @@ export default class ViewChecklists extends Component {
         });
         return (
           <div>
-            <h3 style={{ fontSize: "16px" }}>
-              {" "}{role}{" "}
-            </h3>
+            <h3 style={{ fontSize: "16px" }}> {role} </h3>
             <CollapseableList
               listInfo={checklists}
               onClickEdit={checklist => this.onClickEdit(checklist)}
@@ -210,7 +207,8 @@ export default class ViewChecklists extends Component {
       return (
         <div>
           <h1 style={{ textAlign: "center", textDecoration: "underline" }}>
-            {" "}{location}{" "}
+            {" "}
+            {location}{" "}
           </h1>
           <div style={{ margin: "16px 0" }} />
           {roleChecklists}
@@ -225,12 +223,8 @@ export default class ViewChecklists extends Component {
           tabs={tabs}
           currentURL="/viewchecklists"
         />
-        <p>
-          {" "}{this.state.status}{" "}
-        </p>
-        <div className="viewChecklists">
-          {checklistDisplays}
-        </div>
+        <p> {this.state.status} </p>
+        <div className="viewChecklists">{checklistDisplays}</div>
 
         <Modal
           style={{ top: "30px" }}

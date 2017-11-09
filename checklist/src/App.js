@@ -77,11 +77,6 @@ class App extends Component {
       <div className="App">
         <BrowserRouter>
           <div style={{ height: "100%", width: "100%" }}>
-            {this.state.userInfo &&
-              <Header
-                userFirstName={this.state.userInfo.firstName}
-                onClickSignOut={() => this.onClickSignOut()}
-              />}
             <Switch>
               <Route
                 exact
@@ -96,20 +91,23 @@ class App extends Component {
               <Route
                 exact
                 path="/createchecklist"
-                component={() =>
-                  <CreateOrEditChecklist userInfo={this.state.userInfo} />}
+                component={() => (
+                  <CreateOrEditChecklist userInfo={this.state.userInfo} />
+                )}
               />
               <Route
                 exact
                 path="/viewchecklists"
-                component={() =>
-                  <ViewChecklists userInfo={this.state.userInfo} />}
+                component={() => (
+                  <ViewChecklists userInfo={this.state.userInfo} />
+                )}
               />
               <Route
                 exact
                 path="/users"
-                component={() =>
-                  <UserManagement userInfo={this.state.userInfo} />}
+                component={() => (
+                  <UserManagement userInfo={this.state.userInfo} />
+                )}
               />
               <Route
                 exact
