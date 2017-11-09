@@ -80,8 +80,8 @@ export default class TopNavBar extends React.Component {
               <img
                 src={profileIcon}
                 alt="Profile Icon"
-                height="50px"
-                width="50px"
+                height="35px"
+                width="35px"
               />
             </Link>
             <Button

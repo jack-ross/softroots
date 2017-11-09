@@ -15,11 +15,11 @@ const tabs = [
     url: "/home"
   },
   {
-    name: "Create",
+    name: "Create Checklist",
     url: "/createchecklist"
   },
   {
-    name: "View",
+    name: "View Checklist",
     url: "/viewchecklists"
   },
   {
