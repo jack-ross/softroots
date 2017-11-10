@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, TimePicker } from "antd";
+import { Button } from "antd";
 import DropdownSelection from "./DropdownSelection.js";
 import "../css/ChecklistForm.css";
 
