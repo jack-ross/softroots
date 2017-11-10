@@ -5,6 +5,7 @@
 .nav-bar {
   display: flex !important;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .tab {
@@ -20,14 +21,45 @@
   font-weight: 500;
 }
 
-.tab-text:hover {
-  color: #f47d37 !important;
-}
-
 .roots-logo {
   display: flex !important;
   padding: 8px !important;
   padding-left: 16px !important;
+}
+
+@media only screen and (max-width: 865px) {
+  .nav-bar {
+    padding: 1rem 0 !important;
+  }
+  .tab {
+    margin: 0 !important;
+  }
+  .tab-text {
+    font-size: 1.15rem;
+  }
+  .roots-logo {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .nav-bar {
+    padding: 1rem 0 !important;
+  }
+  .tab {
+    margin: 0 !important;
+    padding: 10px 7px !important;
+  }
+  .tab-text {
+    font-size: 0.9rem;
+  }
+  .roots-logo {
+    display: none !important;
+  }
+}
+
+.tab-text:hover {
+  color: #f47d37 !important;
 }
 
 .logout-button {

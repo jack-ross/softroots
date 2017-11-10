@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import { Input } from "antd";
+import { Input, notification, Modal, Button } from "antd";
 import NewDynamicHeaders from "../components/NewDynamicHeaders.js";
 import Checklist from "../components/Checklist.js";
+import ChecklistValidation from "../validation/ChecklistValidation.js";
+import submitChecklist from "../firebase/submitChecklist.js";
 import DropdownSelection from "../components/DropdownSelection.js";
 import TimeDropdowns from "../components/TimeDropdowns.js";
 import roleHierarchy from "../roles/roleHierarchy.js";
+import "../css/ChecklistForm.css";
 
 /* PROPS
     checklistData: obj; has all the relevant fields for checklists (managed by parent component)
@@ -38,6 +41,57 @@ const daysOfWeek = [
 let locations = ["Charlottesville, VA", "Newark, DE"];
 
 export default class ChecklistForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      newChecklist: {
+        title: "",
+        description: "",
+        subsections: [],
+        daysToRepeat: [],
+        endTimes: [],
+        locations: [],
+        role: ""
+      },
+      allChecklists: undefined,
+      isPreexistingModalVisible: false
+    };
+  }
+
+  confirmSubmit() {
+    // validate input; throw errors if found
+    let valid = new ChecklistValidation();
+    let errorsAndWarnings = valid.validateChecklist(this.state.newChecklist);
+    if (errorsAndWarnings.errors.length !== 0) {
+      errorsAndWarnings.errors.map(error => {
+        notification.error({
+          message: "ERROR",
+          description: error
+        });
+      });
+      return;
+    }
+
+    // if no errors, but warnings, display them along with submit modal
+    errorsAndWarnings.warnings.map(warning => {
+      notification.warning({
+        message: "WARNING",
+        description: warning
+      });
+    });
+
+    // confirm submit with a modal
+    Modal.confirm({
+      title: "Submit Checklist?",
+      okText: "Yes",
+      cancelText: "No",
+      onOk: () => {
+        submitChecklist(this.state.newChecklist);
+      },
+      onCancel() {}
+    });
+  }
+
   render() {
     // grab the relevant roles based on user's position in the hierarchy
     const roles = roleHierarchy[this.props.userInfo.role];
@@ -48,76 +102,82 @@ export default class ChecklistForm extends Component {
     }
 
     return (
-      <div style={{ textAlign: "center" }}>
-        <h1> Title </h1>
-        <Input
-          style={{ width: 200 }}
-          value={this.props.checklistData.title}
-          onChange={e => this.props.updateField("title", e.target.value)}
-          maxLength={50}
-          placeholder={"Title (max 50 characters)"}
-        />
-        <div style={{ margin: "30px" }} />
-
-        <h1> Description </h1>
-        <Input
-          style={{ width: 300 }}
-          value={this.props.checklistData.description}
-          onChange={e => this.props.updateField("description", e.target.value)}
-          maxLength={500}
-          placeholder={"Description (max 500 characters)"}
-          type="textarea"
-          autosize
-        />
-        <div style={{ margin: "30px 0" }} />
-
-        <h1> Subsections </h1>
-        <NewDynamicHeaders
-          fields={testFields}
-          data={this.props.checklistData.subsections}
-          updateParent={subsections =>
-            this.props.updateField("subsections", subsections)}
-        />
-        <div style={{ margin: "30px 0" }} />
-
-        <div style={{ margin: "10px 0" }} />
-        <h1> Days to Repeat </h1>
-        <Checklist
-          checklistValues={daysOfWeek}
-          checkedValues={this.props.checklistData.daysToRepeat}
-          onCheck={checkedItems =>
-            this.props.updateField("daysToRepeat", checkedItems)}
-        />
-        <div style={{ margin: "30px 0" }} />
-
-        <h1> End Times </h1>
-        <TimeDropdowns
-          timeData={this.props.checklistData.endTimes}
-          onChange={data => this.props.updateField("endTimes", data)}
-        />
-        <div style={{ margin: "30px 0" }} />
-
-        <h1> Role </h1>
-        <DropdownSelection
-          promptText={"Select Role"}
-          dropdownValues={roles}
-          onClickField={value => this.props.updateField("role", value)}
-          selectedValue={this.props.checklistData.role}
-        />
-        <div style={{ margin: "30px 0" }} />
-
+      <div className="checklist-container">
+        <h1 className="header">Create A New Checklist</h1>
+        <br />
+        <div className="container">
+          <p className="text"> Title </p>
+          <Input
+            className="title-input"
+            value={this.props.checklistData.title}
+            onChange={e => this.props.updateField("title", e.target.value)}
+            maxLength={50}
+            placeholder={"Title (max 50 characters)"}
+          />
+        </div>
+        <div className="description-container">
+          <p className="text"> Description </p>
+          <Input
+            className="description-input"
+            value={this.props.checklistData.description}
+            onChange={e =>
+              this.props.updateField("description", e.target.value)}
+            placeholder={"Description (max 500 characters)"}
+            type="textarea"
+          />
+        </div>
+        <div className="container">
+          <p className="text">End Times</p>
+          <TimeDropdowns
+            timeData={this.props.checklistData.endTimes}
+            onChange={data => this.props.updateField("endTimes", data)}
+          />
+        </div>
+        <div className="container">
+          <p className="text"> Days to Repeat </p>
+          <Checklist
+            checklistValues={daysOfWeek}
+            checkedValues={this.props.checklistData.daysToRepeat}
+            onCheck={checkedItems =>
+              this.props.updateField("daysToRepeat", checkedItems)}
+          />
+        </div>
+        <div className="container">
+          <p className="text"> Role </p>
+          <DropdownSelection
+            promptText={"Select Role"}
+            dropdownValues={roles}
+            onClickField={value => this.props.updateField("role", value)}
+            selectedValue={this.props.checklistData.role}
+          />
+        </div>
         {!this.props.hideLocations && (
-          <div>
-            <h1> Location(s) </h1>
+          <div className="container">
+            <p className="text"> Location(s) </p>
             <Checklist
               checklistValues={locations}
               checkedValues={this.props.checklistData.locations}
               onCheck={checkedItems =>
                 this.props.updateField("locations", checkedItems)}
             />
-            <div style={{ margin: "30px 0" }} />
           </div>
         )}
+        <div className="container">
+          <p className="text"> Subsections </p>
+          <NewDynamicHeaders
+            fields={testFields}
+            data={this.props.checklistData.subsections}
+            updateParent={subsections =>
+              this.props.updateField("subsections", subsections)}
+          />
+        </div>
+        <Button
+          className="submit-button"
+          type="primary"
+          onClick={() => this.confirmSubmit()}
+        >
+          Submit
+        </Button>
       </div>
     );
   }

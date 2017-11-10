@@ -1,6 +1,6 @@
-import { Checkbox } from "antd";
+import { Checkbox, Button } from "antd";
 import React, { Component } from "react";
-
+import "../css/ChecklistForm.css";
 /* PROPS:
 
 checklistValues= [String] The value that are displayed to be checked
@@ -23,8 +23,7 @@ export default class Checklist extends Component {
     super(props);
 
     this.state = {
-      indeterminate: true,
-      checkAll: false
+      checkAll: true
     };
   }
 
@@ -39,31 +38,21 @@ export default class Checklist extends Component {
     this.props.onCheck(checkedList);
   };
 
-  onCheckAllChange = e => {
-    let checkedItems = [];
-    if (e.target.checked) {
-      checkedItems = this.props.checklistValues;
+  onCheckAllChange = () => {
+    if (this.state.checkAll) {
+      this.props.onCheck(this.props.checklistValues);
+    } else {
+      this.props.onCheck([]);
     }
-    this.setState({
-      indeterminate: false,
-      checkAll: e.target.checked
-    });
-    this.props.onCheck(checkedItems);
+    this.setState({ checkAll: !this.state.checkAll });
   };
 
   render() {
     return (
-      <div>
-        <div style={{}}>
-          <Checkbox
-            indeterminate={this.state.indeterminate}
-            onChange={this.onCheckAllChange}
-            checked={this.state.checkAll}
-          >
-            Check all
-          </Checkbox>
-        </div>
-        <br />
+      <div className="checkboxes">
+        <Button className="checklist-button" onClick={this.onCheckAllChange}>
+          Toggle all
+        </Button>
         <CheckboxGroup
           options={this.props.checklistValues}
           value={this.props.checkedValues}
