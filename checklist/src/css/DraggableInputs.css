@@ -1,6 +1,14 @@
+.draggable-inputs {
+  width: 100%;
+}
+
+.card-container {
+  background: transparent !important;
+  border: none !important;
+}
+
 .flexContainer {
   display: flex;
-  background: transparent !important;
 }
 
 .singleInput {

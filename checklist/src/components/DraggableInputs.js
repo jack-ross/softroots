@@ -57,8 +57,8 @@ const SortableItem = SortableElement(
 
     // return those inputs and a DragHandle inside a list item
     return (
-      <li>
-        <Card>
+      <li className="list">
+        <Card className="card-container">
           <div className="flexContainer">
             <div className="dragHandle">
               <DragHandle />
@@ -150,7 +150,7 @@ export default class DraggableInputs extends Component {
 
   render() {
     return (
-      <div>
+      <div className="draggable-inputs">
         <SortableList
           dataObjects={this.props.values}
           fieldObjects={this.props.fields}
