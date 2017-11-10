@@ -3,6 +3,7 @@ import TopNavBar from "../components/TopNavBar.js";
 import PleaseLogin from "../components/PleaseLogin.js";
 import { Input, Button, Modal, notification } from "antd";
 import firebase from "../configs/firebaseConfig.js";
+import "../css/Profile.css";
 
 /* PROPS
     userInfo: object, logged-in user's info from firebase
@@ -136,81 +137,84 @@ export default class Profile extends Component {
           tabs={tabs}
           onClickSignOut={this.props.onClickSignOut}
         />
-        <div style={{ textAlign: "center", padding: "30px" }}>
-          <h1> User Profile </h1>
-          <h3> Name </h3>
-          <p>
-            {" "}
-            {this.props.userInfo.firstName +
-              " " +
-              this.props.userInfo.lastName}{" "}
-          </p>
-          <div style={{ margin: "12px" }} />
-
-          <h3> Location </h3>
-          <p> {this.props.userInfo.location} </p>
-          <div style={{ margin: "12px" }} />
-
-          <h3> Role </h3>
-          <p> {this.props.userInfo.role} </p>
-          <div style={{ margin: "24px" }} />
-        </div>
-
-        <div style={{ textAlign: "center" }}>
-          <h1> Change Email and Password </h1>
-
-          <h3> Enter New Email: </h3>
-          <div>
-            <Input
-              style={{ width: 250 }}
-              onChange={e => this.onInputChange("newEmail", e.target.value)}
-              placeholder="New Email (max 100 characters)"
-              maxLength={100}
-            />
-          </div>
-          <div style={{ margin: "12px" }} />
-
-          <Button
-            icon="mail "
-            type="primary"
-            onClick={() => this.onClickChangeEmail()}
-          >
-            {" "}
-            Change Email{" "}
-          </Button>
-          <div style={{ margin: "24px" }} />
-
-          <div>
-            <h3> Enter New Password: </h3>
-            <Input
-              style={{ width: 250 }}
-              type="password"
-              onChange={e => this.onInputChange("newPassword", e.target.value)}
-              placeholder="Password (between 6-100 characters)"
-              maxLength={100}
-            />
+        <div className="card">
+          <div style={{ textAlign: "center" }}>
+            <h1> User Profile </h1>
+            <h3> Name </h3>
+            <p>
+              {" "}
+              {this.props.userInfo.firstName +
+                " " +
+                this.props.userInfo.lastName}{" "}
+            </p>
             <div style={{ margin: "12px" }} />
 
-            <h3> Enter New Password Again: </h3>
-            <Input
-              style={{ width: 250 }}
-              type="password"
-              onChange={e =>
-                this.onInputChange("newPasswordRepeated", e.target.value)}
-              placeholder="Password (between 6-100 characters)"
-              maxLength={100}
-            />
+            <h3> Location </h3>
+            <p> {this.props.userInfo.location} </p>
             <div style={{ margin: "12px" }} />
+
+            <h3> Role </h3>
+            <p> {this.props.userInfo.role} </p>
+            <div style={{ margin: "24px" }} />
           </div>
 
-          <Button
-            icon="lock"
-            type="primary"
-            onClick={() => this.onClickChangePassword()}
-          >
-            {" "}
-            Change Password{" "}
-          </Button>
+          <div style={{ textAlign: "center" }}>
+            <h1> Change Email and Password </h1>
+
+            <h3> Enter New Email: </h3>
+            <div>
+              <Input
+                style={{ width: 250 }}
+                onChange={e => this.onInputChange("newEmail", e.target.value)}
+                placeholder="New Email (max 100 characters)"
+                maxLength={100}
+              />
+            </div>
+            <div style={{ margin: "12px" }} />
+
+            <Button
+              icon="mail "
+              type="primary"
+              onClick={() => this.onClickChangeEmail()}
+            >
+              {" "}
+              Change Email{" "}
+            </Button>
+            <div style={{ margin: "24px" }} />
+
+            <div>
+              <h3> Enter New Password: </h3>
+              <Input
+                style={{ width: 250 }}
+                type="password"
+                onChange={e =>
+                  this.onInputChange("newPassword", e.target.value)}
+                placeholder="Password (between 6-100 characters)"
+                maxLength={100}
+              />
+              <div style={{ margin: "12px" }} />
+
+              <h3> Enter New Password Again: </h3>
+              <Input
+                style={{ width: 250 }}
+                type="password"
+                onChange={e =>
+                  this.onInputChange("newPasswordRepeated", e.target.value)}
+                placeholder="Password (between 6-100 characters)"
+                maxLength={100}
+              />
+              <div style={{ margin: "12px" }} />
+            </div>
+
+            <Button
+              icon="lock"
+              type="primary"
+              onClick={() => this.onClickChangePassword()}
+            >
+              {" "}
+              Change Password{" "}
+            </Button>
+          </div>
         </div>
       </div>
     );

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Select, Button, Modal, notification } from "antd";
 import updateUserRole from "../firebase/updateUserRole.js";
+import "../css/UserManagement.css";
 
 /* PROPS
     roles: [string], array of possible roles for the dropdown to display
@@ -64,7 +65,13 @@ export default class ChangePrivilegeDropdown extends Component {
         >
           {roles}
         </Select>
-        <Button onClick={() => this.onClickButton()}> Save </Button>
+        <Button
+          className="change-role-button"
+          type="primary"
+          onClick={() => this.onClickButton()}
+        >
+          Save
+        </Button>
       </div>
     );
   }

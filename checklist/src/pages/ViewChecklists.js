@@ -205,7 +205,7 @@ export default class ViewChecklists extends Component {
         );
       });
       return (
-        <div>
+        <div className="location-card">
           <h1 style={{ textAlign: "center", textDecoration: "underline" }}>
             {" "}
             {location}{" "}

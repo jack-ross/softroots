@@ -47,9 +47,11 @@ export default class NewDynamicHeaders extends Component {
   render() {
     const headerInputs = this.props.data.map((dataObj, index) => {
       return (
-        <div className="container">
-          <div className="container">
-            <p> Subsection Title </p>
+        <div className="subsection-divider">
+          <div className="subsection-input">
+            <p>
+              <b> Subsection Title </b>
+            </p>
             <Input
               style={{ width: 200 }}
               value={dataObj.title}
@@ -58,14 +60,16 @@ export default class NewDynamicHeaders extends Component {
               maxLength={100}
             />
           </div>
-          <p> Tasks </p>
-          <DraggableInputs
-            values={this.props.data[index].subtasks}
-            fields={this.props.fields}
-            updateParent={subtasks => this.onSubtasksChange(subtasks, index)}
-            displayConfirmDeleteModal={() =>
-              displayConfirmDeleteModal(() => this.removeHeader(index))}
-          />
+          <div className="subsection-input">
+            <p> Tasks </p>
+            <DraggableInputs
+              values={this.props.data[index].subtasks}
+              fields={this.props.fields}
+              updateParent={subtasks => this.onSubtasksChange(subtasks, index)}
+              displayConfirmDeleteModal={() =>
+                displayConfirmDeleteModal(() => this.removeHeader(index))}
+            />
+          </div>
         </div>
       );
     });

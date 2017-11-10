@@ -29,6 +29,19 @@
   max-width: 100%;
 }
 
+.subsection-container {
+  width: 100%;
+}
+
+.subsection-input {
+  padding-bottom: 1rem;
+}
+
+.subsection-divider {
+  border-bottom: 1px solid black;
+  margin-bottom: 1rem;
+}
+
 .description-container {
   width: 100%;
 }
