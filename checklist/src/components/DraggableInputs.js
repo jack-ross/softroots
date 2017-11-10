@@ -160,8 +160,18 @@ export default class DraggableInputs extends Component {
           onSortEnd={this.onSortEnd}
           useDragHandle={true}
         />
-        <Button onClick={() => this.addInputs()}> + Add Another Task </Button>
-        <div style={{ margin: "24px 0" }} />
+        <Button className="task-button" onClick={() => this.addInputs()}>
+          {" "}
+          + Add Another Task{" "}
+        </Button>
+        <Button
+          className="task-button"
+          icon="close-circle-o"
+          type="danger"
+          onClick={this.props.displayConfirmDeleteModal}
+        >
+          Remove Subsection
+        </Button>
       </div>
     );
   }

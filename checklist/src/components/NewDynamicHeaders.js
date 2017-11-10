@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Input, Button } from "antd";
 import DraggableInputs from "./DraggableInputs.js";
 import displayConfirmDeleteModal from "../helperFunctions/displayConfirmDeleteModal.js";
+import "../css/ChecklistForm.css";
 
 /* PROPS
     data: [obj]; array of initial data to be rendered formatted as such:
@@ -46,31 +47,25 @@ export default class NewDynamicHeaders extends Component {
   render() {
     const headerInputs = this.props.data.map((dataObj, index) => {
       return (
-        <div>
-          <h3> Subsection Title </h3>
-          <Input
-            style={{ width: 200 }}
-            value={dataObj.title}
-            onChange={e => this.onHeaderChange(e, index)}
-            placeholder={"Title (max 100 characters)"}
-            maxLength={100}
-          />
-          <div style={{ margin: "16px 0" }} />
-          <h3> Tasks </h3>
+        <div className="container">
+          <div className="container">
+            <p> Subsection Title </p>
+            <Input
+              style={{ width: 200 }}
+              value={dataObj.title}
+              onChange={e => this.onHeaderChange(e, index)}
+              placeholder={"Title (max 100 characters)"}
+              maxLength={100}
+            />
+          </div>
+          <p> Tasks </p>
           <DraggableInputs
             values={this.props.data[index].subtasks}
             fields={this.props.fields}
             updateParent={subtasks => this.onSubtasksChange(subtasks, index)}
-          />
-          <Button
-            icon="close-circle-o"
-            type="danger"
-            onClick={() =>
+            displayConfirmDeleteModal={() =>
               displayConfirmDeleteModal(() => this.removeHeader(index))}
-          >
-            {" "}Remove Subsection{" "}
-          </Button>
-          <div style={{ margin: "24px 0" }} />
+          />
         </div>
       );
     });
@@ -78,9 +73,9 @@ export default class NewDynamicHeaders extends Component {
     return (
       <div>
         {headerInputs}
-        <div style={{ margin: "24px 0" }} />
         <Button type="primary" onClick={() => this.addHeader()}>
-          {" "}+ New Subsection{" "}
+          {" "}
+          + New Subsection{" "}
         </Button>
       </div>
     );

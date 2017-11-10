@@ -1,7 +1,12 @@
 .flexContainer {
   display: flex;
+  background: transparent !important;
 }
 
 .singleInput {
   flex: 1;
+}
+
+.task-button {
+  width: 160px;
 }

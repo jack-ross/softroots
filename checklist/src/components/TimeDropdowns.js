@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Button } from "antd";
+import { Button, TimePicker } from "antd";
 import DropdownSelection from "./DropdownSelection.js";
+import "../css/ChecklistForm.css";
 
 /* PROPS
     timeData: [obj]; array of objects, each of which rep's a time with following fields:
@@ -37,7 +38,7 @@ export default class TimeDropdowns extends Component {
   render() {
     let dropdowns = this.props.timeData.map((timeObj, index) => {
       return (
-        <div>
+        <div className="dropdown-container">
           <DropdownSelection
             promptText="Select Hours"
             selectedValue={timeObj.hours}
@@ -74,19 +75,16 @@ export default class TimeDropdowns extends Component {
             icon="close-circle-o"
             type="danger"
             onClick={() => this.removeTime(index)}
-          >
-            {" "}Remove{" "}
-          </Button>
-          <div style={{ margin: "15px 0" }} />
+          />
         </div>
       );
     });
 
     return (
-      <div>
+      <div className="time-dropdown-container">
         {dropdowns}
         <Button type="primary" onClick={() => this.addTime()}>
-          {" "}+ Add Time{" "}
+          + Add Time
         </Button>
       </div>
     );
