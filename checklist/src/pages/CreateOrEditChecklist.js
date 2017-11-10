@@ -11,126 +11,144 @@ import firebase from "../configs/firebaseConfig.js";
 import "../css/CreateOrEditChecklist.css";
 
 const tabs = [
-  {
-    name: "Home",
-    url: "/home"
-  },
-  {
-    name: "Create Checklist",
-    url: "/createchecklist"
-  },
-  {
-    name: "View Checklist",
-    url: "/viewchecklists"
-  },
-  {
-    name: "Manage",
-    url: "/users"
-  }
+    {
+        name: "Home",
+        url: "/home"
+    },
+    {
+        name: "Create Checklist",
+        url: "/createchecklist"
+    },
+    {
+        name: "View Checklist",
+        url: "/viewchecklists"
+    },
+    {
+        name: "Manage",
+        url: "/users"
+    }
 ];
 
 export default class CreateOrEditChecklist extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      newChecklist: {
-        title: "",
-        description: "",
-        subsections: [],
-        daysToRepeat: [],
-        endTimes: [],
-        locations: [],
-        role: ""
-      },
-      allChecklists: undefined,
-      isPreexistingModalVisible: false
-    };
-  }
-
-  componentWillMount() {
-    firebase
-      .database()
-      .ref("/checklists/")
-      .on("value", snapshot => {
-        this.setState({
-          ...this.state,
-          allChecklists: snapshot.val()
-        });
-      });
-  }
-
-  updateField(field, value) {
-    let updatedChecklist = this.state.newChecklist;
-    updatedChecklist[field] = value;
-    this.setState({
-      ...this.state,
-      newChecklist: updatedChecklist
-    });
-  }
-
-  switchModalVisibility() {
-    this.setState({
-      ...this.state,
-      isPreexistingModalVisible: !this.state.isPreexistingModalVisible
-    });
-  }
-
-  onSelectPreexistingChecklist(checklist) {
-    this.setState({
-      ...this.state,
-      newChecklist: checklist,
-      isPreexistingModalVisible: false
-    });
-  }
-
-  render() {
-    if (!this.props.userInfo) {
-      return <PleaseLogin />;
+    constructor(props) {
+        super(props);
+        this.state = {
+            newChecklist: {
+                title: "",
+                description: "",
+                subsections: [],
+                daysToRepeat: [],
+                endTimes: [],
+                locations: [],
+                role: ""
+            },
+            allChecklists: undefined,
+            isPreexistingModalVisible: false
+        };
     }
 
-    const preexistingListModal = (
-      <div>
-        <p
-          style={{ cursor: "pointer", color: "#108ee9" }}
-          onClick={() => this.switchModalVisibility()}
-        >
-          {" "}
-          Import Checklist{" "}
-        </p>
-        <div style={{ margin: "20px" }} />
-        <FindPreexistingListModal
-          checklists={this.state.allChecklists}
-          locations={
-            this.props.userInfo.role === "Admin"
-              ? ["Charlottesville, VA", "Newark, DE"]
-              : [this.props.userInfo.location]
-          }
-          roles={roleHierarchy[this.props.userInfo.role]}
-          onClickSelect={checklist =>
-            this.onSelectPreexistingChecklist(checklist)}
-          onCancel={() => this.switchModalVisibility()}
-          isVisible={this.state.isPreexistingModalVisible}
-        />
-      </div>
-    );
+    componentWillMount() {
+        firebase
+            .database()
+            .ref("/checklists/")
+            .on("value", snapshot => {
+                this.setState({
+                    ...this.state,
+                    allChecklists: snapshot.val()
+                });
+            });
 
-    return (
-      <div>
-        <TopNavBar
-          className="horizontal"
-          tabs={tabs}
-          onClickSignOut={this.props.onClickSignOut}
-        />
-        <div className="createEditPage" style={{ padding: "30px 0" }}>
-          {this.state.allChecklists && preexistingListModal}
+        firebase
+            .database()
+            .ref("/roles")
+            .on("value", snapshot => {
+                if (snapshot.val()) {
+                    this.setState({
+                        ...this.state,
+                        roles: snapshot.val()
+                    });
+                } else {
+                    this.setState({
+                        ...this.state,
+                        roles: ["error loading roles"]
+                    });
+                }
+            });
+    }
 
-          <ChecklistForm
-            checklistData={this.state.newChecklist}
-            updateField={(field, value) => this.updateField(field, value)}
-            userInfo={this.props.userInfo}
-          />
-        </div>
-      </div>
-    );
-  }
+    updateField(field, value) {
+        let updatedChecklist = this.state.newChecklist;
+        updatedChecklist[field] = value;
+        this.setState({
+            ...this.state,
+            newChecklist: updatedChecklist
+        });
+    }
+
+    switchModalVisibility() {
+        this.setState({
+            ...this.state,
+            isPreexistingModalVisible: !this.state.isPreexistingModalVisible
+        });
+    }
+
+    onSelectPreexistingChecklist(checklist) {
+        this.setState({
+            ...this.state,
+            newChecklist: checklist,
+            isPreexistingModalVisible: false
+        });
+    }
+
+    render() {
+        if (!this.props.userInfo) {
+            return <PleaseLogin />;
+        }
+
+        const preexistingListModal = (
+            <div>
+                <p
+                    style={{ cursor: "pointer", color: "#108ee9" }}
+                    onClick={() => this.switchModalVisibility()}
+                >
+                    {" "}
+                    Import Checklist{" "}
+                </p>
+                <div style={{ margin: "20px" }} />
+                <FindPreexistingListModal
+                    checklists={this.state.allChecklists}
+                    locations={
+                        this.props.userInfo.role === "Admin"
+                            ? Object.keys(this.state.roles)
+                            : [this.props.userInfo.location]
+                    }
+                    roles={roleHierarchy[this.props.userInfo.role]}
+                    onClickSelect={checklist =>
+                        this.onSelectPreexistingChecklist(checklist)}
+                    onCancel={() => this.switchModalVisibility()}
+                    isVisible={this.state.isPreexistingModalVisible}
+                />
+            </div>
+        );
+
+        return (
+            <div>
+                <TopNavBar
+                    className="horizontal"
+                    tabs={tabs}
+                    onClickSignOut={this.props.onClickSignOut}
+                />
+                <div className="createEditPage" style={{ padding: "30px 0" }}>
+                    {this.state.allChecklists && preexistingListModal}
+
+                    <ChecklistForm
+                        checklistData={this.state.newChecklist}
+                        updateField={(field, value) =>
+                            this.updateField(field, value)}
+                        userInfo={this.props.userInfo}
+                    />
+                </div>
+            </div>
+        );
+    }
 }
