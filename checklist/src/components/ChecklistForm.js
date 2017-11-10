@@ -162,7 +162,7 @@ export default class ChecklistForm extends Component {
             />
           </div>
         )}
-        <div className="container">
+        <div className="subsection-container">
           <p className="text"> Subsections </p>
           <NewDynamicHeaders
             fields={testFields}

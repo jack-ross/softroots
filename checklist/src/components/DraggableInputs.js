@@ -58,17 +58,16 @@ const SortableItem = SortableElement(
     // return those inputs and a DragHandle inside a list item
     return (
       <li className="list">
-        <Card className="card-container">
-          <div className="flexContainer">
-            <div className="dragHandle">
-              <DragHandle />
-            </div>
-
-            {inputs}
+        <div className="flexContainer">
+          <div className="dragHandle">
+            <DragHandle />
           </div>
 
-          <div style={{ margin: "10px 0" }} />
+          {inputs}
+        </div>
 
+        <div style={{ margin: "10px 0" }} />
+        <div className="subsection-buttons">
           <Select
             value={dataObject.displayType}
             style={{ width: "90px" }}
@@ -89,7 +88,7 @@ const SortableItem = SortableElement(
             {" "}
             Remove Task{" "}
           </Button>
-        </Card>
+        </div>
         <div style={{ margin: "24px 0" }} />
       </li>
     );
