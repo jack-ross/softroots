@@ -40,7 +40,7 @@ export default class CreateOrEditChecklist extends Component {
                 daysToRepeat: [],
                 endTimes: [],
                 locations: [],
-                role: ""
+                roles: []
             },
             allChecklists: undefined,
             isPreexistingModalVisible: false

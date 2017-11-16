@@ -1,26 +1,34 @@
 .draggable-inputs {
-  width: 100%;
+    width: 100%;
 }
 
 .card-container {
-  background: transparent !important;
-  border: none !important;
+    background: transparent !important;
+    border: none !important;
 }
 
 .flexContainer {
-  display: flex;
+    display: flex;
+    flex-grow: 5;
 }
 
 .singleInput {
-  flex: 1;
-  padding: 0 8px;
+    flex: 1;
+    padding: 0 8px;
 }
 
 .subsection-buttons {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
 }
 
 .task-button {
-  width: 160px;
+    width: 160px;
+}
+
+.list {
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem 0;
 }
