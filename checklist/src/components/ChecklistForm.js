@@ -25,7 +25,7 @@ const testFields = [
     },
     {
         field: "longDescription",
-        prompt: "(Optional) Detailed Description:"
+        prompt: "Detailed Description(Optional):"
     }
 ];
 
@@ -189,30 +189,28 @@ export default class ChecklistForm extends Component {
                     />
                 </div>
                 <div className="container">
-                    <p className="text"> Role </p>
-                    <DropdownSelection
-                        promptText={"Select Role"}
-                        dropdownValues={roles}
-                        onClickField={value =>
-                            this.props.updateField("role", value)}
-                        selectedValue={this.props.checklistData.role}
+                    <p className="text"> Location(s) </p>
+                    <Checklist
+                        checklistValues={locationsUserCanSee}
+                        checkedValues={this.props.checklistData.locations}
+                        onCheck={checkedItems =>
+                            this.props.updateField("locations", checkedItems)}
                     />
                 </div>
-                {!this.props.hideLocations && (
-                    <div className="container">
-                        <p className="text"> Location(s) </p>
-                        <Checklist
-                            checklistValues={locations}
-                            checkedValues={this.props.checklistData.locations}
-                            onCheck={checkedItems =>
-                                this.props.updateField(
-                                    "locations",
-                                    checkedItems
-                                )}
-                        />
-                    </div>
-                )}
+
+                <div className="container">
+                    <p className="text"> Role </p>
+                    <Checklist
+                        checklistValues={roles}
+                        checkedValues={this.props.checklistData.roles}
+                        onCheck={checkedItems =>
+                            this.props.updateField("roles", checkedItems)}
+                    />
+                </div>
                 <div className="subsection-container">
+                    <h1 className="subsection-header">
+                        Checklist Sections and Tasks
+                    </h1>
                     <p className="text"> Subsections </p>
                     <NewDynamicHeaders
                         fields={testFields}
