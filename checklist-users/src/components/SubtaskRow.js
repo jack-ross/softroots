@@ -83,13 +83,15 @@ export default class SubtaskRow extends Component {
         <Row style={style} className="show-grid">
           <Col xs={10} sm={9} className="textAndButtonsCol">
             <div className="textAndButtons">
-              <p>{this.props.subtask.shortDescription} </p>
+              <p className="subtaskShortDescription">
+                {this.props.subtask.shortDescription}
+              </p>
 
               {this.props.subtask.longDescription && (
                 <div className="longDescription">
                   <Icon
                     type="plus-circle-o"
-                    style={{ fontSize: "10px", paddingLeft: "4px" }}
+                    className="longDescriptionIcon"
                     onClick={() => this.displayMoreInfo(this.props.subtask)}
                   />
                 </div>
