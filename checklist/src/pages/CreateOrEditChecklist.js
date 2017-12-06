@@ -40,7 +40,9 @@ export default class CreateOrEditChecklist extends Component {
                 daysToRepeat: [],
                 endTimes: [],
                 locations: [],
-                roles: []
+                roles: [],
+                phoneNumbers: [""],
+                emails: [""]
             },
             allChecklists: undefined,
             isPreexistingModalVisible: false
@@ -76,14 +78,50 @@ export default class CreateOrEditChecklist extends Component {
             });
     }
 
-    updateField(field, value) {
+    updateField(field, value, index) {
         let updatedChecklist = this.state.newChecklist;
-        updatedChecklist[field] = value;
+        if (index >= 0) {
+            updatedChecklist[field][index] = value;
+        } else {
+            updatedChecklist[field] = value;
+        }
         this.setState({
             ...this.state,
             newChecklist: updatedChecklist
         });
     }
+
+    handleAddPhoneNumber = () => {
+        let temp = this.state.newChecklist;
+        temp.phoneNumbers.push("");
+        this.setState({
+            newChecklist: temp
+        });
+    };
+
+    handleAddEmail = () => {
+        let temp = this.state.newChecklist;
+        temp.emails.push("");
+        this.setState({
+            newChecklist: temp
+        });
+    };
+
+    handleRemovePhoneNumber = index => {
+        let temp = this.state.newChecklist;
+        temp.phoneNumbers.splice(index, 1);
+        this.setState({
+            newChecklist: temp
+        });
+    };
+
+    handleRemoveEmail = index => {
+        let temp = this.state.newChecklist;
+        temp.emails.splice(index, 1);
+        this.setState({
+            newChecklist: temp
+        });
+    };
 
     switchModalVisibility() {
         this.setState({
@@ -124,7 +162,8 @@ export default class CreateOrEditChecklist extends Component {
                     }
                     roles={roleHierarchy[this.props.userInfo.role]}
                     onClickSelect={checklist =>
-                        this.onSelectPreexistingChecklist(checklist)}
+                        this.onSelectPreexistingChecklist(checklist)
+                    }
                     onCancel={() => this.switchModalVisibility()}
                     isVisible={this.state.isPreexistingModalVisible}
                 />
@@ -143,9 +182,16 @@ export default class CreateOrEditChecklist extends Component {
 
                     <ChecklistForm
                         checklistData={this.state.newChecklist}
-                        updateField={(field, value) =>
-                            this.updateField(field, value)}
+                        updateField={(field, value, index) =>
+                            this.updateField(field, value, index)
+                        }
                         userInfo={this.props.userInfo}
+                        handleAddPhoneNumber={this.handleAddPhoneNumber}
+                        handleAddEmail={this.handleAddEmail}
+                        handleRemoveEmail={index => this.handleRemoveEmail}
+                        handleRemovePhoneNumber={index =>
+                            this.handleRemovePhoneNumber
+                        }
                     />
                 </div>
             </div>
