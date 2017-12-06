@@ -52,7 +52,9 @@ export default class ChecklistForm extends Component {
                 daysToRepeat: [],
                 endTimes: [],
                 locations: [],
-                role: ""
+                role: "",
+                phoneNumbers: [],
+                emails: []
             },
             allChecklists: undefined,
             isPreexistingModalVisible: false
@@ -139,6 +141,60 @@ export default class ChecklistForm extends Component {
                 locations.push(location);
         });
 
+        let phoneFields = [];
+        for (let i = 0; i < this.props.checklistData.phoneNumbers.length; i++) {
+            phoneFields.push(
+                <div className="contact-container">
+                    <Input
+                        value={this.props.checklistData.phoneNumbers[i]}
+                        className="title-input"
+                        onChange={e => {
+                            this.props.updateField(
+                                "phoneNumbers",
+                                e.target.value,
+                                i
+                            );
+                        }}
+                    />
+                    <Button
+                        icon="plus-circle-o"
+                        type="secondary"
+                        onClick={this.props.handleAddPhoneNumber}
+                    />
+                    <Button
+                        icon="close-circle-o"
+                        type="danger"
+                        onClick={this.props.handleRemovePhoneNumber(i)}
+                    />
+                </div>
+            );
+        }
+
+        let emailFields = [];
+        for (let i = 0; i < this.props.checklistData.emails.length; i++) {
+            emailFields.push(
+                <div className="contact-container">
+                    <Input
+                        value={this.props.checklistData.emails[i]}
+                        className="title-input"
+                        onChange={e => {
+                            this.props.updateField("emails", e.target.value, i);
+                        }}
+                    />
+                    <Button
+                        icon="plus-circle-o"
+                        type="secondary"
+                        onClick={this.props.handleAddEmail}
+                    />
+                    <Button
+                        icon="close-circle-o"
+                        type="danger"
+                        onClick={this.props.handleRemoveEmail(i)}
+                    />
+                </div>
+            );
+        }
+
         return (
             <div className="checklist-container">
                 <h1 className="header">Create A New Checklist</h1>
@@ -149,7 +205,8 @@ export default class ChecklistForm extends Component {
                         className="title-input"
                         value={this.props.checklistData.title}
                         onChange={e =>
-                            this.props.updateField("title", e.target.value)}
+                            this.props.updateField("title", e.target.value)
+                        }
                         maxLength={50}
                         placeholder={"Title (max 50 characters)"}
                     />
@@ -163,7 +220,8 @@ export default class ChecklistForm extends Component {
                             this.props.updateField(
                                 "description",
                                 e.target.value
-                            )}
+                            )
+                        }
                         placeholder={"Description (max 500 characters)"}
                         type="textarea"
                     />
@@ -173,7 +231,8 @@ export default class ChecklistForm extends Component {
                     <TimeDropdowns
                         timeData={this.props.checklistData.endTimes}
                         onChange={data =>
-                            this.props.updateField("endTimes", data)}
+                            this.props.updateField("endTimes", data)
+                        }
                     />
                 </div>
                 <div className="container">
@@ -182,10 +241,8 @@ export default class ChecklistForm extends Component {
                         checklistValues={daysOfWeek}
                         checkedValues={this.props.checklistData.daysToRepeat}
                         onCheck={checkedItems =>
-                            this.props.updateField(
-                                "daysToRepeat",
-                                checkedItems
-                            )}
+                            this.props.updateField("daysToRepeat", checkedItems)
+                        }
                     />
                 </div>
                 <div className="container">
@@ -194,18 +251,29 @@ export default class ChecklistForm extends Component {
                         checklistValues={locationsUserCanSee}
                         checkedValues={this.props.checklistData.locations}
                         onCheck={checkedItems =>
-                            this.props.updateField("locations", checkedItems)}
+                            this.props.updateField("locations", checkedItems)
+                        }
                     />
                 </div>
-
                 <div className="container">
                     <p className="text"> Role </p>
                     <Checklist
                         checklistValues={roles}
                         checkedValues={this.props.checklistData.roles}
                         onCheck={checkedItems =>
-                            this.props.updateField("roles", checkedItems)}
+                            this.props.updateField("roles", checkedItems)
+                        }
                     />
+                </div>
+                <div className="double-container">
+                    <div className="phone-container">
+                        <p className="text">Email</p>
+                        {emailFields}
+                    </div>
+                    <div className="phone-container">
+                        <p className="text">Phone</p>
+                        {phoneFields}
+                    </div>
                 </div>
                 <div className="subsection-container">
                     <h1 className="subsection-header">
@@ -216,7 +284,8 @@ export default class ChecklistForm extends Component {
                         fields={testFields}
                         data={this.props.checklistData.subsections}
                         updateParent={subsections =>
-                            this.props.updateField("subsections", subsections)}
+                            this.props.updateField("subsections", subsections)
+                        }
                     />
                 </div>
                 <Button
