@@ -72,6 +72,23 @@ export default class UserManagement extends Component {
           });
         }
       });
+
+    firebase
+      .database()
+      .ref("/roles")
+      .on("value", snapshot => {
+        if (snapshot.val()) {
+          this.setState({
+            ...this.state,
+            roles: snapshot.val()
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            roles: ["error loading roles"]
+          });
+        }
+      });
   }
 
   render() {
@@ -80,9 +97,23 @@ export default class UserManagement extends Component {
     }
 
     const roles = roleHierarchy[this.props.userInfo.role];
-    let locations = ["Charlottesville, VA", "Newark, DE"];
+
+    if (this.state.roles === undefined) return <p>Loading...</p>;
+    let locations = Object.keys(this.state.roles);
+
     if (this.props.userInfo.role !== "Admin") {
-      locations = [this.props.userInfo.location];
+      return (
+        <div>
+          <TopNavBar
+            className="horizontal"
+            tabs={tabs}
+            onClickSignOut={this.props.onClickSignOut}
+          />
+          <div className="userManagement">
+            <h1> Must be an administrator to access </h1>
+          </div>
+        </div>
+      );
     }
 
     return (

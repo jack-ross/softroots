@@ -20,6 +20,10 @@ export default function submitChecklist(checklist) {
       .key.toString();
     newChecklist.key = checklistKey;
 
+    // generate the path based on location and role
+    let path =
+      "/checklists/" + location + "/" + checklist.role + "/" + checklistKey;
+
     // this version of the checklist will hold an array with just the ONE location
     newChecklist.locations = [location];
 
@@ -27,11 +31,7 @@ export default function submitChecklist(checklist) {
     newChecklist.daysToRepeat.sort(sortDaysOfWeek);
 
     // add to the firebase updates
-    checklist.roles.forEach(role => {
-      // generate the path based on location and role
-      let path = "/checklists/" + location + "/" + role + "/" + checklistKey;
-      firebaseUpdates[path] = newChecklist;
-    });
+    firebaseUpdates[path] = newChecklist;
   });
 
   // make the firebase call

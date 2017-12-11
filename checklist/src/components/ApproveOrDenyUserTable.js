@@ -127,14 +127,8 @@ export default class ApproveOrDenyUserTable extends Component {
     let usersArray = [];
     Object.keys(this.props.firebaseUsers).map(key => {
       let userObj = this.props.firebaseUsers[key];
-      // only show users from the role hiearchy and approved locations
-      if (
-        this.props.roles.includes(userObj.role) &&
-        this.props.locations.includes(userObj.location)
-      ) {
-        userObj.key = userObj.uid;
-        usersArray.push(userObj);
-      }
+      userObj.key = userObj.uid;
+      usersArray.push(userObj);
     });
 
     // if there were no users the logged-in user has access to, render None
@@ -168,7 +162,8 @@ export default class ApproveOrDenyUserTable extends Component {
           icon="check-circle-o"
           type="primary"
         >
-          {" "}Approve Selected Users{" "}
+          {" "}
+          Approve Selected Users{" "}
         </Button>
         <div style={{ margin: "24px" }} />
       </div>
