@@ -39,8 +39,8 @@ export default class CreateOrEditChecklist extends Component {
                 subsections: [],
                 daysToRepeat: [],
                 endTimes: [],
-                locations: [],
-                roles: [],
+                location: "",
+                role: "",
                 phoneNumbers: [""],
                 emails: [""]
             },
@@ -50,16 +50,6 @@ export default class CreateOrEditChecklist extends Component {
     }
 
     componentWillMount() {
-        firebase
-            .database()
-            .ref("/checklists/")
-            .on("value", snapshot => {
-                this.setState({
-                    ...this.state,
-                    allChecklists: snapshot.val()
-                });
-            });
-
         firebase
             .database()
             .ref("/roles")
@@ -91,43 +81,17 @@ export default class CreateOrEditChecklist extends Component {
         });
     }
 
-    handleAddPhoneNumber = () => {
-        let temp = this.state.newChecklist;
-        temp.phoneNumbers.push("");
-        this.setState({
-            newChecklist: temp
-        });
-    };
-
-    handleAddEmail = () => {
-        let temp = this.state.newChecklist;
-        temp.emails.push("");
-        this.setState({
-            newChecklist: temp
-        });
-    };
-
-    handleRemovePhoneNumber = index => {
-        let temp = this.state.newChecklist;
-        temp.phoneNumbers.splice(index, 1);
-        this.setState({
-            newChecklist: temp
-        });
-    };
-
-    handleRemoveEmail = index => {
-        let temp = this.state.newChecklist;
-        temp.emails.splice(index, 1);
-        this.setState({
-            newChecklist: temp
-        });
-    };
-
     switchModalVisibility() {
-        this.setState({
-            ...this.state,
-            isPreexistingModalVisible: !this.state.isPreexistingModalVisible
-        });
+        firebase
+          .database()
+          .ref("/checklists/")
+          .on("value", snapshot => {
+            this.setState({
+              ...this.state,
+              isPreexistingModalVisible: !this.state.isPreexistingModalVisible,
+              allChecklists: snapshot.val()
+            });
+          });
     }
 
     onSelectPreexistingChecklist(checklist) {
@@ -142,7 +106,6 @@ export default class CreateOrEditChecklist extends Component {
         if (!this.props.userInfo) {
             return <PleaseLogin />;
         }
-
         const preexistingListModal = (
             <div>
                 <p
@@ -178,7 +141,7 @@ export default class CreateOrEditChecklist extends Component {
                     onClickSignOut={this.props.onClickSignOut}
                 />
                 <div className="createEditPage" style={{ padding: "30px 0" }}>
-                    {this.state.allChecklists && preexistingListModal}
+                    {preexistingListModal}
 
                     <ChecklistForm
                         checklistData={this.state.newChecklist}
@@ -186,12 +149,6 @@ export default class CreateOrEditChecklist extends Component {
                             this.updateField(field, value, index)
                         }
                         userInfo={this.props.userInfo}
-                        handleAddPhoneNumber={this.handleAddPhoneNumber}
-                        handleAddEmail={this.handleAddEmail}
-                        handleRemoveEmail={index => this.handleRemoveEmail}
-                        handleRemovePhoneNumber={index =>
-                            this.handleRemovePhoneNumber
-                        }
                     />
                 </div>
             </div>

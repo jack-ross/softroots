@@ -91,6 +91,8 @@ export default class ViewChecklists extends Component {
         if (!checklistToEdit.daysToRepeat) {
             checklistToEdit.daysToRepeat = [];
         }
+
+        console.log(checklist);
         this.setState({
             ...this.state,
             checklistToEdit: checklistToEdit,
@@ -114,7 +116,7 @@ export default class ViewChecklists extends Component {
         });
     }
 
-    updateChecklistField(field, value) {
+    updateChecklistField(field, value, index) {
         let checklistData = this.state.checklistToEdit;
         checklistData[field] = value;
         this.setState({
