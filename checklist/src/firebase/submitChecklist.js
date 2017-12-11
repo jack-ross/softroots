@@ -3,36 +3,29 @@ import { notification } from "antd";
 import sortDaysOfWeek from "../helperFunctions/sortDaysOfWeek.js";
 
 export default function submitChecklist(checklist) {
-  let locationKeys = checklist.locations;
+  let location = checklist.location;
 
   let firebaseUpdates = {};
-  // map through the locations and push to each one using the firebase object
-  locationKeys.map(location => {
-    // make a copy of the checklist object (because JavaScript is weird with how
-    // objects work as parameters)
-    let newChecklist = Object.assign({}, checklist);
+  // make a copy of the checklist object (because JavaScript is weird with how
+  // objects work as parameters)
+  let newChecklist = Object.assign({}, checklist);
 
-    // generate the key for this checklist
-    let checklistKey = firebase
-      .database()
-      .ref()
-      .push()
-      .key.toString();
-    newChecklist.key = checklistKey;
+  // generate the key for this checklist
+  let checklistKey = firebase.database().ref().push().key.toString();
+  newChecklist.key = checklistKey;
 
-    // generate the path based on location and role
-    let path =
-      "/checklists/" + location + "/" + checklist.role + "/" + checklistKey;
+  // generate the path based on location and role
+  let path =
+    "/checklists/" + location + "/" + checklist.role + "/" + checklistKey;
 
-    // this version of the checklist will hold an array with just the ONE location
-    newChecklist.locations = [location];
+  // this version of the checklist will hold an array with just the ONE location
+  newChecklist.location = [location];
 
-    // sort the days to repeat
-    newChecklist.daysToRepeat.sort(sortDaysOfWeek);
+  // sort the days to repeat
+  newChecklist.daysToRepeat.sort(sortDaysOfWeek);
 
-    // add to the firebase updates
-    firebaseUpdates[path] = newChecklist;
-  });
+  // add to the firebase updates
+  firebaseUpdates[path] = newChecklist;
 
   // make the firebase call
   firebase

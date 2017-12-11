@@ -57,7 +57,7 @@ export default class ChecklistValidation {
     if (checklistObj.role === "") {
       errorsAndWarnings.errors.push("ERROR: Please select a role.");
     }
-    if (checklistObj.locations.length === 0) {
+    if (checklistObj.location === "") {
       errorsAndWarnings.errors.push(
         "ERROR: Please select at least one location."
       );
