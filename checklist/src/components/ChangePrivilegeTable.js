@@ -22,8 +22,8 @@ export default class ChangePrivilegeTable extends Component {
     Object.keys(this.props.firebaseUsers).map(key => {
       let userObj = this.props.firebaseUsers[key];
       if (
-        this.props.roles.includes(userObj.role) &&
-        this.props.locations.includes(userObj.location) &&
+        // this.props.roles.includes(userObj.role) &&
+        // this.props.locations.includes(userObj.location) &&
         this.props.loggedInUserUID !== userObj.uid
       ) {
         userObj.key = userObj.uid;
@@ -77,8 +77,9 @@ export default class ChangePrivilegeTable extends Component {
         title: "Change Role",
         dataIndex: "changeRole",
         key: "changeRole",
-        render: (text, record) =>
+        render: (text, record) => (
           <ChangePrivilegeDropdown user={record} roles={this.props.roles} />
+        )
       }
     ];
 
