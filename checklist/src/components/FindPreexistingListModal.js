@@ -62,7 +62,7 @@ export default class FindPreexistingListModal extends Component {
       height: "30px",
       lineHeight: "30px"
     };
-
+    
     // render the checklist radio buttons based on the selected role and location
     let radioButtons = [];
     if (this.state.isSearchClicked) {

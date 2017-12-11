@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, notification, Modal, Button } from "antd";
+import { Input, notification, Modal, Button, Select } from "antd";
 import NewDynamicHeaders from "../components/NewDynamicHeaders.js";
 import Checklist from "../components/Checklist.js";
 import ChecklistValidation from "../validation/ChecklistValidation.js";
@@ -17,6 +17,8 @@ import firebase from "../configs/firebaseConfig.js";
     hideLocations: boolean, determines whether to render the locations or not (for now, they should
       be hidden when you go to edit a checklist)
 */
+
+const Option = Select.Option;
 
 const testFields = [
   {
@@ -51,10 +53,10 @@ export default class ChecklistForm extends Component {
         subsections: [],
         daysToRepeat: [],
         endTimes: [],
-        locations: [],
+        location: "",
         role: "",
-        phoneNumbers: [],
-        emails: []
+        phoneNumbers: [""],
+        emails: [""]
       },
       allChecklists: undefined,
       isPreexistingModalVisible: false
@@ -114,9 +116,56 @@ export default class ChecklistForm extends Component {
     });
   }
 
+  updateField(field, value, index) {
+        let updatedChecklist = this.state.newChecklist;
+        if (index >= 0) {
+            updatedChecklist[field][index] = value;
+        } else {
+            updatedChecklist[field] = value;
+        }
+        this.setState({
+            ...this.state,
+            newChecklist: updatedChecklist
+        });
+        this.props.updateField(field, value, index);
+    }
+
+  handleAddPhoneNumber = () => {
+      let temp = this.state.newChecklist;
+      temp.phoneNumbers.push("");
+      this.setState({
+          newChecklist: temp
+      });
+  };
+
+  handleAddEmail = () => {
+      let temp = this.state.newChecklist;
+      temp.emails.push("");
+      this.setState({
+          newChecklist: temp
+      });
+  };
+
+  handleRemovePhoneNumber = index => {
+      let temp = this.state.newChecklist;
+      temp.phoneNumbers.splice(index, 1);
+      this.setState({
+          newChecklist: temp
+      });
+  };
+
+  handleRemoveEmail = index => {
+      let temp = this.state.newChecklist;
+      temp.emails.splice(index, 1);
+      this.setState({
+          newChecklist: temp
+      });
+  };
+
   render() {
     // if user not an admin, restrict locations to just that user's location
     var locations = [];
+    let pickerLocations = [];
     var locationsUserCanSee = [];
     if (this.props.userInfo.role !== "Admin") {
       locationsUserCanSee = [this.props.userInfo.location];
@@ -129,66 +178,43 @@ export default class ChecklistForm extends Component {
     locationsUserCanSee.forEach(location => {
       let rolesInLocation = Object.keys(this.state.roles[location]);
       rolesInLocation.forEach(role => {
-        if (!roles.includes(role)) roles.push(role);
+        if (!roles.includes(role)) {
+          roles.push(<Option value={role}>{role}</Option>);
+        }
       });
+    });
+    
+    locationsUserCanSee.forEach(location => {
+      let rolesInLocation = Object.keys(this.state.roles[location]);
+      if (rolesInLocation.includes(this.props.checklistData.role)) {
+        locations.push(location);
+      }
     });
 
     locationsUserCanSee.forEach(location => {
-      let rolesInLocation = Object.keys(this.state.roles[location]);
-      if (rolesInLocation.includes(this.props.checklistData.role))
-        locations.push(location);
-    });
+      pickerLocations.push(<Option value={location}>{location}</Option>);
+    })
 
     let phoneFields = [];
-    for (let i = 0; i < this.props.checklistData.phoneNumbers.length; i++) {
-      phoneFields.push(
-        <div className="contact-container">
-          <Input
-            value={this.props.checklistData.phoneNumbers[i]}
-            placeholder="Phone Number"
-            className="title-input"
-            onChange={e => {
-              this.props.updateField("phoneNumbers", e.target.value, i);
-            }}
-          />
-          <Button
-            icon="plus-circle-o"
-            type="secondary"
-            onClick={this.props.handleAddPhoneNumber}
-          />
-          <Button
-            icon="close-circle-o"
-            type="danger"
-            onClick={this.props.handleRemovePhoneNumber(i)}
-          />
-        </div>
-      );
+    for (let i = 0; i < this.state.newChecklist.phoneNumbers.length; i++) {
+      phoneFields.push(<div className="contact-container">
+          <Input value={this.state.newChecklist.phoneNumbers[i]} placeholder="Phone Number" className="title-input" onChange={e => {
+              this.updateField("phoneNumbers", e.target.value, i)
+            }} />
+          <Button icon="plus-circle-o" type="secondary" onClick={this.handleAddPhoneNumber} />
+          {this.state.newChecklist.phoneNumbers.length > 1 && <Button icon="close-circle-o" type="danger" onClick={() => this.handleRemovePhoneNumber(i)} />}
+        </div>);
     }
 
     let emailFields = [];
-    for (let i = 0; i < this.props.checklistData.emails.length; i++) {
-      emailFields.push(
-        <div className="contact-container">
-          <Input
-            value={this.props.checklistData.emails[i]}
-            className="title-input"
-            placeholder="Email"
-            onChange={e => {
-              this.props.updateField("emails", e.target.value, i);
-            }}
-          />
-          <Button
-            icon="plus-circle-o"
-            type="secondary"
-            onClick={this.props.handleAddEmail}
-          />
-          <Button
-            icon="close-circle-o"
-            type="danger"
-            onClick={this.props.handleRemoveEmail(i)}
-          />
-        </div>
-      );
+    for (let i = 0; i < this.state.newChecklist.emails.length; i++) {
+      emailFields.push(<div className="contact-container">
+          <Input value={this.state.newChecklist.emails[i]} className="title-input" placeholder="Email" onChange={e => {
+              this.updateField("emails", e.target.value, i);
+            }} />
+          <Button icon="plus-circle-o" type="secondary" onClick={this.handleAddEmail} />
+          {this.state.newChecklist.emails.length > 1 && <Button icon="close-circle-o" type="danger" onClick={() => this.handleRemoveEmail(i)} />}
+        </div>);
     }
 
     return (
@@ -235,24 +261,24 @@ export default class ChecklistForm extends Component {
           />
         </div>
         <div className="container">
-          <p className="text"> Location(s) </p>
-          <Checklist
-            checklistValues={locationsUserCanSee}
-            checkedValues={this.props.checklistData.locations}
-            onCheck={checkedItems =>
-              this.props.updateField("locations", checkedItems)
-            }
-          />
+          <p className="text"> Role </p>
+          <Select
+            className="picker"
+            onChange={value =>
+              this.props.updateField("role", value)
+            }>
+            {roles}
+            </Select>
         </div>
         <div className="container">
-          <p className="text"> Role </p>
-          <Checklist
-            checklistValues={roles}
-            checkedValues={this.props.checklistData.roles}
-            onCheck={checkedItems =>
-              this.props.updateField("roles", checkedItems)
-            }
-          />
+          <p className="text"> Location </p>
+          <Select
+            className="picker"
+            onChange={value =>
+              this.props.updateField("location", value)
+            }>
+            {pickerLocations}
+            </Select>
         </div>
         <div className="double-container">
           <div className="phone-container">
