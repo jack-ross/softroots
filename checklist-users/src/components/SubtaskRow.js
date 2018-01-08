@@ -83,13 +83,15 @@ export default class SubtaskRow extends Component {
         <Row style={style} className="show-grid">
           <Col xs={10} sm={9} className="textAndButtonsCol">
             <div className="textAndButtons">
-              <p>{this.props.subtask.shortDescription} </p>
+              <p className="subtaskShortDescription">
+                {this.props.subtask.shortDescription}
+              </p>
 
               {this.props.subtask.longDescription && (
                 <div className="longDescription">
                   <Icon
                     type="plus-circle-o"
-                    style={{ fontSize: "10px", paddingLeft: "4px" }}
+                    className="longDescriptionIcon"
                     onClick={() => this.displayMoreInfo(this.props.subtask)}
                   />
                 </div>
@@ -108,7 +110,8 @@ export default class SubtaskRow extends Component {
             {displayType === "input" && (
               <Button
                 onClick={() =>
-                  this.changeModalVisibility("isInputModalVisible")}
+                  this.changeModalVisibility("isInputModalVisible")
+                }
                 size="small"
                 icon="arrows-alt"
               />
@@ -118,7 +121,8 @@ export default class SubtaskRow extends Component {
                 size="small"
                 icon={scaleIcon}
                 onClick={() =>
-                  this.changeModalVisibility("isScaleModalVisible")}
+                  this.changeModalVisibility("isScaleModalVisible")
+                }
                 style={scaleButtonStyle}
               >
                 {scaleText}
@@ -130,7 +134,8 @@ export default class SubtaskRow extends Component {
         {this.state.isInputModalVisible && (
           <SubtaskInputModal
             onSubmitInput={newValue =>
-              this.props.onChangeSubtaskField("inputValue", newValue)}
+              this.props.onChangeSubtaskField("inputValue", newValue)
+            }
             subtask={this.props.subtask}
             closeModal={() => this.changeModalVisibility("isInputModalVisible")}
           />
@@ -139,7 +144,8 @@ export default class SubtaskRow extends Component {
         {this.state.isScaleModalVisible && (
           <SubtaskScaleModal
             onSubmitScaleValue={newValue =>
-              this.props.onChangeSubtaskField("scaleValue", newValue)}
+              this.props.onChangeSubtaskField("scaleValue", newValue)
+            }
             subtask={this.props.subtask}
             closeModal={() => this.changeModalVisibility("isScaleModalVisible")}
           />

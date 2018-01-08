@@ -5,3 +5,29 @@
   width: 100%;
   overflow: auto;
 }
+.longDescriptionIcon {
+  font-size: 10px;
+  padding-left: 4px;
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  input[type="checkbox"] {
+    /* Double-sized Checkboxes */
+    -ms-transform: scale(2.5); /* IE */
+    -moz-transform: scale(2.5); /* FF */
+    -webkit-transform: scale(2.5); /* Safari and Chrome */
+    -o-transform: scale(2.5); /* Opera */
+    margin: 20px 0;
+  }
+  .textAndButtons {
+    padding-top: 10px;
+  }
+  .subtaskShortDescription {
+    font-size: 18px;
+  }
+  .longDescriptionIcon {
+    font-size: 18px;
+    padding-left: 4px;
+    padding-top: 5px;
+  }
+}
