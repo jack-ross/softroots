@@ -3,7 +3,7 @@ import { notification } from "antd";
 
 export default function deleteChecklist(checklist) {
   // create the paths to delete from
-  let locationKeys = checklist.locations;
+  let locationKeys = checklist.location;
 
   // object storing firebase paths to delete
   let firebaseUpdates = {};
