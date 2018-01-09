@@ -4,7 +4,7 @@ import TopNavBar from "../components/TopNavBar.js";
 import CollapseableList from "../components/CollapseableList.js";
 import PleaseLogin from "../components/PleaseLogin.js";
 import firebase from "../configs/firebaseConfig.js";
-import ChecklistForm from "../components/ChecklistForm.js";
+import EditChecklistForm from "../components/EditChecklistForm.js";
 import Validation from "../validation/ChecklistValidation.js";
 import submitEditedChecklist from "../firebase/submitEditedChecklist.js";
 import deleteChecklist from "../firebase/deleteChecklist.js";
@@ -110,31 +110,40 @@ export default class ViewChecklists extends Component {
       onOk: () => {
         deleteChecklist(checklist);
       },
-      onCancel: () => {}
+      onCancel: () => { }
     });
   }
 
-  updateChecklistField(field, value) {
-    let checklistData = this.state.checklistToEdit;
-    checklistData[field] = value;
+  // Updates fields in EditChecklistForm.js
+  updateChecklistField = (field, value, index) => {
+    let updatedChecklist = this.state.checklistToEdit;
+    if (index >= 0) {
+      updatedChecklist[field][index] = value;
+    } else {
+      updatedChecklist[field] = value;
+    }
     this.setState({
       ...this.state,
-      checklistToEdit: checklistData
+      checklistToEdit: updatedChecklist
     });
   }
 
-  onCancel() {
+  onCancel = () => {
     this.setState({
       ...this.state,
       isModalVisible: false
     });
   }
 
-  onClickSubmit(updatedChecklist) {
+  // Saves Changes
+  onClickSubmit = () => {
     // validate the new input first, throw any errors and break if they exist
     let valid = new Validation();
-    let errorsAndWarnings = valid.validateChecklist(updatedChecklist);
-    if (errorsAndWarnings.errors.length > 0) {
+    let errorsAndWarnings;
+    if (this.state.checklistToEdit !== {}) {
+      errorsAndWarnings = valid.validateChecklist(this.state.checklistToEdit);
+    }
+    if (errorsAndWarnings && errorsAndWarnings.errors.length > 0) {
       errorsAndWarnings.errors.map(error => {
         notification.error({
           message: "ERROR",
@@ -145,12 +154,14 @@ export default class ViewChecklists extends Component {
     }
 
     // otherwise, display any warnings and confirm they want to save these changes
-    errorsAndWarnings.warnings.map(warning => {
-      notification.warning({
-        message: "WARNING",
-        description: warning
+    if (errorsAndWarnings) {
+      errorsAndWarnings.warnings.map(warning => {
+        notification.warning({
+          message: "WARNING",
+          description: warning
+        });
       });
-    });
+    }
     Modal.confirm({
       title: "Confirm Changes?",
       content: "Do you want to save these changes?",
@@ -160,11 +171,45 @@ export default class ViewChecklists extends Component {
           this.state.initialLocations,
           this.state.initialRole
         ),
-      onCancel: () => {},
+      onCancel: () => { },
       okText: "Save Changes",
       cancelText: "Cancel"
     });
   }
+
+  // These handle phone and email inputs in EditChecklistForm.
+  // These can eventually be pulled out b/c they're used in checklistForm.js
+  handleAddPhoneNumber = () => {
+    let temp = this.state.checklistToEdit;
+    temp.phoneNumbers.push("");
+    this.setState({
+      checklistToEdit: temp
+    });
+  };
+
+  handleAddEmail = () => {
+    let temp = this.state.checklistToEdit;
+    temp.emails.push("");
+    this.setState({
+      checklistToEdit: temp
+    });
+  };
+
+  handleRemovePhoneNumber = index => {
+    let temp = this.state.checklistToEdit;
+    temp.phoneNumbers.splice(index, 1);
+    this.setState({
+      checklistToEdit: temp
+    });
+  };
+
+  handleRemoveEmail = index => {
+    let temp = this.state.checklistToEdit;
+    temp.emails.splice(index, 1);
+    this.setState({
+      checklistToEdit: temp
+    });
+  };
 
   render() {
     if (!this.props.userInfo) {
@@ -179,6 +224,7 @@ export default class ViewChecklists extends Component {
     }
 
     if (this.state.checklists === undefined) return <p>Loading...</p>;
+
     const checklistDisplays = locations.map(location => {
       let roleInfoAtLocation = this.state.checklists[location];
       // if there are NO checklists at that location, render this
@@ -252,19 +298,21 @@ export default class ViewChecklists extends Component {
           style={{ top: "30px" }}
           title="Edit Checklist"
           visible={this.state.isModalVisible}
-          onOk={() => this.onClickSubmit(this.state.checklistToEdit)}
-          onCancel={() => this.onCancel()}
+          onOk={this.onClickSubmit}
+          onCancel={this.onCancel}
           okText="Save Changes"
           cancelText="Cancel"
           width="80%"
         >
-          <ChecklistForm
+          <EditChecklistForm
             checklistData={this.state.checklistToEdit}
-            updateField={(field, value) =>
-              this.updateChecklistField(field, value)
-            }
+            updateField={this.updateChecklistField}
             userInfo={this.props.userInfo}
             hideLocations={true}
+            handleAddEmail={this.handleAddEmail}
+            handleAddPhoneNumber={this.handleAddPhoneNumber}
+            handleRemoveEmail={this.handleRemoveEmail}
+            handleRemovePhoneNumber={this.handleRemovePhoneNumber}
           />
         </Modal>
       </div>
