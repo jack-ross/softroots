@@ -33,17 +33,6 @@ export default class CreateOrEditChecklist extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            newChecklist: {
-                title: "",
-                description: "",
-                subsections: [],
-                daysToRepeat: [],
-                endTimes: [],
-                location: "",
-                role: "",
-                phoneNumbers: [""],
-                emails: [""]
-            },
             allChecklists: undefined,
             isPreexistingModalVisible: false
         };
@@ -68,30 +57,17 @@ export default class CreateOrEditChecklist extends Component {
             });
     }
 
-    updateField(field, value, index) {
-        let updatedChecklist = this.state.newChecklist;
-        if (index >= 0) {
-            updatedChecklist[field][index] = value;
-        } else {
-            updatedChecklist[field] = value;
-        }
-        this.setState({
-            ...this.state,
-            newChecklist: updatedChecklist
-        });
-    }
-
     switchModalVisibility() {
         firebase
-          .database()
-          .ref("/checklists/")
-          .on("value", snapshot => {
-            this.setState({
-              ...this.state,
-              isPreexistingModalVisible: !this.state.isPreexistingModalVisible,
-              allChecklists: snapshot.val()
+            .database()
+            .ref("/checklists/")
+            .on("value", snapshot => {
+                this.setState({
+                    ...this.state,
+                    isPreexistingModalVisible: !this.state.isPreexistingModalVisible,
+                    allChecklists: snapshot.val()
+                });
             });
-          });
     }
 
     onSelectPreexistingChecklist(checklist) {
@@ -144,10 +120,6 @@ export default class CreateOrEditChecklist extends Component {
                     {preexistingListModal}
 
                     <ChecklistForm
-                        checklistData={this.state.newChecklist}
-                        updateField={(field, value, index) =>
-                            this.updateField(field, value, index)
-                        }
                         userInfo={this.props.userInfo}
                     />
                 </div>
