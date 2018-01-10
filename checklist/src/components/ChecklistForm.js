@@ -47,17 +47,7 @@ export default class ChecklistForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newChecklist: {
-        title: "",
-        description: "",
-        subsections: [],
-        daysToRepeat: [],
-        endTimes: [],
-        location: "",
-        role: "",
-        phoneNumbers: [""],
-        emails: [""]
-      }
+      newChecklist: this.props.checklistTemplate
     };
   }
 
@@ -78,6 +68,11 @@ export default class ChecklistForm extends Component {
           });
         }
       });
+  }
+
+  componentWillReceiveProps(props) {
+    console.log("componentWillReceiveProps");
+    this.state.newChecklist = props.checklistTemplate;
   }
 
   confirmSubmit() {

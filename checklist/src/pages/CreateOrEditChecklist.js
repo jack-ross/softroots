@@ -34,7 +34,18 @@ export default class CreateOrEditChecklist extends Component {
         super(props);
         this.state = {
             allChecklists: undefined,
-            isPreexistingModalVisible: false
+            isPreexistingModalVisible: false,
+            checklistTemplate: {
+                title: "",
+                description: "",
+                subsections: [],
+                daysToRepeat: [],
+                endTimes: [],
+                location: "",
+                role: "",
+                phoneNumbers: [""],
+                emails: [""]
+              }
         };
     }
 
@@ -71,9 +82,10 @@ export default class CreateOrEditChecklist extends Component {
     }
 
     onSelectPreexistingChecklist(checklist) {
+        console.log(checklist);
         this.setState({
             ...this.state,
-            newChecklist: checklist,
+            checklistTemplate: checklist,
             isPreexistingModalVisible: false
         });
     }
@@ -120,6 +132,7 @@ export default class CreateOrEditChecklist extends Component {
 
                     <ChecklistForm
                         userInfo={this.props.userInfo}
+                        checklistTemplate={this.state.checklistTemplate}
                     />
                 </div>
             </div>
