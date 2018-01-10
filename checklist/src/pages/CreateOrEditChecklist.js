@@ -88,8 +88,7 @@ export default class CreateOrEditChecklist extends Component {
                     style={{ cursor: "pointer", color: "#108ee9" }}
                     onClick={() => this.switchModalVisibility()}
                 >
-                    {" "}
-                    Import Checklist{" "}
+                    Import Checklist
                 </p>
                 <div style={{ margin: "20px" }} />
                 <FindPreexistingListModal
@@ -99,7 +98,7 @@ export default class CreateOrEditChecklist extends Component {
                             ? Object.keys(this.state.roles)
                             : [this.props.userInfo.location]
                     }
-                    roles={roleHierarchy[this.props.userInfo.role]}
+                    roles={this.state.roles}
                     onClickSelect={checklist =>
                         this.onSelectPreexistingChecklist(checklist)
                     }
