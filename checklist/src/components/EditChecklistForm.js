@@ -106,29 +106,35 @@ export default class ChecklistForm extends Component {
         })
 
         let phoneFields = [];
-        if (this.props.checklistData.phoneNumbers) {
-            for (let i = 0; i < this.props.checklistData.phoneNumbers.length; i++) {
-                phoneFields.push(<div className="contact-container">
-                    <Input value={this.props.checklistData.phoneNumbers[i]} placeholder="Phone Number" className="title-input" onChange={e => {
-                        this.props.updateField("phoneNumbers", e.target.value, i)
-                    }} />
-                    <Button icon="plus-circle-o" type="secondary" onClick={this.props.handleAddPhoneNumber} />
-                    {this.props.checklistData.phoneNumbers.length > 1 && <Button icon="close-circle-o" type="danger" onClick={() => this.props.handleRemovePhoneNumber(i)} />}
-                </div>);
-            }
+        let phoneNumbers = this.props.checklistData.phoneNumbers
+        if (phoneNumbers == undefined)  {
+            phoneNumbers = [""];
+            this.props.checklistData.phoneNumbers = phoneNumbers; // so that updating the field (below) works
+        }
+        for (let i = 0; i < phoneNumbers.length; i++) {
+            phoneFields.push(<div className="contact-container">
+                <Input value={phoneNumbers[i]} placeholder="Phone Number" className="title-input" onChange={e => {
+                    this.props.updateField("phoneNumbers", e.target.value, i)
+                }} />
+                <Button icon="plus-circle-o" type="secondary" onClick={this.props.handleAddPhoneNumber} />
+                {phoneNumbers.length > 1 && <Button icon="close-circle-o" type="danger" onClick={() => this.props.handleRemovePhoneNumber(i)} />}
+            </div>);
         }
 
         let emailFields = [];
-        if (this.props.checklistData.emails) {
-            for (let i = 0; i < this.props.checklistData.emails.length; i++) {
-                emailFields.push(<div className="contact-container">
-                    <Input value={this.props.checklistData.emails[i]} className="title-input" placeholder="Email" onChange={e => {
-                        this.props.updateField("emails", e.target.value, i);
-                    }} />
-                    <Button icon="plus-circle-o" type="secondary" onClick={this.props.handleAddEmail} />
-                    {this.props.checklistData.emails.length > 1 && <Button icon="close-circle-o" type="danger" onClick={() => this.props.handleRemoveEmail(i)} />}
-                </div>);
-            }
+        let emails = this.props.checklistData.emails
+        if (emails == undefined) { 
+            emails = [""];
+            this.props.checklistData.emails = emails; // so that updating the field (below) works
+        }
+        for (let i = 0; i < emails.length; i++) {
+            emailFields.push(<div className="contact-container">
+                <Input value={emails[i]} className="title-input" placeholder="Email" onChange={e => {
+                    this.props.updateField("emails", e.target.value, i);
+                }} />
+                <Button icon="plus-circle-o" type="secondary" onClick={this.props.handleAddEmail} />
+                {emails.length > 1 && <Button icon="close-circle-o" type="danger" onClick={() => this.props.handleRemoveEmail(i)} />}
+            </div>);
         }
 
         return (

@@ -2,9 +2,6 @@ import firebase from "../configs/firebaseConfig.js";
 import { notification } from "antd";
 
 export default function deleteChecklist(checklist) {
-  // create the paths to delete from
-  console.log("attempting to delete checklist:");
-  console.log(checklist);
 
   // object storing firebase paths to delete
   let firebaseUpdates = {};
