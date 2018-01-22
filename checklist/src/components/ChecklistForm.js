@@ -71,7 +71,6 @@ export default class ChecklistForm extends Component {
   }
 
   componentWillReceiveProps(props) {
-    console.log("componentWillReceiveProps");
     this.state.newChecklist = props.checklistTemplate;
   }
 

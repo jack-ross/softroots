@@ -82,7 +82,6 @@ export default class CreateOrEditChecklist extends Component {
     }
 
     onSelectPreexistingChecklist(checklist) {
-        console.log(checklist);
         this.setState({
             ...this.state,
             checklistTemplate: checklist,
