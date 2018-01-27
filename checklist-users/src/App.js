@@ -10,6 +10,7 @@ import Home from "./pages/Home.js";
 import CreateAccount from "./pages/CreateAccount.js";
 import Login from "./pages/Login.js";
 import ViewChecklists from "./pages/ViewChecklists.js";
+import { HistoryView } from "./pages/HistoryView.js";
 import Profile from "./pages/Profile.js";
 import ForgotPassword from "./pages/ForgotPassword.js";
 
@@ -90,8 +91,9 @@ class App extends Component {
       <div className="App">
         <BrowserRouter>
           <div style={{ height: "100%", width: "100%" }}>
-            {this.state.userInfo &&
-              <Header onClickSignOut={() => this.onClickSignOut()} />}
+            {this.state.userInfo && (
+              <Header onClickSignOut={() => this.onClickSignOut()} />
+            )}
             <Switch>
               <Route
                 exact
@@ -101,8 +103,9 @@ class App extends Component {
               <Route
                 exact
                 path="/create-account"
-                component={() =>
-                  <CreateAccount userInfo={this.state.userInfo} />}
+                component={() => (
+                  <CreateAccount userInfo={this.state.userInfo} />
+                )}
               />
               <Route
                 exact
@@ -112,11 +115,22 @@ class App extends Component {
               <Route
                 exact
                 path="/viewchecklists"
-                component={() =>
+                component={() => (
                   <ViewChecklists
                     userInfo={this.state.userInfo}
                     dateKey={this.state.dateKey}
-                  />}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/history"
+                component={() => (
+                  <HistoryView
+                    userInfo={this.state.userInfo}
+                    dateKey={this.state.dateKey}
+                  />
+                )}
               />
               <Route
                 exact
@@ -127,8 +141,9 @@ class App extends Component {
               <Route
                 exact
                 path="/forgotpassword"
-                component={() =>
-                  <ForgotPassword userInfo={this.state.userInfo} />}
+                component={() => (
+                  <ForgotPassword userInfo={this.state.userInfo} />
+                )}
               />
             </Switch>
           </div>
