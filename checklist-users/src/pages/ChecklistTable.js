@@ -1,12 +1,5 @@
 import React from "react";
 import { Checkbox, Tag, Table } from "antd";
-/* {"daysToRepeat":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-"description":"Making sure everything was fine with deployment",
-"endTime":{"amPm":"AM","hours":"5","minutes":"00"},
-"key":"-Kr8yEXndUF2QUvlx2Bw",
-"locations":["Roots-Charlottesville"],
-"role":"GM",
-"subsections":[{"subtasks":[{"displayType":"checkbox","isCompleted":true,"longDescription":"Gotta keep testing","shortDescription":"Test 1"}, */
 
 const columns = [
   {

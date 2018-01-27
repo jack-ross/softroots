@@ -1,10 +1,39 @@
 import React, { Component } from "react";
+import { Select, DatePicker } from "antd";
 import firebase from "../configs/firebaseConfig";
 import ChecklistTable from "./ChecklistTable";
 import SubtaskScaleModal from "../components/SubtaskScaleModal";
+const RangePicker = DatePicker.RangePicker;
 
-export const HistoryViewComponent = ({ checklists = [] }) => (
+const Filters = ({ filters, onFilterChange }) => (
+  <div style={{ paddingTop: 24, paddingBottom: 12 }}>
+    <RangePicker
+      key="picker"
+      style={{ marginRight: 12 }}
+      onChange={range => onFilterChange({ range })}
+    />
+    <Select
+      key="role-select"
+      placeholder="Role"
+      style={{ width: 200, marginRight: 12 }}
+      onChange={role => onFilterChange({ role })}
+    />
+    <Select
+      key="location-select"
+      style={{ width: 200 }}
+      placeholder="Location"
+      onChange={location => onFilterChange({ location })}
+    />
+  </div>
+);
+
+export const HistoryViewComponent = ({
+  checklists = [],
+  onFilterChange,
+  filters
+}) => (
   <div className="ViewChecklistsPage">
+    <Filters filters={filters} onFilterChange={onFilterChange} />
     <ChecklistTable checklists={checklists} />
   </div>
 );
@@ -85,7 +114,11 @@ export class HistoryView extends React.Component {
     super();
     this.state = {
       checklists: [],
-      pivot: "date"
+      filters: {
+        dateRange: null,
+        role: null,
+        location: null
+      }
     };
   }
 
@@ -97,11 +130,15 @@ export class HistoryView extends React.Component {
     });
   }
 
+  onFilterChange(change) {
+    this.setState({ filters: { ...this.state.filters, ...change } });
+  }
+
   componentWillMount() {
     firebase
       .database()
       .ref("/dailyLists")
-      .once("value", snapshot => {
+      .on("value", snapshot => {
         // if no data, let the user know by updating the status
         const val = snapshot.val();
         if (val) {
@@ -111,8 +148,19 @@ export class HistoryView extends React.Component {
   }
   render() {
     const { userInfo = {}, dateKey } = this.props;
-    if (userInfo && userInfo.role === "Admin") {
+    if (
+      process.env.NODE_ENV === "development" ||
+      (userInfo && userInfo.role === "Admin")
+    ) {
+      return (
+        <HistoryViewComponent
+          checklists={this.state.checklists}
+          filters={this.state.filters}
+          onFilterChange={filters => this.onFilterChange(filters)}
+        />
+      );
+    } else {
+      return <span>You must be an admin to see this page</span>;
     }
-    return <HistoryViewComponent checklists={this.state.checklists} />;
   }
 }
