@@ -1,39 +1,67 @@
 import React, { Component } from "react";
+import moment from "moment";
 import { Select, DatePicker } from "antd";
 import firebase from "../configs/firebaseConfig";
 import ChecklistTable from "./ChecklistTable";
 import SubtaskScaleModal from "../components/SubtaskScaleModal";
 const RangePicker = DatePicker.RangePicker;
 
-const Filters = ({ filters, onFilterChange }) => (
+const Filters = ({
+  filters = {},
+  onFilterChange,
+  locations = [],
+  roles = []
+}) => (
   <div style={{ paddingTop: 24, paddingBottom: 12 }}>
     <RangePicker
       key="picker"
       style={{ marginRight: 12 }}
+      value={filters.range}
       onChange={range => onFilterChange({ range })}
     />
     <Select
       key="role-select"
       placeholder="Role"
       style={{ width: 200, marginRight: 12 }}
+      value={filters.role}
       onChange={role => onFilterChange({ role })}
-    />
+    >
+      {roles.map(r => (
+        <Select.Option key={r} value={r}>
+          {r}
+        </Select.Option>
+      ))}
+    </Select>
     <Select
       key="location-select"
       style={{ width: 200 }}
       placeholder="Location"
+      value={filters.location}
       onChange={location => onFilterChange({ location })}
-    />
+    >
+      {locations.map(l => (
+        <Select.Option key={l} value={l}>
+          {l}
+        </Select.Option>
+      ))}
+    </Select>
   </div>
 );
 
 export const HistoryViewComponent = ({
   checklists = [],
+  roles,
+  locations,
   onFilterChange,
   filters
 }) => (
   <div className="ViewChecklistsPage">
-    <Filters filters={filters} onFilterChange={onFilterChange} />
+    <Filters
+      filters={filters}
+      onFilterChange={onFilterChange}
+      roles={roles}
+      locations={locations}
+    />
     <ChecklistTable checklists={checklists} />
   </div>
 );
@@ -106,8 +134,37 @@ const flattenEntry = entry => {
 
 const flattenChecklists = firebaseLists =>
   Object.keys(firebaseLists)
-    .map(date => flattenEntry(firebaseLists[date]).map(m => ({ ...m, date })))
+    .map(date =>
+      flattenEntry(firebaseLists[date]).map(e => ({
+        ...e,
+        date: moment(date, "YYYY-MM-DD")
+      }))
+    )
     .reduce((acc, list) => acc.concat(list), []);
+
+const filterChecklists = (checklists, filters) => {
+  let filteredChecklists = checklists;
+  if (filters.range) {
+    const [start, end] = filters.range;
+    filteredChecklists = checklists.filter(
+      checklist =>
+        checklist.date &&
+        !checklist.date.isBefore(start) &&
+        !checklist.date.isAfter(end)
+    );
+  }
+  if (filters.role) {
+    filteredChecklists = filteredChecklists.filter(
+      checklist => checklist.role === filters.role
+    );
+  }
+  if (filters.location) {
+    filteredChecklists = filteredChecklists.filter(
+      checklist => checklist.location.indexOf(filters.location) > -1
+    );
+  }
+  return filteredChecklists;
+};
 
 export class HistoryView extends React.Component {
   constructor() {
@@ -123,9 +180,34 @@ export class HistoryView extends React.Component {
   }
 
   receiveChecklists(value) {
+    const checklists = flattenChecklists(value).reverse(),
+      locations = Object.keys(
+        checklists
+          .map(c => c.location)
+          .reduce((acc, l) => acc.concat(l), [])
+          .reduce(
+            (acc, c) => ({
+              ...acc,
+              [c]: true
+            }),
+            {}
+          )
+      ),
+      roles = Object.keys(
+        checklists.reduce(
+          (acc, c) => ({
+            ...acc,
+            [c.role]: true
+          }),
+          {}
+        )
+      );
+
     this.setState({
       ...this.state,
-      checklists: flattenChecklists(value).reverse(),
+      checklists,
+      locations,
+      roles,
       loadedChecklists: true
     });
   }
@@ -148,14 +230,18 @@ export class HistoryView extends React.Component {
   }
   render() {
     const { userInfo = {}, dateKey } = this.props;
+    const { filters, checklists, roles, locations } = this.state;
+    const filteredChecklists = filterChecklists(checklists, filters);
     if (
       process.env.NODE_ENV === "development" ||
       (userInfo && userInfo.role === "Admin")
     ) {
       return (
         <HistoryViewComponent
-          checklists={this.state.checklists}
-          filters={this.state.filters}
+          checklists={filteredChecklists}
+          filters={filters}
+          roles={roles}
+          locations={locations}
           onFilterChange={filters => this.onFilterChange(filters)}
         />
       );

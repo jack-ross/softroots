@@ -6,7 +6,8 @@ const columns = [
     title: <div style={{ marginLeft: 24 }}>Description</div>,
     width: "35%",
     dataIndex: "description",
-    key: "description"
+    key: "description",
+    render: description => <span>{description}</span>
   },
   {
     title: "",
@@ -37,8 +38,8 @@ const columns = [
     key: "role"
   },
   {
-    title: "Locations",
-    dataIndex: "locations",
+    title: "Location",
+    dataIndex: "location",
     render: locations =>
       locations &&
       locations.map(location => <Tag key={location}>{location}</Tag>)
@@ -46,7 +47,9 @@ const columns = [
   {
     title: "Date",
     dataIndex: "date",
-    key: "date"
+    key: "date",
+    render: date => date && date.format("MMM Do, YYYY"),
+    sorter: (a, b) => a.date && a.date.isBefore(b.date)
   }
 ];
 
