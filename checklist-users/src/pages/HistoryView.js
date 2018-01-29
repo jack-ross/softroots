@@ -6,45 +6,70 @@ import ChecklistTable from "./ChecklistTable";
 import SubtaskScaleModal from "../components/SubtaskScaleModal";
 const RangePicker = DatePicker.RangePicker;
 
+const Label = ({ children }) => (
+  <div style={{ fontWeight: 500, color: "#777", paddingBottom: 4 }}>
+    {children}
+  </div>
+);
+
 const Filters = ({
   filters = {},
   onFilterChange,
   locations = [],
   roles = []
 }) => (
-  <div style={{ paddingTop: 24, paddingBottom: 12 }}>
-    <RangePicker
-      key="picker"
-      style={{ marginRight: 12 }}
-      value={filters.range}
-      onChange={range => onFilterChange({ range })}
-    />
-    <Select
-      key="role-select"
-      placeholder="Role"
-      style={{ width: 200, marginRight: 12 }}
-      value={filters.role}
-      onChange={role => onFilterChange({ role })}
-    >
-      {roles.map(r => (
-        <Select.Option key={r} value={r}>
-          {r}
-        </Select.Option>
-      ))}
-    </Select>
-    <Select
-      key="location-select"
-      style={{ width: 200 }}
-      placeholder="Location"
-      value={filters.location}
-      onChange={location => onFilterChange({ location })}
-    >
-      {locations.map(l => (
-        <Select.Option key={l} value={l}>
-          {l}
-        </Select.Option>
-      ))}
-    </Select>
+  <div
+    style={{
+      paddingTop: 24,
+      paddingBottom: 12,
+      display: "flex",
+      justifyContent: "flex-start"
+    }}
+  >
+    <span>
+      <Label>Date range</Label>
+      <RangePicker
+        key="picker"
+        style={{ marginRight: 12 }}
+        value={filters.range}
+        allowClear={true}
+        onChange={range => onFilterChange({ range })}
+      />
+    </span>
+    <span>
+      <Label>Role</Label>
+      <Select
+        key="role-select"
+        placeholder="Role"
+        style={{ width: 200, marginRight: 12 }}
+        value={filters.role}
+        allowClear={true}
+        onChange={role => onFilterChange({ role })}
+      >
+        {roles.map(r => (
+          <Select.Option key={r} value={r}>
+            {r}
+          </Select.Option>
+        ))}
+      </Select>
+    </span>
+    <span>
+      <Label>Location</Label>
+      <Select
+        key="location-select"
+        style={{ width: 200 }}
+        placeholder="Location"
+        allowClear={true}
+        value={filters.location}
+        onChange={location => onFilterChange({ location })}
+      >
+        {locations.map(l => (
+          <Select.Option key={l} value={l}>
+            {l}
+          </Select.Option>
+        ))}
+      </Select>
+    </span>
   </div>
 );
 
@@ -55,7 +80,7 @@ export const HistoryViewComponent = ({
   onFilterChange,
   filters
 }) => (
-  <div className="ViewChecklistsPage">
+  <div className="ViewChecklistsPage" style={{ height: "100%" }}>
     <Filters
       filters={filters}
       onFilterChange={onFilterChange}
@@ -132,19 +157,24 @@ const flattenEntry = entry => {
   return checklists;
 };
 
+const getDate = (date, entry) => {
+  debugger;
+  return moment(date, "YYYY-MM-DD");
+};
+
 const flattenChecklists = firebaseLists =>
   Object.keys(firebaseLists)
     .map(date =>
       flattenEntry(firebaseLists[date]).map(e => ({
         ...e,
-        date: moment(date, "YYYY-MM-DD")
+        date: getDate(date, firebaseLists[date])
       }))
     )
     .reduce((acc, list) => acc.concat(list), []);
 
 const filterChecklists = (checklists, filters) => {
   let filteredChecklists = checklists;
-  if (filters.range) {
+  if (filters.range && filters.range.length) {
     const [start, end] = filters.range;
     filteredChecklists = checklists.filter(
       checklist =>

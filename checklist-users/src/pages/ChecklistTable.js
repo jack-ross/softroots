@@ -26,7 +26,10 @@ const columns = [
         percentage = Math.ceil(completed / total * 1000) / 10 + "%";
       return (
         <div>
-          <Checkbox checked={percentage === "100%"} />{" "}
+          <Checkbox
+            checked={percentage === "100%"}
+            style={{ marginRight: 4 }}
+          />{" "}
           {`(${completed}/${total})`}
         </div>
       );
