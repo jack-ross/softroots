@@ -245,8 +245,6 @@ export class HistoryView extends React.Component {
         )
       );
 
-    console.log(checklists);
-
     this.setState({
       ...this.state,
       checklists,
