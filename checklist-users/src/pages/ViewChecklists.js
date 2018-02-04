@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Radio } from "antd";
+import { Link } from "react-router-dom";
+import { Button, Radio } from "antd";
 import { Redirect } from "react-router-dom";
 import firebase from "../configs/firebaseConfig.js";
 import LocationListsOfChecklists from "../components/LocationListsOfChecklists.js";
@@ -133,6 +134,11 @@ export default class ViewChecklists extends Component {
             <Radio.Button value="crew">Crew</Radio.Button>
           </Radio.Group>
           <div style={{ margin: "10px 0" }} />
+          <div style={{ marginBottom: 10 }}>
+            <Link to={`/history`}>
+              <Button>View past checklists</Button>
+            </Link>
+          </div>
         </div>
 
         {listsByLocations}
