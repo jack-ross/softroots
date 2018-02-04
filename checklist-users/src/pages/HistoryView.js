@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import moment from "moment";
-import { Select, DatePicker } from "antd";
+import { Input, Select, DatePicker } from "antd";
 import firebase from "../configs/firebaseConfig";
 import ChecklistTable from "./ChecklistTable";
 import SubtaskScaleModal from "../components/SubtaskScaleModal";
@@ -26,6 +26,14 @@ const Filters = ({
       justifyContent: "flex-start"
     }}
   >
+    <span style={{ display: "inline-block", marginRight: 12 }}>
+      <Label>Title</Label>
+      <Input
+        key="input"
+        value={filters.title}
+        onChange={e => onFilterChange({ title: e.target.value })}
+      />
+    </span>
     <span>
       <Label>Date range</Label>
       <RangePicker
@@ -158,7 +166,6 @@ const flattenEntry = entry => {
 };
 
 const getDate = (date, entry) => {
-  debugger;
   return moment(date, "YYYY-MM-DD");
 };
 
@@ -181,6 +188,11 @@ const filterChecklists = (checklists, filters) => {
         checklist.date &&
         !checklist.date.isBefore(start) &&
         !checklist.date.isAfter(end)
+    );
+  }
+  if (filters.title && filters.title.length) {
+    filteredChecklists = filteredChecklists.filter(
+      checklist => checklist.title.toLowerCase().indexOf(filters.title) > -1
     );
   }
   if (filters.role) {
@@ -232,6 +244,8 @@ export class HistoryView extends React.Component {
           {}
         )
       );
+
+    console.log(checklists);
 
     this.setState({
       ...this.state,

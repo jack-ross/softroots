@@ -3,11 +3,11 @@ import { Checkbox, Tag, Table } from "antd";
 
 const columns = [
   {
-    title: <div style={{ marginLeft: 24 }}>Description</div>,
+    title: <div style={{ marginLeft: 24 }}>Title</div>,
     width: "35%",
-    dataIndex: "description",
-    key: "description",
-    render: description => <span>{description}</span>
+    dataIndex: "title",
+    key: "title",
+    render: title => <span>{title}</span>
   },
   {
     title: "",
@@ -29,7 +29,7 @@ const columns = [
           <Checkbox
             checked={percentage === "100%"}
             style={{ marginRight: 4 }}
-          />{" "}
+          />
           {`(${completed}/${total})`}
         </div>
       );
