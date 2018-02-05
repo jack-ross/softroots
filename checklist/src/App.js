@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
-import { Modal, notification } from "antd";
+import { LocaleProvider, Modal, notification } from "antd";
+import en_US from "antd/lib/locale-provider/en_US";
 import Header from "./components/Header.js";
 
 // the different pages that can be rendered
@@ -9,6 +10,7 @@ import CreateOrEditChecklist from "./pages/CreateOrEditChecklist.js";
 import Home from "./pages/Home.js";
 import UserManagement from "./pages/UserManagement.js";
 import ViewChecklists from "./pages/ViewChecklists.js";
+import HistoryView from "./pages/HistoryView.js";
 import Login from "./pages/Login.js";
 import Profile from "./pages/Profile.js";
 
@@ -76,73 +78,85 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <BrowserRouter>
-          <div style={{ height: "100%", width: "100%" }}>
-            <Switch>
-              <Route
-                exact
-                path="/"
-                component={() => <Login userInfo={this.state.userInfo} />}
-              />
-              <Route
-                exact
-                path="/home"
-                component={() => (
-                  <Home
-                    userInfo={this.state.userInfo}
-                    onClickSignOut={this.onClickSignOut}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/createchecklist"
-                component={() => (
-                  <CreateOrEditChecklist
-                    userInfo={this.state.userInfo}
-                    onClickSignOut={this.onClickSignOut}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/viewchecklists"
-                component={() => (
-                  <ViewChecklists
-                    userInfo={this.state.userInfo}
-                    onClickSignOut={this.onClickSignOut}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/users"
-                component={() => (
-                  <UserManagement
-                    userInfo={this.state.userInfo}
-                    onClickSignOut={this.onClickSignOut}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/profile"
-                component={() => (
-                  <Profile
-                    userInfo={this.state.userInfo}
-                    onClickSignOut={this.onClickSignOut}
-                  />
-                )}
-              />
+        <LocaleProvider locale={en_US}>
+          <BrowserRouter>
+            <div style={{ height: "100%", width: "100%" }}>
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  component={() => <Login userInfo={this.state.userInfo} />}
+                />
+                <Route
+                  exact
+                  path="/home"
+                  component={() => (
+                    <Home
+                      userInfo={this.state.userInfo}
+                      onClickSignOut={this.onClickSignOut}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/createchecklist"
+                  component={() => (
+                    <CreateOrEditChecklist
+                      userInfo={this.state.userInfo}
+                      onClickSignOut={this.onClickSignOut}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/viewchecklists"
+                  component={() => (
+                    <ViewChecklists
+                      userInfo={this.state.userInfo}
+                      onClickSignOut={this.onClickSignOut}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/history"
+                  component={() => (
+                    <HistoryView
+                      userInfo={this.state.userInfo}
+                      onClickSignOut={this.onClickSignOut}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/users"
+                  component={() => (
+                    <UserManagement
+                      userInfo={this.state.userInfo}
+                      onClickSignOut={this.onClickSignOut}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/profile"
+                  component={() => (
+                    <Profile
+                      userInfo={this.state.userInfo}
+                      onClickSignOut={this.onClickSignOut}
+                    />
+                  )}
+                />
 
-              <Route
-                render={function() {
-                  return <p>Not Found</p>;
-                }}
-              />
-            </Switch>
-          </div>
-        </BrowserRouter>
+                <Route
+                  render={function() {
+                    return <p>Not Found</p>;
+                  }}
+                />
+              </Switch>
+            </div>
+          </BrowserRouter>
+        </LocaleProvider>
       </div>
     );
   }

@@ -110,7 +110,7 @@ export default class ViewChecklists extends Component {
       onOk: () => {
         deleteChecklist(checklist);
       },
-      onCancel: () => { }
+      onCancel: () => {}
     });
   }
 
@@ -126,14 +126,14 @@ export default class ViewChecklists extends Component {
       ...this.state,
       checklistToEdit: updatedChecklist
     });
-  }
+  };
 
   onCancel = () => {
     this.setState({
       ...this.state,
       isModalVisible: false
     });
-  }
+  };
 
   // Saves Changes
   onClickSubmit = () => {
@@ -171,11 +171,11 @@ export default class ViewChecklists extends Component {
           this.state.initialLocations,
           this.state.initialRole
         ),
-      onCancel: () => { },
+      onCancel: () => {},
       okText: "Save Changes",
       cancelText: "Cancel"
     });
-  }
+  };
 
   // These handle phone and email inputs in EditChecklistForm.
   // These can eventually be pulled out b/c they're used in checklistForm.js
