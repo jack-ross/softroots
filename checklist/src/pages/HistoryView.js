@@ -124,13 +124,15 @@ const getSubsectionProgress = section => {
 };
 
 const subtasksToChildren = (tasks, k) =>
-  tasks.map((task, index) => ({
-    key: k + "-" + index,
-    title: task.shortDescription,
-    progress: task.isCompleted,
-    inputValue: task.inputValue,
-    locations: []
-  }));
+  tasks.map((task, index) => {
+    return {
+      key: k + "-" + index,
+      title: task.shortDescription,
+      progress: task.isCompleted,
+      inputValue: task.inputValue,
+      locations: []
+    };
+  });
 
 const subsectionsToChildren = (checklist, k) =>
   checklist.subsections.map((subsection, index) => {
@@ -193,7 +195,6 @@ const flattenChecklists = firebaseLists =>
 
 const filterChecklists = (checklists, filters) => {
   let filteredChecklists = checklists;
-  console.log(checklists);
   if (filters.range && filters.range.length) {
     const [start, end] = filters.range;
     filteredChecklists = checklists.filter(

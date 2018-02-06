@@ -18,7 +18,7 @@ const columns = [
         return (
           <div>
             <Checkbox checked={progress} />
-            {row.displayType === "input" && <span>{row.inputValue}</span>}
+            <span>{row.inputValue}</span>
           </div>
         );
       }
