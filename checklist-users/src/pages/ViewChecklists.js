@@ -134,11 +134,6 @@ export default class ViewChecklists extends Component {
             <Radio.Button value="crew">Crew</Radio.Button>
           </Radio.Group>
           <div style={{ margin: "10px 0" }} />
-          <div style={{ marginBottom: 10 }}>
-            <Link to={`/history`}>
-              <Button>View past checklists</Button>
-            </Link>
-          </div>
         </div>
 
         {listsByLocations}

@@ -11,7 +11,6 @@ import Home from "./pages/Home.js";
 import CreateAccount from "./pages/CreateAccount.js";
 import Login from "./pages/Login.js";
 import ViewChecklists from "./pages/ViewChecklists.js";
-import { HistoryView } from "./pages/HistoryView.js";
 import Profile from "./pages/Profile.js";
 import ForgotPassword from "./pages/ForgotPassword.js";
 
@@ -119,16 +118,6 @@ class App extends Component {
                   path="/viewchecklists"
                   component={() => (
                     <ViewChecklists
-                      userInfo={this.state.userInfo}
-                      dateKey={this.state.dateKey}
-                    />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/history"
-                  component={() => (
-                    <HistoryView
                       userInfo={this.state.userInfo}
                       dateKey={this.state.dateKey}
                     />
