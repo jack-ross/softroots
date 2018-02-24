@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import queryString from "query-string";
 import moment from "moment";
 import TopNavBar from "../components/TopNavBar.js";
 import { Input, Select, DatePicker } from "antd";
@@ -78,36 +80,6 @@ const Filters = ({
         ))}
       </Select>
     </span>
-  </div>
-);
-
-export const HistoryViewComponent = ({
-  checklists = [],
-  roles,
-  locations,
-  onFilterChange,
-  filters
-}) => (
-  <div
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      height: "100%",
-      alignItems: "stretch"
-    }}
-  >
-    <TopNavBar key="top" className="horizontal" onClickSignOut={() => null} />
-    <div style={{ flex: 1 }}>
-      <div style={{ height: "100%", maxWidth: 1200, margin: "0 auto" }}>
-        <Filters
-          filters={filters}
-          onFilterChange={onFilterChange}
-          roles={roles}
-          locations={locations}
-        />
-        <ChecklistTable checklists={checklists} />
-      </div>
-    </div>
   </div>
 );
 
@@ -206,7 +178,8 @@ const filterChecklists = (checklists, filters) => {
   }
   if (filters.title && filters.title.length) {
     filteredChecklists = filteredChecklists.filter(
-      checklist => checklist.title.toLowerCase().indexOf(filters.title) > -1
+      checklist =>
+        checklist.title.toLowerCase().indexOf(filters.title.toLowerCase()) > -1
     );
   }
   if (filters.role) {
@@ -222,87 +195,145 @@ const filterChecklists = (checklists, filters) => {
   return filteredChecklists;
 };
 
-export default class HistoryView extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      checklists: [],
-      filters: {
-        dateRange: null,
-        role: null,
-        location: null
-      }
-    };
-  }
+export const HistoryViewComponent = ({
+  checklists = [],
+  roles,
+  locations,
+  onFilterChange,
+  filters,
+  isAdmin
+}) => (
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+      alignItems: "stretch"
+    }}
+  >
+    <TopNavBar key="top" className="horizontal" onClickSignOut={() => null} />
+    <div style={{ flex: 1 }}>
+      <div style={{ height: "100%", maxWidth: 1200, margin: "0 auto" }}>
+        {isAdmin && (
+          <Filters
+            filters={filters}
+            onFilterChange={onFilterChange}
+            roles={roles}
+            locations={locations}
+          />
+        )}
+        <ChecklistTable checklists={checklists} />
+      </div>
+    </div>
+  </div>
+);
 
-  receiveChecklists(value) {
-    const checklists = flattenChecklists(value).reverse(),
-      locations = Object.keys(
-        checklists
-          .map(c => c.location)
-          .reduce((acc, l) => acc.concat(l), [])
-          .reduce(
+const connectViewState = Component =>
+  class HistoryViewState extends React.Component {
+    constructor() {
+      super();
+      this.state = {
+        checklists: []
+      };
+    }
+
+    receiveChecklists(value) {
+      const checklists = flattenChecklists(value).reverse(),
+        locations = Object.keys(
+          checklists
+            .map(c => c.location)
+            .reduce((acc, l) => acc.concat(l), [])
+            .reduce(
+              (acc, c) => ({
+                ...acc,
+                [c]: true
+              }),
+              {}
+            )
+        ),
+        roles = Object.keys(
+          checklists.reduce(
             (acc, c) => ({
               ...acc,
-              [c]: true
+              [c.role]: true
             }),
             {}
           )
-      ),
-      roles = Object.keys(
-        checklists.reduce(
-          (acc, c) => ({
-            ...acc,
-            [c.role]: true
-          }),
-          {}
-        )
-      );
+        );
 
-    this.setState({
-      ...this.state,
-      checklists,
-      locations,
-      roles,
-      loadedChecklists: true
-    });
-  }
+      this.setState({
+        checklists,
+        locations,
+        roles
+      });
+    }
 
-  onFilterChange(change) {
-    this.setState({ filters: { ...this.state.filters, ...change } });
-  }
+    onFilterChange(change) {
+      this.setParams({ ...this.getParams().filters, ...change });
+    }
 
-  componentWillMount() {
-    firebase
-      .database()
-      .ref("/dailyLists")
-      .on("value", snapshot => {
-        // if no data, let the user know by updating the status
-        const val = snapshot.val();
-        if (val) {
-          this.receiveChecklists(val);
+    setParams = change => {
+      const { history } = this.props;
+      const query = queryString.parse(history.location.search);
+      Object.keys(change).forEach(key => {
+        if (key === "range") {
+          const dateStr = change[key].map(d => d.toString()).join(",");
+          query["range"] = dateStr;
+        } else {
+          query[key] = change[key];
         }
       });
-  }
-  render() {
-    const { userInfo = {}, dateKey } = this.props;
-    const { filters, checklists, roles, locations } = this.state;
-    const filteredChecklists = filterChecklists(checklists, filters);
-    if (
-      process.env.NODE_ENV === "development" ||
-      (userInfo && userInfo.role === "Admin")
-    ) {
-      return (
-        <HistoryViewComponent
-          checklists={filteredChecklists}
-          filters={filters}
-          roles={roles}
-          locations={locations}
-          onFilterChange={filters => this.onFilterChange(filters)}
-        />
-      );
-    } else {
-      return <span>You must be an admin to see this page</span>;
+      history.replace({
+        ...history.location,
+        search: queryString.stringify(query)
+      });
+    };
+
+    getParams = () => {
+      const { history } = this.props;
+      const search = queryString.parse(history.location.search);
+      if (search.range) {
+        search.range = search.range.split(",").map(s => moment(s));
+      }
+      return search;
+    };
+
+    componentWillMount() {
+      firebase
+        .database()
+        .ref("/dailyLists")
+        .on("value", snapshot => {
+          // if no data, let the user know by updating the status
+          const val = snapshot.val();
+          if (val) {
+            this.receiveChecklists(val);
+          }
+        });
     }
-  }
-}
+    render() {
+      const { userInfo = {}, dateKey, history, location } = this.props;
+      const { checklists, roles, locations } = this.state;
+      const filters = this.getParams();
+      const filteredChecklists = filterChecklists(checklists, filters);
+      console.log(userInfo);
+      const isAdmin =
+        process.env.NODE_ENV === "development" ||
+        (userInfo && userInfo.role === "Admin");
+      if (!isAdmin && Object.keys(filters).length === 0) {
+        return <span>You must be an admin to see this page</span>;
+      } else {
+        return (
+          <Component
+            checklists={filteredChecklists}
+            isAdmin={isAdmin}
+            roles={roles}
+            locations={locations}
+            onFilterChange={filters => this.onFilterChange(filters)}
+            filters={this.getParams()}
+          />
+        );
+      }
+    }
+  };
+
+export const HistoryView = withRouter(connectViewState(HistoryViewComponent));

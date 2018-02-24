@@ -10,7 +10,7 @@ import CreateOrEditChecklist from "./pages/CreateOrEditChecklist.js";
 import Home from "./pages/Home.js";
 import UserManagement from "./pages/UserManagement.js";
 import ViewChecklists from "./pages/ViewChecklists.js";
-import HistoryView from "./pages/HistoryView.js";
+import { HistoryView } from "./pages/HistoryView.js";
 import Login from "./pages/Login.js";
 import Profile from "./pages/Profile.js";
 
@@ -120,7 +120,7 @@ class App extends Component {
                 <Route
                   exact
                   path="/history"
-                  component={() => (
+                  render={() => (
                     <HistoryView
                       userInfo={this.state.userInfo}
                       onClickSignOut={this.onClickSignOut}
