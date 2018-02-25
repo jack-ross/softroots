@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Table, Modal, Button } from "antd";
+import { Table, Modal, Checkbox, Button } from "antd";
 import ChangePrivilegeDropdown from "./ChangePrivilegeDropdown.js";
+import { SelectChecklistModal } from "./SelectChecklistModal";
 
 /* PROPS
     roles: [string], the roles that can be seen
@@ -8,6 +9,17 @@ import ChangePrivilegeDropdown from "./ChangePrivilegeDropdown.js";
     loggedInUserUID: string, the logged-in user's id to filter them out
     firebaseUsers: object, the users pulled from /users/verified in firebase
 */
+
+const ReportSelect = ({
+  checklists = [],
+  user = {},
+  onReportSelect = () => null
+}) => (
+  <div>
+    <Checkbox checked={user.receiveEmailReports} />
+    {checklists.length}
+  </div>
+);
 
 export default class ChangePrivilegeTable extends Component {
   render() {
@@ -19,7 +31,7 @@ export default class ChangePrivilegeTable extends Component {
     // take the firebaseUsers, make an array, and filter out users based
     // on location and role privileges of the logged-in user
     let usersArray = [];
-    Object.keys(this.props.firebaseUsers).map(key => {
+    Object.keys(this.props.firebaseUsers).forEach(key => {
       let userObj = this.props.firebaseUsers[key];
       if (
         // this.props.roles.includes(userObj.role) &&
@@ -30,6 +42,8 @@ export default class ChangePrivilegeTable extends Component {
         usersArray.push(userObj);
       }
     });
+
+    usersArray.reverse();
 
     // create the columns for the table
     const columns = [
@@ -79,6 +93,17 @@ export default class ChangePrivilegeTable extends Component {
         key: "changeRole",
         render: (text, record) => (
           <ChangePrivilegeDropdown user={record} roles={this.props.roles} />
+        )
+      },
+      {
+        title: "Email report",
+        dataIndex: "reports",
+        key: "reports",
+        render: (text, record) => (
+          <SelectChecklistModal
+            user={record}
+            checklists={this.props.checklists || []}
+          />
         )
       }
     ];

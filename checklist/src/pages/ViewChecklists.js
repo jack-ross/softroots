@@ -11,25 +11,6 @@ import deleteChecklist from "../firebase/deleteChecklist.js";
 import roleHierarchy from "../roles/roleHierarchy.js";
 import "../css/ViewChecklists.css";
 
-const tabs = [
-  {
-    name: "Home",
-    url: "/home"
-  },
-  {
-    name: "Create Checklist",
-    url: "/createchecklist"
-  },
-  {
-    name: "View Checklist",
-    url: "/viewchecklists"
-  },
-  {
-    name: "Manage",
-    url: "/users"
-  }
-];
-
 export default class ViewChecklists extends Component {
   constructor(props) {
     super(props);
@@ -288,7 +269,6 @@ export default class ViewChecklists extends Component {
       <div>
         <TopNavBar
           className="horizontal"
-          tabs={tabs}
           onClickSignOut={this.props.onClickSignOut}
         />
         <p> {this.state.status} </p>

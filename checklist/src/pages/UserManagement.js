@@ -55,7 +55,8 @@ export default class UserManagement extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firebaseUsers: undefined
+      firebaseUsers: undefined,
+      checklists: []
     };
   }
 
@@ -64,11 +65,27 @@ export default class UserManagement extends Component {
       .database()
       .ref("/users")
       .on("value", snapshot => {
+        console.log("Value:", snapshot.val());
         // if snapshot exists, store in the state
         if (snapshot.val()) {
           this.setState({
-            ...this.state,
             firebaseUsers: snapshot.val()
+          });
+        }
+      });
+
+    firebase
+      .database()
+      .ref("/checklists")
+      .on("value", snapshot => {
+        if (snapshot.val()) {
+          this.setState({
+            checklists: snapshot.val()
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            checklists: []
           });
         }
       });
@@ -79,12 +96,10 @@ export default class UserManagement extends Component {
       .on("value", snapshot => {
         if (snapshot.val()) {
           this.setState({
-            ...this.state,
             roles: snapshot.val()
           });
         } else {
           this.setState({
-            ...this.state,
             roles: ["error loading roles"]
           });
         }
@@ -92,22 +107,28 @@ export default class UserManagement extends Component {
   }
 
   render() {
-    if (!this.props.userInfo) {
+    let { userInfo, onClickSignOut } = this.props;
+    const { firebaseUsers } = this.state;
+    if (process.env.NODE_ENV === "development") {
+      userInfo = { role: "Admin" };
+    }
+    if (!userInfo && process.env.NODE_ENV !== "development") {
       return <PleaseLogin />;
     }
+    console.log("State", this.state);
 
-    const roles = roleHierarchy[this.props.userInfo.role];
+    const roles = roleHierarchy[userInfo.role];
 
     if (this.state.roles === undefined) return <p>Loading...</p>;
     let locations = Object.keys(this.state.roles);
 
-    if (this.props.userInfo.role !== "Admin") {
+    if (userInfo.role !== "Admin") {
       return (
         <div>
           <TopNavBar
             className="horizontal"
             tabs={tabs}
-            onClickSignOut={this.props.onClickSignOut}
+            onClickSignOut={onClickSignOut}
           />
           <div className="userManagement">
             <h1> Must be an administrator to access </h1>
@@ -115,42 +136,45 @@ export default class UserManagement extends Component {
         </div>
       );
     }
+    console.log(firebaseUsers);
 
     return (
       <div>
         <TopNavBar
           className="horizontal"
           tabs={tabs}
-          onClickSignOut={this.props.onClickSignOut}
+          onClickSignOut={onClickSignOut}
         />
         <div className="userManagement">
-          <h1> Waiting Approval </h1>
-          <div style={{ margin: "6px" }} />
-
-          {!this.state.firebaseUsers && <p> Loading... </p>}
-
-          {this.state.firebaseUsers && (
-            <div className="approveDenyTable">
-              <ApproveOrDenyUserTable
-                firebaseUsers={this.state.firebaseUsers.unverified}
-                roles={roles}
-                locations={locations}
-              />
-            </div>
-          )}
+          {firebaseUsers &&
+            firebaseUsers.unverified && (
+              <div>
+                <h1> Waiting Approval </h1>
+                <div style={{ margin: "6px" }} />
+                <div className="approveDenyTable">
+                  <ApproveOrDenyUserTable
+                    firebaseUsers={firebaseUsers.unverified}
+                    roles={roles}
+                    locations={locations}
+                  />
+                </div>
+                )
+              </div>
+            )}
           <div style={{ margin: "12px" }} />
 
-          <h1> Approved </h1>
+          {firebaseUsers && firebaseUsers.unverified && <h1> Approved </h1>}
           <div style={{ margin: "6px" }} />
 
-          {!this.state.firebaseUsers && <p> Loading... </p>}
+          {!firebaseUsers && <p> Loading... </p>}
 
-          {this.state.firebaseUsers && (
+          {firebaseUsers && (
             <ChangePrivilegeTable
-              firebaseUsers={this.state.firebaseUsers.verified}
+              firebaseUsers={firebaseUsers.verified}
+              checklists={this.state.checklists}
               roles={roles}
               locations={locations}
-              loggedInUserUID={this.props.userInfo.uid}
+              loggedInUserUID={userInfo.uid}
             />
           )}
         </div>

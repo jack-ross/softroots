@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Select, Button, Modal, notification } from "antd";
-import updateUserRole from "../firebase/updateUserRole.js";
+import { updateUserRole } from "../firebase/updateUser";
 import "../css/UserManagement.css";
 
 /* PROPS

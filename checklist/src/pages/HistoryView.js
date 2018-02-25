@@ -14,6 +14,16 @@ const Label = ({ children }) => (
   </div>
 );
 
+const generateReportUrl = (role, location) => {
+  const range = [moment().subtract(1, "d"), moment()].join(",");
+  const search = {
+    range,
+    role,
+    location
+  };
+  return "http://localhost:3000/history?" + queryString.stringify(search);
+};
+
 const Filters = ({
   filters = {},
   onFilterChange,
@@ -315,10 +325,12 @@ const connectViewState = Component =>
       const { checklists, roles, locations } = this.state;
       const filters = this.getParams();
       const filteredChecklists = filterChecklists(checklists, filters);
-      console.log(userInfo);
       const isAdmin =
         process.env.NODE_ENV === "development" ||
         (userInfo && userInfo.role === "Admin");
+      console.log(
+        roles && roles.length && generateReportUrl(roles[0], "Charlottesville")
+      );
       if (!isAdmin && Object.keys(filters).length === 0) {
         return <span>You must be an admin to see this page</span>;
       } else {
