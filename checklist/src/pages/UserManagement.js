@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import moment from "moment";
+import queryString from "query-string";
 import TopNavBar from "../components/TopNavBar.js";
 import ApproveOrDenyUserList from "../components/ApproveOrDenyUserList.js";
 import ChangePrivilegeList from "../components/ChangePrivilegeList.js";
@@ -8,25 +10,6 @@ import roleHierarchy from "../roles/roleHierarchy.js";
 import ApproveOrDenyUserTable from "../components/ApproveOrDenyUserTable.js";
 import ChangePrivilegeTable from "../components/ChangePrivilegeTable.js";
 import firebase from "../configs/firebaseConfig.js";
-
-const tabs = [
-  {
-    name: "Home",
-    url: "/home"
-  },
-  {
-    name: "Create Checklist",
-    url: "/createchecklist"
-  },
-  {
-    name: "View Checklist",
-    url: "/viewchecklists"
-  },
-  {
-    name: "Manage",
-    url: "/users"
-  }
-];
 
 const fields = [
   {
@@ -65,7 +48,6 @@ export default class UserManagement extends Component {
       .database()
       .ref("/users")
       .on("value", snapshot => {
-        console.log("Value:", snapshot.val());
         // if snapshot exists, store in the state
         if (snapshot.val()) {
           this.setState({
@@ -108,14 +90,13 @@ export default class UserManagement extends Component {
 
   render() {
     let { userInfo, onClickSignOut } = this.props;
-    const { firebaseUsers } = this.state;
+    const { firebaseUsers, checklists } = this.state;
     if (process.env.NODE_ENV === "development") {
       userInfo = { role: "Admin" };
     }
     if (!userInfo && process.env.NODE_ENV !== "development") {
       return <PleaseLogin />;
     }
-    console.log("State", this.state);
 
     const roles = roleHierarchy[userInfo.role];
 
@@ -125,26 +106,17 @@ export default class UserManagement extends Component {
     if (userInfo.role !== "Admin") {
       return (
         <div>
-          <TopNavBar
-            className="horizontal"
-            tabs={tabs}
-            onClickSignOut={onClickSignOut}
-          />
+          <TopNavBar className="horizontal" onClickSignOut={onClickSignOut} />
           <div className="userManagement">
             <h1> Must be an administrator to access </h1>
           </div>
         </div>
       );
     }
-    console.log(firebaseUsers);
 
     return (
       <div>
-        <TopNavBar
-          className="horizontal"
-          tabs={tabs}
-          onClickSignOut={onClickSignOut}
-        />
+        <TopNavBar className="horizontal" onClickSignOut={onClickSignOut} />
         <div className="userManagement">
           {firebaseUsers &&
             firebaseUsers.unverified && (
@@ -171,7 +143,7 @@ export default class UserManagement extends Component {
           {firebaseUsers && (
             <ChangePrivilegeTable
               firebaseUsers={firebaseUsers.verified}
-              checklists={this.state.checklists}
+              checklists={checklists}
               roles={roles}
               locations={locations}
               loggedInUserUID={userInfo.uid}

@@ -40,21 +40,41 @@ export class SelectChecklistModal extends React.Component {
     selectedIds: [],
     checklists: []
   };
+
+  setChecklistState = props => {
+    const { checklists, user } = props;
+    try {
+      const locationChecklists =
+        checklists[user.location] || checklists[`Roots-${user.location}`];
+      const allChecklists = Object.keys(locationChecklists)
+        .map(role =>
+          Object.keys(locationChecklists[role]).map(checklistId => ({
+            ...locationChecklists[role][checklistId],
+            id: checklistId,
+            role
+          }))
+        )
+        .reduce((a, c) => a.concat(c), []);
+      this.setState({
+        checklists: allChecklists,
+        selectedIds: user.reportIds ? user.reportIds.split(",") : []
+      });
+    } catch (e) {
+      debugger;
+    }
+  };
   componentWillMount() {
     const { checklists, user } = this.props;
-    const allChecklists = Object.keys(checklists[user.location])
-      .map(role =>
-        Object.keys(checklists[user.location][role]).map(checklistId => ({
-          ...checklists[user.location][role][checklistId],
-          id: checklistId,
-          role
-        }))
-      )
-      .reduce((a, c) => a.concat(c), []);
-    this.setState({
-      checklists: allChecklists,
-      selectedIds: user.reportIds ? user.reportIds.split(",") : []
-    });
+    if (checklists && user) {
+      this.setChecklistState(this.props);
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    const { checklists, user } = this.props;
+    const { checklists: nextChecklists, user: nextUser } = nextProps;
+    if (nextChecklists && nextUser && (!checklists || !user)) {
+      this.setChecklistState(nextProps);
+    }
   }
   toggleChecklist = id => {
     const { selectedIds } = this.state;

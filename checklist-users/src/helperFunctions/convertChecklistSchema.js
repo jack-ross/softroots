@@ -1,7 +1,7 @@
 // takes in the checklist schema object and returns a cleaned up version where
 // each subtask has an isCompleted field for that day
 
-export default function(checklist) {
+export default function(checklist, checklistKey) {
   let subsections = checklist.subsections;
   let convertedSubsections = subsections.map(subsection => {
     let convertedSubtasks = subsection.subtasks.map(subtask => {
@@ -13,5 +13,6 @@ export default function(checklist) {
   });
   checklist.subsections = convertedSubsections;
   checklist.isMarkedCompleted = false;
+  checklist.templateKey = checklistKey;
   return checklist;
 }

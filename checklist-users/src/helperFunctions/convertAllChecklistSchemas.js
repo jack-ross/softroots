@@ -35,7 +35,7 @@ export default function(checklistSchemas, dateKey) {
           checklistCopies.map(checklist => {
             allChecklistCopies[location][role][
               checklist.key
-            ] = convertChecklistSchema(checklist);
+            ] = convertChecklistSchema(checklist, checklistKey);
           });
         }
       });
