@@ -43,8 +43,6 @@ export default class ChangePrivilegeTable extends Component {
       }
     });
 
-    usersArray.reverse();
-
     // create the columns for the table
     const columns = [
       {
