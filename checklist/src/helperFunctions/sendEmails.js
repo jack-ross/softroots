@@ -67,7 +67,10 @@ const generateReportUrl = (role, location) => {
     location
   };
 
-  return "http://localhost:3000/history?" + queryString.stringify(search);
+  return (
+    "https://listtalk-admin.firebaseio.com/history?" +
+    queryString.stringify(search)
+  );
 };
 
 const getDateKey = () => {
@@ -104,7 +107,6 @@ const generateEmails = (users, templates, checklists) => {
       })
       .map(c => "+ " + getChecklistString(c))
       .join("\n");
-    console.log(dailyChecklists[dailyChecklists.length - 1]);
     const link = generateReportUrl(user.role, user.location);
     return {
       to: user.email,
