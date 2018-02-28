@@ -11,25 +11,6 @@ import deleteChecklist from "../firebase/deleteChecklist.js";
 import roleHierarchy from "../roles/roleHierarchy.js";
 import "../css/ViewChecklists.css";
 
-const tabs = [
-  {
-    name: "Home",
-    url: "/home"
-  },
-  {
-    name: "Create Checklist",
-    url: "/createchecklist"
-  },
-  {
-    name: "View Checklist",
-    url: "/viewchecklists"
-  },
-  {
-    name: "Manage",
-    url: "/users"
-  }
-];
-
 export default class ViewChecklists extends Component {
   constructor(props) {
     super(props);
@@ -110,7 +91,7 @@ export default class ViewChecklists extends Component {
       onOk: () => {
         deleteChecklist(checklist);
       },
-      onCancel: () => { }
+      onCancel: () => {}
     });
   }
 
@@ -126,14 +107,14 @@ export default class ViewChecklists extends Component {
       ...this.state,
       checklistToEdit: updatedChecklist
     });
-  }
+  };
 
   onCancel = () => {
     this.setState({
       ...this.state,
       isModalVisible: false
     });
-  }
+  };
 
   // Saves Changes
   onClickSubmit = () => {
@@ -171,11 +152,11 @@ export default class ViewChecklists extends Component {
           this.state.initialLocations,
           this.state.initialRole
         ),
-      onCancel: () => { },
+      onCancel: () => {},
       okText: "Save Changes",
       cancelText: "Cancel"
     });
-  }
+  };
 
   // These handle phone and email inputs in EditChecklistForm.
   // These can eventually be pulled out b/c they're used in checklistForm.js
@@ -290,7 +271,6 @@ export default class ViewChecklists extends Component {
       <div>
         <TopNavBar
           className="horizontal"
-          tabs={tabs}
           onClickSignOut={this.props.onClickSignOut}
         />
         <p> {this.state.status} </p>
