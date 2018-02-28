@@ -252,6 +252,8 @@ export default class ViewChecklists extends Component {
           );
         }
         const checklists = Object.keys(roleChecklists).map(key => {
+          // build URI for object (easier deleting/updating)
+          roleChecklists[key]["path"] = "/checklists/" + location + "/" + role + "/" + key;
           return roleChecklists[key];
         });
         return (

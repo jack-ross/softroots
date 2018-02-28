@@ -47,17 +47,7 @@ export default class ChecklistForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newChecklist: {
-        title: "",
-        description: "",
-        subsections: [],
-        daysToRepeat: [],
-        endTimes: [],
-        location: "",
-        role: "",
-        phoneNumbers: [""],
-        emails: [""]
-      }
+      newChecklist: this.props.checklistTemplate
     };
   }
 
@@ -78,6 +68,10 @@ export default class ChecklistForm extends Component {
           });
         }
       });
+  }
+
+  componentWillReceiveProps(props) {
+    this.state.newChecklist = props.checklistTemplate;
   }
 
   confirmSubmit() {
@@ -199,26 +193,31 @@ export default class ChecklistForm extends Component {
     })
 
     let phoneFields = [];
-    for (let i = 0; i < this.state.newChecklist.phoneNumbers.length; i++) {
+    let phoneNumbers = this.state.newChecklist.phoneNumbers;
+    if (phoneNumbers == undefined) phoneNumbers = [""];
+    for (let i = 0; i < phoneNumbers.length; i++) {
       phoneFields.push(<div className="contact-container">
-        <Input value={this.state.newChecklist.phoneNumbers[i]} placeholder="Phone Number" className="title-input" onChange={e => {
+        <Input value={phoneNumbers[i]} placeholder="Phone Number" className="title-input" onChange={e => {
           this.updateField("phoneNumbers", e.target.value, i)
         }} />
         <Button icon="plus-circle-o" type="secondary" onClick={this.handleAddPhoneNumber} />
-        {this.state.newChecklist.phoneNumbers.length > 1 && <Button icon="close-circle-o" type="danger" onClick={() => this.handleRemovePhoneNumber(i)} />}
+        {phoneNumbers.length > 1 && <Button icon="close-circle-o" type="danger" onClick={() => this.handleRemovePhoneNumber(i)} />}
       </div>);
     }
 
     let emailFields = [];
-    for (let i = 0; i < this.state.newChecklist.emails.length; i++) {
+    let emails = this.state.newChecklist.emails;
+    if (emails == undefined) emails = [""];
+    for (let i = 0; i < emails.length; i++) {
       emailFields.push(<div className="contact-container">
-        <Input value={this.state.newChecklist.emails[i]} className="title-input" placeholder="Email" onChange={e => {
+        <Input value={emails[i]} className="title-input" placeholder="Email" onChange={e => {
           this.updateField("emails", e.target.value, i);
         }} />
         <Button icon="plus-circle-o" type="secondary" onClick={this.handleAddEmail} />
-        {this.state.newChecklist.emails.length > 1 && <Button icon="close-circle-o" type="danger" onClick={() => this.handleRemoveEmail(i)} />}
+        {emails.length > 1 && <Button icon="close-circle-o" type="danger" onClick={() => this.handleRemoveEmail(i)} />}
       </div>);
     }
+
 
     return (
       <div className="checklist-container">

@@ -2,17 +2,11 @@ import firebase from "../configs/firebaseConfig.js";
 import { notification } from "antd";
 
 export default function deleteChecklist(checklist) {
-  // create the paths to delete from
-  let locationKeys = checklist.location;
 
   // object storing firebase paths to delete
   let firebaseUpdates = {};
-  locationKeys.map(locationKey => {
-    let path =
-      "/checklists/" + locationKey + "/" + checklist.role + "/" + checklist.key;
-    firebaseUpdates[path] = null;
-  });
-
+  firebaseUpdates[checklist.path] = null;
+  
   firebase
     .database()
     .ref()

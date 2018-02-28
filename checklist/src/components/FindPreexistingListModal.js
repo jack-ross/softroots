@@ -105,18 +105,22 @@ export default class FindPreexistingListModal extends Component {
           dropdownValues={this.props.locations}
           onClickField={location => this.onChange("selectedLocation", location)}
         />
-        <DropdownSelection
-          promptText="Choose role."
-          selectedValue={this.state.selectedRole}
-          dropdownValues={this.props.roles}
-          onClickField={role => this.onChange("selectedRole", role)}
-        />
-        <Button
-          icon="search"
-          onClick={() => this.onChange("isSearchClicked", true)}
-        >
-          {" "}Search{" "}
-        </Button>
+        {this.state.selectedLocation !== "" && 
+          <div>
+          <DropdownSelection
+            promptText="Choose role."
+            selectedValue={this.state.selectedRole}
+            dropdownValues={Object.keys(this.props.roles[this.state.selectedLocation])}
+            onClickField={role => this.onChange("selectedRole", role)}
+          />
+          <Button
+            icon="search"
+            onClick={() => this.onChange("isSearchClicked", true)}
+          >
+            {" "}Search{" "}
+          </Button>
+          </div>
+        }
 
         <div>
           <Radio.Group

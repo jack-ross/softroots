@@ -34,7 +34,18 @@ export default class CreateOrEditChecklist extends Component {
         super(props);
         this.state = {
             allChecklists: undefined,
-            isPreexistingModalVisible: false
+            isPreexistingModalVisible: false,
+            checklistTemplate: {
+                title: "",
+                description: "",
+                subsections: [],
+                daysToRepeat: [],
+                endTimes: [],
+                location: "",
+                role: "",
+                phoneNumbers: [""],
+                emails: [""]
+              }
         };
     }
 
@@ -73,7 +84,7 @@ export default class CreateOrEditChecklist extends Component {
     onSelectPreexistingChecklist(checklist) {
         this.setState({
             ...this.state,
-            newChecklist: checklist,
+            checklistTemplate: checklist,
             isPreexistingModalVisible: false
         });
     }
@@ -88,8 +99,7 @@ export default class CreateOrEditChecklist extends Component {
                     style={{ cursor: "pointer", color: "#108ee9" }}
                     onClick={() => this.switchModalVisibility()}
                 >
-                    {" "}
-                    Import Checklist{" "}
+                    Import Checklist
                 </p>
                 <div style={{ margin: "20px" }} />
                 <FindPreexistingListModal
@@ -99,7 +109,7 @@ export default class CreateOrEditChecklist extends Component {
                             ? Object.keys(this.state.roles)
                             : [this.props.userInfo.location]
                     }
-                    roles={roleHierarchy[this.props.userInfo.role]}
+                    roles={this.state.roles}
                     onClickSelect={checklist =>
                         this.onSelectPreexistingChecklist(checklist)
                     }
@@ -121,6 +131,7 @@ export default class CreateOrEditChecklist extends Component {
 
                     <ChecklistForm
                         userInfo={this.props.userInfo}
+                        checklistTemplate={this.state.checklistTemplate}
                     />
                 </div>
             </div>
