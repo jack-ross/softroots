@@ -19,6 +19,29 @@ import "../css/TopNavBar.css";
     redirectURL: string; if shouldRedirect is true, redirect to this url
 */
 
+const tabs = [
+  {
+    name: "Home",
+    url: "/home"
+  },
+  {
+    name: "Create Checklist",
+    url: "/createchecklist"
+  },
+  {
+    name: "View Checklist",
+    url: "/viewchecklists"
+  },
+  {
+    name: "Manage",
+    url: "/users"
+  },
+  {
+    name: "Checklist History",
+    url: "/history"
+  }
+];
+
 export default class TopNavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -43,7 +66,7 @@ export default class TopNavBar extends React.Component {
 
   render() {
     // else render the navigation bar itself
-    const listTabs = this.createTabsList(this.props.tabs);
+    const listTabs = this.createTabsList(tabs);
     return (
       <div className="tabs">
         <Menu

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
-import { Modal, notification } from "antd";
+import { LocaleProvider, Modal, notification } from "antd";
+import en_US from "antd/lib/locale-provider/en_US";
 
 import Header from "./components/Header.js";
 
@@ -10,7 +11,6 @@ import Home from "./pages/Home.js";
 import CreateAccount from "./pages/CreateAccount.js";
 import Login from "./pages/Login.js";
 import ViewChecklists from "./pages/ViewChecklists.js";
-import { HistoryView } from "./pages/HistoryView.js";
 import Profile from "./pages/Profile.js";
 import ForgotPassword from "./pages/ForgotPassword.js";
 
@@ -89,65 +89,57 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <BrowserRouter>
-          <div style={{ height: "100%", width: "100%" }}>
-            {this.state.userInfo && (
-              <Header onClickSignOut={() => this.onClickSignOut()} />
-            )}
-            <Switch>
-              <Route
-                exact
-                path="/"
-                component={() => <Home userInfo={this.state.userInfo} />}
-              />
-              <Route
-                exact
-                path="/create-account"
-                component={() => (
-                  <CreateAccount userInfo={this.state.userInfo} />
-                )}
-              />
-              <Route
-                exact
-                path="/login"
-                component={() => <Login userInfo={this.state.userInfo} />}
-              />
-              <Route
-                exact
-                path="/viewchecklists"
-                component={() => (
-                  <ViewChecklists
-                    userInfo={this.state.userInfo}
-                    dateKey={this.state.dateKey}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/history"
-                component={() => (
-                  <HistoryView
-                    userInfo={this.state.userInfo}
-                    dateKey={this.state.dateKey}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/profile"
-                component={() => <Profile userInfo={this.state.userInfo} />}
-              />
+        <LocaleProvider locale={en_US}>
+          <BrowserRouter>
+            <div style={{ height: "100%", width: "100%" }}>
+              {this.state.userInfo && (
+                <Header onClickSignOut={() => this.onClickSignOut()} />
+              )}
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  component={() => <Home userInfo={this.state.userInfo} />}
+                />
+                <Route
+                  exact
+                  path="/create-account"
+                  component={() => (
+                    <CreateAccount userInfo={this.state.userInfo} />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/login"
+                  component={() => <Login userInfo={this.state.userInfo} />}
+                />
+                <Route
+                  exact
+                  path="/viewchecklists"
+                  component={() => (
+                    <ViewChecklists
+                      userInfo={this.state.userInfo}
+                      dateKey={this.state.dateKey}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/profile"
+                  component={() => <Profile userInfo={this.state.userInfo} />}
+                />
 
-              <Route
-                exact
-                path="/forgotpassword"
-                component={() => (
-                  <ForgotPassword userInfo={this.state.userInfo} />
-                )}
-              />
-            </Switch>
-          </div>
-        </BrowserRouter>
+                <Route
+                  exact
+                  path="/forgotpassword"
+                  component={() => (
+                    <ForgotPassword userInfo={this.state.userInfo} />
+                  )}
+                />
+              </Switch>
+            </div>
+          </BrowserRouter>
+        </LocaleProvider>
       </div>
     );
   }
