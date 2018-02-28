@@ -74,7 +74,9 @@ const generateReportUrl = (role, location) => {
 };
 
 const getDateKey = () => {
-  let dateISOString = moment().format();
+  let dateISOString = moment()
+    .subtract(5, "h")
+    .format();
   let dayMonthYearString = dateISOString.substring(0, 10); // formatted as YYYY-MM-DD
   return dayMonthYearString;
 };

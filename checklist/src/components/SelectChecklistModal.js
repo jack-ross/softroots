@@ -8,7 +8,9 @@ const ModalComponent = ({
   toggle,
   checklists = [],
   selectedIds,
-  toggleChecklist
+  toggleChecklist,
+  toggleAll,
+  allSelected
 }) => (
   <Modal
     title="Select checklists to include in report"
@@ -17,6 +19,13 @@ const ModalComponent = ({
     visible={visible}
   >
     <ul>
+      <li
+        key="toggle-all"
+        onClick={() => toggleAll()}
+        style={{ listStyle: "none", padding: "4px 8px" }}
+      >
+        <Checkbox checked={allSelected} style={{ marginRight: 4 }} /> Select all
+      </li>
       {checklists.map(checklist => (
         <li
           key={checklist.id}
@@ -59,9 +68,7 @@ export class SelectChecklistModal extends React.Component {
         checklists: allChecklists,
         selectedIds: user.reportIds ? user.reportIds.split(",") : []
       });
-    } catch (e) {
-      debugger;
-    }
+    } catch (e) {}
   };
   componentWillMount() {
     const { checklists, user } = this.props;
@@ -84,6 +91,17 @@ export class SelectChecklistModal extends React.Component {
       this.setState({ selectedIds: selectedIds.filter(i => i !== id) });
     }
   };
+
+  toggleAll = id => {
+    const { selectedIds, checklists } = this.state;
+    const ids = checklists.map(c => c.id);
+    debugger;
+    if (ids.length !== selectedIds.length) {
+      this.setState({ selectedIds: ids });
+    } else {
+      this.setState({ selectedIds: [] });
+    }
+  };
   render() {
     const { selectedIds, checklists } = this.state;
     return (
@@ -95,7 +113,9 @@ export class SelectChecklistModal extends React.Component {
         </Button>
         <ModalComponent
           {...this.state}
+          allSelected={selectedIds.length === checklists.length}
           toggleChecklist={id => this.toggleChecklist(id)}
+          toggleAll={() => this.toggleAll()}
           toggle={() => this.setState({ visible: false })}
           submit={() => updateUserReports(this.props.user.uid, selectedIds)}
         />
