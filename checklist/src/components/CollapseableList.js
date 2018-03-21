@@ -66,28 +66,25 @@ export default class CollapseableList extends Component {
           return (
             <div className="subtaskContainer">
               <div className="shortDescription">
-                <p>
-                  {" "}{subtask.shortDescription}{" "}
-                </p>
+                <p> {subtask.shortDescription} </p>
               </div>
 
-              {subtask.longDescription &&
+              {subtask.longDescription && (
                 <div className="longDescription">
                   <Icon
                     style={{ cursor: "pointer" }}
                     type="plus-circle-o"
                     onClick={() => this.displayLongDescriptionModal(subtask)}
                   />
-                </div>}
+                </div>
+              )}
             </div>
           );
         });
 
         return (
           <div>
-            <h3>
-              {" "}{subsection.title}{" "}
-            </h3>
+            <h3> {subsection.title} </h3>
             {subtaskArray}
             <div style={{ margin: "10px 0" }} />
           </div>
@@ -96,49 +93,48 @@ export default class CollapseableList extends Component {
 
       return (
         <Panel header={list.title + " " + allEndTimesString} key={index}>
-          <p>
-            {" "}{list.description}{" "}
-          </p>
+          <p> {list.description} </p>
           <div style={{ margin: "20px 0" }} />
+          {list.requiresSignature && (
+            <p style={{ marginBottom: 20 }}>*Requires signature</p>
+          )}
 
           {subsectionRender}
           <div style={{ margin: "20px 0" }} />
 
-          <p>
-            {" "}{daysToRepeatString}{" "}
-          </p>
+          <p> {daysToRepeatString} </p>
           <div style={{ margin: "20px 0" }} />
 
           <div className="buttonCenter" style={{ textAlign: "center" }}>
-            {this.props.canEditDelete &&
+            {this.props.canEditDelete && (
               <Button
                 type="primary"
                 style={{ marginRight: "10px" }}
                 icon="edit"
                 onClick={() => this.props.onClickEdit(list)}
               >
-                {" "}Edit{" "}
-              </Button>}
+                {" "}
+                Edit{" "}
+              </Button>
+            )}
 
             <Button style={{ marginRight: "10px" }}> Ad Hoc </Button>
 
-            {this.props.canEditDelete &&
+            {this.props.canEditDelete && (
               <Button
                 style={{ marginRight: "10px" }}
                 type="danger"
                 icon="close-circle-o"
                 onClick={() => this.props.onClickDelete(list)}
               >
-                {" "}Delete{" "}
-              </Button>}
+                {" "}
+                Delete{" "}
+              </Button>
+            )}
           </div>
         </Panel>
       );
     });
-    return (
-      <Collapse>
-        {panels}
-      </Collapse>
-    );
+    return <Collapse>{panels}</Collapse>;
   }
 }

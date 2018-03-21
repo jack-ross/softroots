@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Grid } from "react-bootstrap";
-import { notification } from "antd";
+import SignaturePad from "react-signature-pad";
+import "../css/signature.css";
+import { Modal, notification } from "antd";
 import SubtaskRow from "./SubtaskRow.js";
 import firebase from "../configs/firebaseConfig.js";
 import ChecklistComments from "./ChecklistComments.js";
@@ -14,6 +16,12 @@ import updateSubtaskField from "../firebase/updateSubtaskField.js";
 */
 
 export default class ViewSingleChecklist extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      signatureVisible: false
+    };
+  }
   onCheck(subtask, isChecked, subsectionIndex, subtaskIndex) {
     let firebasePath =
       this.props.firebasePath +
@@ -24,6 +32,7 @@ export default class ViewSingleChecklist extends Component {
       "/subtasks/" +
       subtaskIndex +
       "/isCompleted";
+
     firebase
       .database()
       .ref(firebasePath)
@@ -36,16 +45,61 @@ export default class ViewSingleChecklist extends Component {
       });
   }
 
+  openSignature() {
+    this.setState({
+      signatureVisible: true
+    });
+  }
+
+  handleSignatureCancel() {
+    this.setState({
+      signatureVisible: false
+    });
+  }
+  handleSignatureOk() {
+    this.setState({
+      signatureVisible: false
+    });
+    const signature = this.refs.signature;
+    if (!signature.isEmpty()) this.markComplete(true, signature.toDataURL());
+  }
+
   onMarkChecklistAsCompleted(isChecked) {
-    let firebasePath =
+    if (isChecked && this.props.checklist.requiresSignature) {
+      this.openSignature();
+    } else {
+      this.markComplete(isChecked);
+    }
+  }
+
+  markComplete(isChecked, url = null) {
+    let checkedPath =
       this.props.firebasePath +
       "/" +
       this.props.checklist.key +
       "/isMarkedCompleted";
+
     firebase
       .database()
-      .ref(firebasePath)
+      .ref(checkedPath)
       .set(isChecked)
+      .catch(error => {
+        notification.error({
+          message: "ERROR",
+          description: error.message
+        });
+      });
+
+    if (!url) return;
+    debugger;
+
+    let imgPath =
+      this.props.firebasePath + "/" + this.props.checklist.key + "/signature";
+
+    firebase
+      .database()
+      .ref(imgPath)
+      .set(url)
       .catch(error => {
         notification.error({
           message: "ERROR",
@@ -92,6 +146,7 @@ export default class ViewSingleChecklist extends Component {
   }
 
   render() {
+    console.log(this.state);
     const subsections = this.props.checklist.subsections.map(
       (subsection, subsectionIndex) => {
         const subtasks = subsection.subtasks.map((subtask, subtaskIndex) => {
@@ -114,14 +169,16 @@ export default class ViewSingleChecklist extends Component {
                     isChecked,
                     subsectionIndex,
                     subtaskIndex
-                  )}
+                  )
+                }
                 onSubmitInput={newValue =>
                   this.onSubmitInput(
                     subtask,
                     newValue,
                     subsectionIndex,
                     subtaskIndex
-                  )}
+                  )
+                }
                 onChangeSubtaskField={(field, newValue) =>
                   updateSubtaskField(
                     subtask,
@@ -131,7 +188,8 @@ export default class ViewSingleChecklist extends Component {
                     subtaskIndex,
                     this.props.firebasePath,
                     this.props.checklist.key
-                  )}
+                  )
+                }
                 endTime={this.props.checklist.endTime}
                 firebasePath={subtaskFirebasePath}
                 userInfo={this.props.userInfo}
@@ -172,6 +230,22 @@ export default class ViewSingleChecklist extends Component {
           type="checkbox"
           onChange={e => this.onMarkChecklistAsCompleted(e.target.checked)}
         />
+        {this.props.checklist.signature && (
+          <img
+            src={this.props.checklist.signature}
+            style={{ height: 200, width: 400 }}
+          />
+        )}
+        <Modal
+          title="Sign verifying completion"
+          visible={this.state.signatureVisible}
+          onOk={() => this.handleSignatureOk()}
+          onCancel={() => this.handleSignatureCancel()}
+        >
+          <div style={{ height: 400 }}>
+            <SignaturePad ref="signature" />
+          </div>
+        </Modal>
       </div>
     );
   }

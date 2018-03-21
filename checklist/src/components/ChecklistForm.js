@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, notification, Modal, Button, Select } from "antd";
+import { Input, notification, Modal, Button, Select, Switch } from "antd";
 import NewDynamicHeaders from "../components/NewDynamicHeaders.js";
 import Checklist from "../components/Checklist.js";
 import ChecklistValidation from "../validation/ChecklistValidation.js";
@@ -115,9 +115,9 @@ export default class ChecklistForm extends Component {
             phoneNumbers: [""],
             emails: [""]
           }
-        })
+        });
       },
-      onCancel() { }
+      onCancel() {}
     });
   }
 
@@ -190,34 +190,67 @@ export default class ChecklistForm extends Component {
 
     locationsUserCanSee.forEach(location => {
       pickerLocations.push(<Option value={location}>{location}</Option>);
-    })
+    });
 
     let phoneFields = [];
     let phoneNumbers = this.state.newChecklist.phoneNumbers;
     if (phoneNumbers == undefined) phoneNumbers = [""];
     for (let i = 0; i < phoneNumbers.length; i++) {
-      phoneFields.push(<div className="contact-container">
-        <Input value={phoneNumbers[i]} placeholder="Phone Number" className="title-input" onChange={e => {
-          this.updateField("phoneNumbers", e.target.value, i)
-        }} />
-        <Button icon="plus-circle-o" type="secondary" onClick={this.handleAddPhoneNumber} />
-        {phoneNumbers.length > 1 && <Button icon="close-circle-o" type="danger" onClick={() => this.handleRemovePhoneNumber(i)} />}
-      </div>);
+      phoneFields.push(
+        <div className="contact-container">
+          <Input
+            value={phoneNumbers[i]}
+            placeholder="Phone Number"
+            className="title-input"
+            onChange={e => {
+              this.updateField("phoneNumbers", e.target.value, i);
+            }}
+          />
+          <Button
+            icon="plus-circle-o"
+            type="secondary"
+            onClick={this.handleAddPhoneNumber}
+          />
+          {phoneNumbers.length > 1 && (
+            <Button
+              icon="close-circle-o"
+              type="danger"
+              onClick={() => this.handleRemovePhoneNumber(i)}
+            />
+          )}
+        </div>
+      );
     }
 
     let emailFields = [];
     let emails = this.state.newChecklist.emails;
     if (emails == undefined) emails = [""];
     for (let i = 0; i < emails.length; i++) {
-      emailFields.push(<div className="contact-container">
-        <Input value={emails[i]} className="title-input" placeholder="Email" onChange={e => {
-          this.updateField("emails", e.target.value, i);
-        }} />
-        <Button icon="plus-circle-o" type="secondary" onClick={this.handleAddEmail} />
-        {emails.length > 1 && <Button icon="close-circle-o" type="danger" onClick={() => this.handleRemoveEmail(i)} />}
-      </div>);
+      emailFields.push(
+        <div className="contact-container">
+          <Input
+            value={emails[i]}
+            className="title-input"
+            placeholder="Email"
+            onChange={e => {
+              this.updateField("emails", e.target.value, i);
+            }}
+          />
+          <Button
+            icon="plus-circle-o"
+            type="secondary"
+            onClick={this.handleAddEmail}
+          />
+          {emails.length > 1 && (
+            <Button
+              icon="close-circle-o"
+              type="danger"
+              onClick={() => this.handleRemoveEmail(i)}
+            />
+          )}
+        </div>
+      );
     }
-
 
     return (
       <div className="checklist-container">
@@ -237,14 +270,20 @@ export default class ChecklistForm extends Component {
           <p className="text"> Description </p>
           <Input
             className="description-input"
-            onChange={e =>
-              this.updateField("description", e.target.value)
-            }
+            onChange={e => this.updateField("description", e.target.value)}
             placeholder={"Description (max 500 characters)"}
             type="textarea"
             value={this.state.newChecklist.description}
           />
         </div>
+        <div className="description-container">
+          <p className="text"> Requires signature? </p>
+          <Switch
+            checked={this.state.newChecklist.requiresSignature}
+            onChange={checked => this.updateField("requiresSignature", checked)}
+          />,
+        </div>
+
         <div className="container">
           <p className="text">End Times</p>
           <TimeDropdowns
@@ -267,9 +306,8 @@ export default class ChecklistForm extends Component {
           <Select
             className="picker"
             value={this.state.newChecklist.role}
-            onChange={value =>
-              this.updateField("role", value)
-            }>
+            onChange={value => this.updateField("role", value)}
+          >
             {roles}
           </Select>
         </div>
@@ -278,9 +316,8 @@ export default class ChecklistForm extends Component {
           <Select
             className="picker"
             value={this.state.newChecklist.location}
-            onChange={value =>
-              this.updateField("location", value)
-            }>
+            onChange={value => this.updateField("location", value)}
+          >
             {pickerLocations}
           </Select>
         </div>

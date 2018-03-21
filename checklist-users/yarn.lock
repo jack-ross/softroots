@@ -5862,6 +5862,10 @@ react-scripts@1.0.10:
   optionalDependencies:
     fsevents "1.1.2"
 
+react-signature-pad@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/react-signature-pad/-/react-signature-pad-0.0.6.tgz#335547c1f523a36b8396e5365e2f49521e56b9cf"
+
 react-slick@~0.14.2:
   version "0.14.11"
   resolved "https://registry.yarnpkg.com/react-slick/-/react-slick-0.14.11.tgz#c2cbdbe3728c66a2ff4929be96d457e3ea0d80f3"

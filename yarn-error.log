@@ -1,0 +1,32 @@
+Arguments: 
+  /Users/brentbaumgartner/.nvm/versions/node/v9.0.0/bin/node /Users/brentbaumgartner/.nvm/versions/node/v9.0.0/bin/yarn start
+
+PATH: 
+  /Users/brentbaumgartner/.local/bin:/Users/brentbaumgartner/.rbenv/shims:/Users/brentbaumgartner/.pyenv/shims:/Users/brentbaumgartner/.cargo/bin:/Users/brentbaumgartner/.nvm/versions/node/v9.0.0/bin:/Users/brentbaumgartner/bin:/Users/brent/Library/Haskell/bin:/usr/texbin:/Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home/bin:/Users/brentbaumgartner/dev/tf-cli:/usr/local/go/bin:/Applications/Julia-0.6.app/Contents/Resources/julia/bin:/usr/local/lib/python3.4/site-packages:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Android Studio.app/sdk/platform-tools:/Applications/Android Studio.app/sdk/tools:/usr/local/bin:/Library/Frameworks/Mono.framework/Versions/Current/bin/
+
+Yarn version: 
+  1.4.0
+
+Node version: 
+  9.0.0
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Couldn't find a package.json file in "/Users/brentbaumgartner/dev/softroots"
+      at new MessageError (/Users/brentbaumgartner/.nvm/versions/node/v9.0.0/lib/node_modules/yarn/lib/cli.js:186:110)
+      at /Users/brentbaumgartner/.nvm/versions/node/v9.0.0/lib/node_modules/yarn/lib/cli.js:55394:15
+      at Generator.next (<anonymous>)
+      at step (/Users/brentbaumgartner/.nvm/versions/node/v9.0.0/lib/node_modules/yarn/lib/cli.js:98:30)
+      at /Users/brentbaumgartner/.nvm/versions/node/v9.0.0/lib/node_modules/yarn/lib/cli.js:109:13
+      at <anonymous>
