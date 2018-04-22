@@ -9,6 +9,8 @@ import TimeDropdowns from "../components/TimeDropdowns.js";
 import roleHierarchy from "../roles/roleHierarchy.js";
 import "../css/ChecklistForm.css";
 import firebase from "../configs/firebaseConfig.js";
+import { storeLocations } from "../locations.js";
+import roles from "../roles/roles.js";
 
 /* PROPS
     checklistData: obj; has all the relevant fields for checklists (managed by parent component)
@@ -52,22 +54,10 @@ export default class ChecklistForm extends Component {
   }
 
   componentWillMount() {
-    firebase
-      .database()
-      .ref("/roles")
-      .on("value", snapshot => {
-        if (snapshot.val()) {
-          this.setState({
-            ...this.state,
-            roles: snapshot.val()
-          });
-        } else {
-          this.setState({
-            ...this.state,
-            roles: ["error loading locations"]
-          });
-        }
-      });
+    this.setState({
+      ...this.state,
+      roles: roles
+    });
   }
 
   componentWillReceiveProps(props) {
@@ -174,14 +164,13 @@ export default class ChecklistForm extends Component {
     if (this.props.userInfo.role !== "Admin") {
       locationsUserCanSee = [this.props.userInfo.location];
     } else {
-      locationsUserCanSee = Object.keys(this.state.roles);
+      locationsUserCanSee = storeLocations;
     }
 
     // grab the relevant roles based on user's position in the hierarchy
     var roles = [];
     locationsUserCanSee.forEach(location => {
-      let rolesInLocation = Object.keys(this.state.roles[location]);
-      rolesInLocation.forEach(role => {
+      roles.forEach(role => {
         if (!roles.includes(role)) {
           roles.push(<Option value={role}>{role}</Option>);
         }

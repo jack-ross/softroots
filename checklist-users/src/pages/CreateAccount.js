@@ -7,7 +7,7 @@ import firebase from "../configs/firebaseConfig.js";
 import "../css/CreateAccount.css";
 
 // arrays for the dropdowns when creating an account
-const locations = ["Charlottesville", "Newark"];
+const locations = ["Charlottesville", "Newark", "CV2"];
 const roles = [
   "GM",
   "Assistant GM",
@@ -52,14 +52,20 @@ export default class CreateAccount extends Component {
             title: "Account Created",
             content:
               "Please wait for an admin to verify your account before logging in again.",
-            okText: "Ok"
+            okText: "Ok",
+            onOk: () => {
+              window.location = "/";
+            }
           });
           let uid = user.uid;
           let userInfo = this.state;
           userInfo.uid = uid;
           delete userInfo.password;
           delete userInfo.passwordRepeated;
-          firebase.database().ref("users/unverified/" + uid).set(userInfo);
+          firebase
+            .database()
+            .ref("users/unverified/" + uid)
+            .set(userInfo);
         })
         .catch(function(error) {
           notification.error({
@@ -137,7 +143,8 @@ export default class CreateAccount extends Component {
           <Button> Cancel </Button>
         </Link>
         <Button type="primary" onClick={() => this.onClickSubmit()}>
-          {" "}Submit{" "}
+          {" "}
+          Submit{" "}
         </Button>
       </div>
     );

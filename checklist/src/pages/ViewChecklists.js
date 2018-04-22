@@ -10,6 +10,8 @@ import submitEditedChecklist from "../firebase/submitEditedChecklist.js";
 import deleteChecklist from "../firebase/deleteChecklist.js";
 import roleHierarchy from "../roles/roleHierarchy.js";
 import "../css/ViewChecklists.css";
+import { storeLocations } from "../locations.js";
+import roles from "../roles/roles.js";
 
 export default class ViewChecklists extends Component {
   constructor(props) {
@@ -41,23 +43,6 @@ export default class ViewChecklists extends Component {
             ...this.state,
             status: "No checklists found.",
             checklists: []
-          });
-        }
-      });
-
-    firebase
-      .database()
-      .ref("/roles")
-      .on("value", snapshot => {
-        if (snapshot.val()) {
-          this.setState({
-            ...this.state,
-            roles: snapshot.val()
-          });
-        } else {
-          this.setState({
-            ...this.state,
-            roles: ["error loading roles"]
           });
         }
       });
@@ -198,8 +183,7 @@ export default class ViewChecklists extends Component {
     }
 
     // if user is admin, we want ALL locations; otherwise, just that user's location
-    if (this.state.roles === undefined) return <p>Loading...</p>;
-    let locations = Object.keys(this.state.roles);
+    let locations = storeLocations;
     if (this.props.userInfo.role !== "Admin") {
       locations = [this.props.userInfo.location];
     }
@@ -220,36 +204,32 @@ export default class ViewChecklists extends Component {
 
       // otherwise, go through that location's roles and render each
       // checklist within that role
-      let roles = Object.keys(this.state.roles[location]);
-      const roleChecklists = roles.map(role => {
-        let roleChecklists = roleInfoAtLocation[role];
-        if (!roleChecklists) {
+      const roleChecklists = roles
+        .map(role => {
+          let roleChecklists = roleInfoAtLocation[role];
+          if (!roleChecklists) {
+            return null;
+          }
+          const checklists = Object.keys(roleChecklists).map(key => {
+            // build URI for object (easier deleting/updating)
+            roleChecklists[key]["path"] =
+              "/checklists/" + location + "/" + role + "/" + key;
+            return roleChecklists[key];
+          });
           return (
             <div>
               <h3 style={{ fontSize: "16px" }}> {role} </h3>
-              <p> None </p>
-              <div style={{ margin: "24px 0" }} />
+              <CollapseableList
+                listInfo={checklists}
+                onClickEdit={checklist => this.onClickEdit(checklist)}
+                onClickDelete={checklist => this.onClickDelete(checklist)}
+                canEditDelete={this.props.userInfo.role === "Admin"}
+              />
+              <div style={{ margin: "30px 0" }} />
             </div>
           );
-        }
-        const checklists = Object.keys(roleChecklists).map(key => {
-          // build URI for object (easier deleting/updating)
-          roleChecklists[key]["path"] = "/checklists/" + location + "/" + role + "/" + key;
-          return roleChecklists[key];
-        });
-        return (
-          <div>
-            <h3 style={{ fontSize: "16px" }}> {role} </h3>
-            <CollapseableList
-              listInfo={checklists}
-              onClickEdit={checklist => this.onClickEdit(checklist)}
-              onClickDelete={checklist => this.onClickDelete(checklist)}
-              canEditDelete={this.props.userInfo.role === "Admin"}
-            />
-            <div style={{ margin: "30px 0" }} />
-          </div>
-        );
-      });
+        })
+        .filter(r => !!r);
       return (
         <div className="location-card">
           <h1

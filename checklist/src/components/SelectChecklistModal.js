@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Checkbox, Modal, Select } from "antd";
 import { updateUserRole, updateUserReports } from "../firebase/updateUser";
 import { unique } from "../helperFunctions/unique";
+import { storeLocations } from "../locations";
 
 const ModalComponent = ({
   submit,
@@ -30,7 +31,7 @@ const ModalComponent = ({
           onLocationChange(option);
         }}
       >
-        {locations.map(location => (
+        {storeLocations.map(location => (
           <Select.Option value={location}>{location}</Select.Option>
         ))}
       </Select>
@@ -69,10 +70,10 @@ export class SelectChecklistModal extends React.Component {
 
   getLocationChecklists = (location, checklists) => {
     const locationChecklists =
-      checklists[location] || checklists[`Roots-${location}`];
+      checklists[location] || checklists[`Roots-${location}`] || {};
     const allChecklists = Object.keys(locationChecklists)
       .map(role =>
-        Object.keys(locationChecklists[role]).map(checklistId => ({
+        storeLocations.map(checklistId => ({
           ...locationChecklists[role][checklistId],
           id: checklistId,
           role
@@ -89,7 +90,7 @@ export class SelectChecklistModal extends React.Component {
       const allChecklists = this.getLocationChecklists(location, checklists);
       this.setState({
         location,
-        locations: Object.keys(checklists),
+        locations: storeLocations,
         checklists: allChecklists,
         selectedIds: user.reportIds ? user.reportIds.split(",") : []
       });

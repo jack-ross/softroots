@@ -11,6 +11,7 @@ export default function(dailyKey) {
       checklistSchemas = snapshot.val();
     })
     .then(response => {
+      debugger;
       // if some checklist schemas exist, submit the checklists for the day
       if (checklistSchemas) {
         firebase

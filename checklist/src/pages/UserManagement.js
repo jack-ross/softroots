@@ -10,6 +10,8 @@ import roleHierarchy from "../roles/roleHierarchy.js";
 import ApproveOrDenyUserTable from "../components/ApproveOrDenyUserTable.js";
 import ChangePrivilegeTable from "../components/ChangePrivilegeTable.js";
 import firebase from "../configs/firebaseConfig.js";
+import { storeLocations } from "../locations.js";
+import roles from "../roles/roles.js";
 
 const fields = [
   {
@@ -72,20 +74,9 @@ export default class UserManagement extends Component {
         }
       });
 
-    firebase
-      .database()
-      .ref("/roles")
-      .on("value", snapshot => {
-        if (snapshot.val()) {
-          this.setState({
-            roles: snapshot.val()
-          });
-        } else {
-          this.setState({
-            roles: ["error loading roles"]
-          });
-        }
-      });
+    this.setState({
+      roles: roles
+    });
   }
 
   render() {
@@ -101,7 +92,7 @@ export default class UserManagement extends Component {
     const roles = roleHierarchy[userInfo.role];
 
     if (this.state.roles === undefined) return <p>Loading...</p>;
-    let locations = Object.keys(this.state.roles);
+    let locations = storeLocations;
 
     if (userInfo.role !== "Admin") {
       return (

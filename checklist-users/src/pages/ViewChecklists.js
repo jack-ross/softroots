@@ -6,6 +6,8 @@ import firebase from "../configs/firebaseConfig.js";
 import LocationListsOfChecklists from "../components/LocationListsOfChecklists.js";
 import roleHierarchy from "../roles/roleHierarchy.js";
 import "../css/ViewChecklists.css";
+import { storeLocations } from "../helperFunctions/locations.js";
+import { roles } from "../helperFunctions/roles.js";
 
 /* PROPS:
     userInfo: object; the logged in user's information pulled from firebase
@@ -29,22 +31,10 @@ export default class ViewChecklists extends Component {
   }
 
   componentDidMount() {
-    firebase
-      .database()
-      .ref("/roles")
-      .on("value", snapshot => {
-        if (snapshot.val()) {
-          this.setState({
-            ...this.state,
-            roles: snapshot.val()
-          });
-        } else {
-          this.setState({
-            ...this.state,
-            roles: ["error loading roles"]
-          });
-        }
-      });
+    this.setState({
+      ...this.state,
+      roles: roles
+    });
     // grab today's lists from firebase
     firebase
       .database()
@@ -95,7 +85,7 @@ export default class ViewChecklists extends Component {
     // if user is an Admin, show all locations; otherwise, just the user's location
     let locations = [];
     if (this.props.userInfo.role === "Admin") {
-      locations = Object.keys(this.state.roles);
+      locations = storeLocations;
     } else {
       locations = [this.props.userInfo.location];
     }

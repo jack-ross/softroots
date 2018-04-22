@@ -1,6 +1,7 @@
 import convertChecklistSchema from "./convertChecklistSchema.js";
 import getDayOfWeek from "./getDayOfWeek.js";
 import createChecklistsUsingEndTimes from "./createChecklistsUsingEndTimes.js";
+import { storeLocations } from "./locations.js";
 
 // this method takes in ALL the checklist schemas in firebase
 // and searches through them to check which ones should repeat
@@ -14,7 +15,7 @@ export default function(checklistSchemas, dateKey) {
   let allChecklistCopies = {};
 
   // go through each location
-  let locations = Object.keys(checklistSchemas);
+  let locations = storeLocations;
   locations.map(location => {
     // first, create those location keys and values in allChecklistCopies
     allChecklistCopies[location] = {};

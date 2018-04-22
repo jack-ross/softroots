@@ -108,9 +108,7 @@ export default class Profile extends Component {
     return (
       <div>
         <div style={{ paddingLeft: "30px" }}>
-          <Link to="/">
-            {" "}{"< Back"}{" "}
-          </Link>
+          <Link to="/"> {"< Back"} </Link>
         </div>
         <div
           style={{
@@ -125,22 +123,19 @@ export default class Profile extends Component {
 
             <h5> Name </h5>
             <p>
-              {" "}{this.props.userInfo.firstName +
+              {" "}
+              {this.props.userInfo.firstName +
                 " " +
                 this.props.userInfo.lastName}{" "}
             </p>
             <div style={{ margin: "12px" }} />
 
             <h5> Location </h5>
-            <p>
-              {" "}{this.props.userInfo.location}{" "}
-            </p>
+            <p> {this.props.userInfo.location} </p>
             <div style={{ margin: "12px" }} />
 
             <h5> Role </h5>
-            <p>
-              {" "}{this.props.userInfo.role}{" "}
-            </p>
+            <p> {this.props.userInfo.role} </p>
             <div style={{ margin: "24px" }} />
           </div>
 
@@ -165,7 +160,8 @@ export default class Profile extends Component {
             type="primary"
             onClick={() => this.onClickChangeEmail()}
           >
-            {" "}Change Email{" "}
+            {" "}
+            Change Email{" "}
           </Button>
           <div style={{ margin: "24px" }} />
 
@@ -185,7 +181,8 @@ export default class Profile extends Component {
               style={{ width: 250 }}
               type="password"
               onChange={e =>
-                this.onInputChange("newPasswordRepeated", e.target.value)}
+                this.onInputChange("newPasswordRepeated", e.target.value)
+              }
               placeholder="Password (between 6-100 characters)"
               maxLength={100}
             />
@@ -197,7 +194,8 @@ export default class Profile extends Component {
             type="primary"
             onClick={() => this.onClickChangePassword()}
           >
-            {" "}Change Password{" "}
+            {" "}
+            Change Password{" "}
           </Button>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Modal, Button, Radio, notification } from "antd";
 import DropdownSelection from "./DropdownSelection.js";
+import roles from "../roles/roles.js";
 
 /* PROPS
     checklists: object, the data pulled from "/checklists/" on firebase
@@ -62,7 +63,7 @@ export default class FindPreexistingListModal extends Component {
       height: "30px",
       lineHeight: "30px"
     };
-    
+
     // render the checklist radio buttons based on the selected role and location
     let radioButtons = [];
     if (this.state.isSearchClicked) {
@@ -82,7 +83,8 @@ export default class FindPreexistingListModal extends Component {
           let checklist = this.props.checklists[location][role][key];
           let radioButton = (
             <Radio style={radioStyle} value={checklist}>
-              {" "}{checklist.title}{" "}
+              {" "}
+              {checklist.title}{" "}
             </Radio>
           );
           radioButtons.push(radioButton);
@@ -105,22 +107,23 @@ export default class FindPreexistingListModal extends Component {
           dropdownValues={this.props.locations}
           onClickField={location => this.onChange("selectedLocation", location)}
         />
-        {this.state.selectedLocation !== "" && 
+        {this.state.selectedLocation !== "" && (
           <div>
-          <DropdownSelection
-            promptText="Choose role."
-            selectedValue={this.state.selectedRole}
-            dropdownValues={Object.keys(this.props.roles[this.state.selectedLocation])}
-            onClickField={role => this.onChange("selectedRole", role)}
-          />
-          <Button
-            icon="search"
-            onClick={() => this.onChange("isSearchClicked", true)}
-          >
-            {" "}Search{" "}
-          </Button>
+            <DropdownSelection
+              promptText="Choose role."
+              selectedValue={this.state.selectedRole}
+              dropdownValues={roles}
+              onClickField={role => this.onChange("selectedRole", role)}
+            />
+            <Button
+              icon="search"
+              onClick={() => this.onChange("isSearchClicked", true)}
+            >
+              {" "}
+              Search{" "}
+            </Button>
           </div>
-        }
+        )}
 
         <div>
           <Radio.Group
