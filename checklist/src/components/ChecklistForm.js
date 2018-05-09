@@ -10,7 +10,6 @@ import roleHierarchy from "../roles/roleHierarchy.js";
 import "../css/ChecklistForm.css";
 import firebase from "../configs/firebaseConfig.js";
 import { storeLocations } from "../locations.js";
-import roles from "../roles/roles.js";
 
 /* PROPS
     checklistData: obj; has all the relevant fields for checklists (managed by parent component)
@@ -51,13 +50,6 @@ export default class ChecklistForm extends Component {
     this.state = {
       newChecklist: this.props.checklistTemplate
     };
-  }
-
-  componentWillMount() {
-    this.setState({
-      ...this.state,
-      roles: roles
-    });
   }
 
   componentWillReceiveProps(props) {
@@ -166,15 +158,12 @@ export default class ChecklistForm extends Component {
     } else {
       locationsUserCanSee = storeLocations;
     }
+    console.log(locations, locationsUserCanSee);
 
     // grab the relevant roles based on user's position in the hierarchy
     var roles = [];
-    locationsUserCanSee.forEach(location => {
-      roles.forEach(role => {
-        if (!roles.includes(role)) {
-          roles.push(<Option value={role}>{role}</Option>);
-        }
-      });
+    roleHierarchy[this.props.userInfo.role].forEach(role => {
+      roles.push(<Option value={role}>{role}</Option>);
     });
 
     locationsUserCanSee.forEach(location => {
