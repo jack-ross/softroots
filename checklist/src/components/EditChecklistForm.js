@@ -47,17 +47,9 @@ export default class ChecklistForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      roles: {},
       allChecklists: undefined,
       isPreexistingModalVisible: false
     };
-  }
-
-  componentWillMount() {
-    this.setState({
-      ...this.state,
-      roles: roles
-    });
   }
 
   render() {
@@ -74,13 +66,8 @@ export default class ChecklistForm extends Component {
 
     // grab the relevant roles based on user's position in the hierarchy
     var roles = [];
-    locationsUserCanSee.forEach(location => {
-      let rolesInLocation = Object.keys(this.state.roles);
-      rolesInLocation.forEach(role => {
-        if (!roles.includes(role)) {
-          roles.push(<Option value={role}>{role}</Option>);
-        }
-      });
+    roleHierarchy[this.props.userInfo.role].forEach(role => {
+      roles.push(<Option value={role}>{role}</Option>);
     });
 
     locationsUserCanSee.forEach(location => {
