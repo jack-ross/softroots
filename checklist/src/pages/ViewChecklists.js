@@ -205,8 +205,9 @@ export default class ViewChecklists extends Component {
       // otherwise, go through that location's roles and render each
       // checklist within that role
       const roleChecklists = roles
-        .map(role => {
-          let roleChecklists = roleInfoAtLocation[role];
+        .map((role, roleIndex) => {
+          let roleChecklists =
+            roleInfoAtLocation[role] || roleInfoAtLocation[roleIndex];
           if (!roleChecklists) {
             return null;
           }
