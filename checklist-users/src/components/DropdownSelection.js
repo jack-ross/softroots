@@ -15,20 +15,15 @@ export default class DropdownSelection extends Component {
   }
 
   render() {
+    console.log(this.props);
     // map through the possible values to create the dropbox (all AntDesign stuff)
     const dropboxItems = this.props.dropdownValues.map(value => {
-      return (
-        <Menu.Item key={value}>
-          {value}
-        </Menu.Item>
-      );
+      return <Menu.Item key={value}>{value}</Menu.Item>;
     });
 
     // puts those values in a Menu container for AntDesign's Dropbox
     const possibleValueMenu = (
-      <Menu onClick={e => this.onClickField(e)}>
-        {dropboxItems}
-      </Menu>
+      <Menu onClick={e => this.onClickField(e)}>{dropboxItems}</Menu>
     );
 
     // render the button

@@ -8,7 +8,7 @@ import { Redirect } from "react-router-dom";
 import rootsLogo from "../images/rootsLogo.jpg";
 import background from "../images/newSplashPageBackground.jpg";
 import { storeLocations } from "../locations.js";
-import roles from "../roles/roles.js";
+import allRoles from "../roles/roles.js";
 
 /* PROPS
     userInfo: user info pulled from firebase after logging in; if logged in, redirect to home page
@@ -62,7 +62,7 @@ export default class Login extends Component {
   componentWillMount() {
     this.setState({
       ...this.state,
-      roles: roles
+      roles: allRoles
     });
   }
 
@@ -239,7 +239,8 @@ export default class Login extends Component {
 
     // set roles based on location, or default if none selected yet
     let location = this.state.createAccountInfo.location;
-    let roles = location == "" ? ["Select Location First"] : roles;
+    let roles = location == "" ? ["Select Location First"] : allRoles;
+    console.log(allRoles);
 
     return (
       <div
