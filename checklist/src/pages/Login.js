@@ -240,7 +240,6 @@ export default class Login extends Component {
     // set roles based on location, or default if none selected yet
     let location = this.state.createAccountInfo.location;
     let roles = location == "" ? ["Select Location First"] : allRoles;
-    console.log(allRoles);
 
     return (
       <div
