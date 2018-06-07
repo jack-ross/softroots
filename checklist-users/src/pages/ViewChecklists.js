@@ -92,7 +92,9 @@ export default class ViewChecklists extends Component {
 
     // map over those locations and get the lists from each one
     listsByLocations = locations.map(location => {
-      let checklistDataAtLocation = this.state.firebaseChecklists[location];
+      let checklistDataAtLocation =
+        this.state.firebaseChecklists[location] ||
+        this.state.firebaseChecklists["Roots-" + location];
       let firebasePath =
         "/dailyLists/" + this.props.dateKey + "/" + location + "/";
       // render user's role's checklists for the day if any, otherwise tell
