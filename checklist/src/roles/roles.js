@@ -1,6 +1,6 @@
 const roles = [
   "Admin",
-  "General Manager",
+  "GM",
   "Assistant GM",
   "Kitchen Manager",
   "Shift Manager",

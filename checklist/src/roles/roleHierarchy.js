@@ -1,8 +1,8 @@
 let roleHierarchy = {
   Admin: [
     "Admin",
-    "General Manager ",
-    "Assistant General Manager",
+    "GM",
+    "Assistant GM",
     "Kitchen Manager",
     "Prep",
     "Dish",
@@ -10,9 +10,9 @@ let roleHierarchy = {
     "Line",
     "Grill"
   ],
-  "General Manager": [
-    "General Manager",
-    "Assistant General Manager",
+  GM: [
+    "GM",
+    "Assistant GM",
     "Kitchen Manager",
     "Prep",
     "Dish",
@@ -20,8 +20,8 @@ let roleHierarchy = {
     "Line",
     "Grill"
   ],
-  "Assistant General Manager": [
-    "Assistant General Manager",
+  "Assistant GM": [
+    "Assistant GM",
     "Kitchen Manager",
     "Prep",
     "Dish",

@@ -11,7 +11,11 @@ export default function submitChecklist(checklist) {
   let newChecklist = Object.assign({}, checklist);
 
   // generate the key for this checklist
-  let checklistKey = firebase.database().ref().push().key.toString();
+  let checklistKey = firebase
+    .database()
+    .ref()
+    .push()
+    .key.toString();
   newChecklist.key = checklistKey;
 
   // generate the path based on location and role

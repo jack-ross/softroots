@@ -1,7 +1,7 @@
 export const roles = [
   "Admin",
-  "General Manager ",
-  "Assistant General Manager",
+  "GM",
+  "Assistant GM",
   "Kitchen Manager",
   "Shift Manager",
   "Grill",

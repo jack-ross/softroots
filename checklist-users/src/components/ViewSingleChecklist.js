@@ -91,7 +91,6 @@ export default class ViewSingleChecklist extends Component {
       });
 
     if (!url) return;
-    debugger;
 
     let imgPath =
       this.props.firebasePath + "/" + this.props.checklist.key + "/signature";

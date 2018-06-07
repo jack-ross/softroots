@@ -82,6 +82,7 @@ export default class UserManagement extends Component {
   render() {
     let { userInfo, onClickSignOut } = this.props;
     const { firebaseUsers, checklists } = this.state;
+    console.log(this.state);
     if (process.env.NODE_ENV === "development") {
       userInfo = { role: "Admin" };
     }
@@ -121,7 +122,6 @@ export default class UserManagement extends Component {
                     locations={locations}
                   />
                 </div>
-                )
               </div>
             )}
           <div style={{ margin: "12px" }} />
