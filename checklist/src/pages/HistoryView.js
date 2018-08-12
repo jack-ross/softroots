@@ -14,6 +14,16 @@ const Label = ({ children }) => (
   </div>
 );
 
+const getNestedLocation = location => {
+  if (typeof location === "string") {
+    return [location];
+  }
+  if (typeof location[0] === "string") {
+    return location;
+  }
+  return getNestedLocation(location[0]);
+};
+
 const Filters = ({
   filters = {},
   onFilterChange,
@@ -141,6 +151,7 @@ const flattenEntry = entry => {
       checklists = checklists.concat(
         Object.keys(role).map(k => ({
           ...role[k],
+          location: getNestedLocation(role[k].location),
           key: k,
           progress: getChecklistProgress(role[k]),
           children: subsectionsToChildren(role[k], k)
@@ -311,6 +322,7 @@ const connectViewState = Component =>
       firebase
         .database()
         .ref("/dailyLists")
+        .orderByKey()
         .on("value", snapshot => {
           // if no data, let the user know by updating the status
           const val = snapshot.val();
