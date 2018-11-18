@@ -158,7 +158,6 @@ export default class ChecklistForm extends Component {
     } else {
       locationsUserCanSee = storeLocations;
     }
-    console.log(locations, locationsUserCanSee);
 
     // grab the relevant roles based on user's position in the hierarchy
     var roles = [];
@@ -259,7 +258,8 @@ export default class ChecklistForm extends Component {
           <Switch
             checked={this.state.newChecklist.requiresSignature}
             onChange={checked => this.updateField("requiresSignature", checked)}
-          />,
+          />
+          ,
         </div>
 
         <div className="container">
