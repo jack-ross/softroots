@@ -23,13 +23,16 @@ export default function(
     subtaskIndex;
   let fieldPath = updatedFirebasePath + "/" + field;
   let isCompletedPath = updatedFirebasePath + "/isCompleted";
+  let completedDatePath = firebasePath + "/completedDate";
   let firebaseUpdates = {};
   firebaseUpdates[fieldPath] = newValue;
   if (!newValue) {
     // happens if newValue is "", undefined, etc (could depend on certain situations)
     firebaseUpdates[isCompletedPath] = false;
+    firebaseUpdates[completedDatePath] = null;
   } else {
     firebaseUpdates[isCompletedPath] = true;
+    firebaseUpdates[completedDatePath] = new Date().getTime();
   }
 
   firebase

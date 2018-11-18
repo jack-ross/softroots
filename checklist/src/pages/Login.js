@@ -281,7 +281,8 @@ export default class Login extends Component {
 
           <div className="forgot-password-container">
             <p className="forgot-password">
-              Forgot your password?<p
+              Forgot your password?
+              <p
                 className="click-here"
                 onClick={() => this.onClickResetPassword()}
               >
@@ -290,7 +291,8 @@ export default class Login extends Component {
             </p>
           </div>
           <p className="sign-up" onClick={() => this.onClickCreateAccount()}>
-            Create Account<Icon className="sign-up-icon" type="right-circle" />
+            Create Account
+            <Icon className="sign-up-icon" type="right-circle" />
           </p>
 
           <Modal
@@ -354,7 +356,7 @@ export default class Login extends Component {
               onClickField={val => this.onChange(val, "location", "create")}
             />
 
-            <h3> Roles </h3>
+            <h3> Role </h3>
             <DropdownSelection
               promptText="Select Role"
               selectedValue={this.state.createAccountInfo.role}

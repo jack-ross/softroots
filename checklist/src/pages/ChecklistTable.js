@@ -1,5 +1,7 @@
 import React from "react";
+import moment from "moment";
 import { Checkbox, Tag, Table } from "antd";
+import { isMoment } from "moment";
 
 const columns = [
   {
@@ -23,7 +25,7 @@ const columns = [
         );
       }
       const { completed, total } = progress,
-        percentage = Math.ceil(completed / total * 1000) / 10 + "%";
+        percentage = Math.ceil((completed / total) * 1000) / 10 + "%";
       return (
         <div>
           <Checkbox
@@ -49,9 +51,15 @@ const columns = [
   },
   {
     title: "Date",
-    dataIndex: "date",
     key: "date",
-    render: date => date && date.format("MMM Do, YYYY"),
+    render: item => {
+      const formatStr = "MMM Do, YYYY";
+      if (item.date) {
+        return item.date.format(formatStr);
+      } else if (item.completedDate) {
+        return moment(item.completedDate).format(formatStr);
+      }
+    },
     sorter: (a, b) => a.date && a.date.isBefore(b.date)
   }
 ];

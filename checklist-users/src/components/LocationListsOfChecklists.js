@@ -16,9 +16,7 @@ export default class LocationListsOfChecklists extends Component {
     if (!this.props.checklistDataAtLocation) {
       return (
         <div>
-          <h1>
-            {" "}{this.props.location}{" "}
-          </h1>
+          <h1> {this.props.location} </h1>
           <p> No checklists at this location today. </p>
           <div style={{ margin: "16px 0" }} />
         </div>
@@ -29,19 +27,19 @@ export default class LocationListsOfChecklists extends Component {
     // necessary lists
     let listsByRole = this.props.roles.map(role => {
       let checklistsForRole = this.props.checklistDataAtLocation[role];
+      console.log(checklistsForRole);
       let firebasePath = this.props.firebaseLocationPath + "/" + role + "/";
       return (
         <div>
-          <h5 style={{ fontSize: "16px" }}>
-            {" "}{role}{" "}
-          </h5>
+          <h5 style={{ fontSize: "16px" }}> {role} </h5>
           <div style={{ margin: "8px 0" }} />
-          {checklistsForRole &&
+          {checklistsForRole && (
             <ListOfChecklists
               firebasePath={firebasePath}
               checklists={checklistsForRole}
               userInfo={this.props.userInfo}
-            />}
+            />
+          )}
 
           {!checklistsForRole && <p> None </p>}
           <div style={{ margin: "16px 0" }} />
@@ -51,9 +49,7 @@ export default class LocationListsOfChecklists extends Component {
 
     return (
       <div>
-        <h1>
-          {" "}{this.props.location}{" "}
-        </h1>
+        <h1> {this.props.location} </h1>
         <div style={{ height: "8px" }} />
 
         {listsByRole}

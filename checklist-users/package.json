@@ -5,6 +5,7 @@
   "dependencies": {
     "antd": "^2.12.2",
     "firebase": "^4.2.0",
+    "logrocket": "^0.6.16",
     "moment-timezone": "^0.5.13",
     "react": "15.6.1",
     "react-bootstrap": "^0.31.1",

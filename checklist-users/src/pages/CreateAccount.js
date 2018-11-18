@@ -7,7 +7,7 @@ import firebase from "../configs/firebaseConfig.js";
 import "../css/CreateAccount.css";
 
 // arrays for the dropdowns when creating an account
-const locations = ["Charlottesville", "Newark", "CV2"];
+const locations = ["Charlottesville", "Newark", "CV2", "Richmond", "Pitt"];
 const roles = [
   "GM",
   "Assistant GM",
@@ -130,7 +130,7 @@ export default class CreateAccount extends Component {
         />
         <div style={{ margin: "12px 0" }} />
 
-        <h3> Roles </h3>
+        <h3> Role </h3>
         <DropdownSelection
           promptText="Select Role"
           selectedValue={this.state.role}

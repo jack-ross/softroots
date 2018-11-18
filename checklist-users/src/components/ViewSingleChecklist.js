@@ -118,12 +118,15 @@ export default class ViewSingleChecklist extends Component {
       subtaskIndex;
     let inputValuePath = firebasePath + "/inputValue";
     let isCompletedPath = firebasePath + "/isCompleted";
+    let completedDatePath = firebasePath + "/completedDate";
     let firebaseUpdates = {};
     firebaseUpdates[inputValuePath] = newValue;
     if (newValue === "") {
       firebaseUpdates[isCompletedPath] = false;
+      firebaseUpdates[completedDatePath] = null;
     } else {
       firebaseUpdates[isCompletedPath] = true;
+      firebaseUpdates[completedDatePath] = new Date().getTime();
     }
     firebase
       .database()

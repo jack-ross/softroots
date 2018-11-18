@@ -122,6 +122,7 @@ const subsectionsToChildren = (checklist, k) =>
       key: k + index,
       title: subsection.title,
       progress: getSubsectionProgress(subsection),
+      completedDate: subsection.completedDate,
       role: null,
       locations: [],
       date: null,

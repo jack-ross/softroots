@@ -15,6 +15,7 @@ import isPastEndTime from "../helperFunctions/isPastEndTime.js";
 
 export default class ListOfChecklists extends Component {
   render() {
+    console.log(this.props.checklists);
     // create an array of the checklists
     let checklistArray = Object.keys(this.props.checklists).map(key => {
       return this.props.checklists[key];
@@ -54,11 +55,7 @@ export default class ListOfChecklists extends Component {
         headerStyle.color = red;
       }
 
-      headerWithEndTime = (
-        <p style={headerStyle}>
-          {" "}{headerWithEndTime}{" "}
-        </p>
-      );
+      headerWithEndTime = <p style={headerStyle}> {headerWithEndTime} </p>;
 
       return (
         <Collapse.Panel header={headerWithEndTime}>
@@ -71,10 +68,6 @@ export default class ListOfChecklists extends Component {
       );
     });
 
-    return (
-      <Collapse accordion>
-        {renderedChecklists}
-      </Collapse>
-    );
+    return <Collapse accordion>{renderedChecklists}</Collapse>;
   }
 }
