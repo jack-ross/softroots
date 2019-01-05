@@ -15,6 +15,9 @@ const Label = ({ children }) => (
 );
 
 const getNestedLocation = location => {
+  if (!location) {
+    return null;
+  }
   if (typeof location === "string") {
     return [location];
   }
@@ -117,20 +120,25 @@ const subtasksToChildren = (tasks, k) =>
   });
 
 const subsectionsToChildren = (checklist, k) =>
-  checklist.subsections.map((subsection, index) => {
-    return {
-      key: k + index,
-      title: subsection.title,
-      progress: getSubsectionProgress(subsection),
-      completedDate: subsection.completedDate,
-      role: null,
-      locations: [],
-      date: null,
-      children: subtasksToChildren(subsection.subtasks, k + index)
-    };
-  });
+  checklist.subsections
+    ? checklist.subsections.map((subsection, index) => {
+        return {
+          key: k + index,
+          title: subsection.title,
+          progress: getSubsectionProgress(subsection),
+          completedDate: subsection.completedDate,
+          role: null,
+          locations: [],
+          date: null,
+          children: subtasksToChildren(subsection.subtasks, k + index)
+        };
+      })
+    : [];
 
 const getChecklistProgress = checklist => {
+  if (!checklist.subsections) {
+    return [];
+  }
   let total = 0;
   let completed = 0;
   checklist.subsections.map(section =>
@@ -150,13 +158,15 @@ const flattenEntry = entry => {
   Object.values(entry).forEach(location => {
     Object.values(location).forEach(role => {
       checklists = checklists.concat(
-        Object.keys(role).map(k => ({
-          ...role[k],
-          location: getNestedLocation(role[k].location),
-          key: k,
-          progress: getChecklistProgress(role[k]),
-          children: subsectionsToChildren(role[k], k)
-        }))
+        Object.keys(role)
+          .map(k => ({
+            ...role[k],
+            location: getNestedLocation(role[k].location),
+            key: k,
+            progress: getChecklistProgress(role[k]),
+            children: subsectionsToChildren(role[k], k)
+          }))
+          .filter(role => !!role.location)
       );
     });
   });
@@ -219,7 +229,8 @@ export const HistoryViewComponent = ({
   locations,
   onFilterChange,
   filters,
-  isAdmin
+  isAdmin,
+  status
 }) => (
   <div
     style={{
@@ -240,7 +251,15 @@ export const HistoryViewComponent = ({
             locations={locations}
           />
         )}
-        <ChecklistTable checklists={checklists} />
+        {status !== "error" && (
+          <ChecklistTable
+            checklists={checklists}
+            loading={status === "loading"}
+          />
+        )}
+        {status === "error" && (
+          <div style={{ padding: "48px 64px" }}>"Error fetching data"</div>
+        )}
       </div>
     </div>
   </div>
@@ -320,6 +339,9 @@ const connectViewState = Component =>
     };
 
     componentWillMount() {
+      const db = firebase.database();
+      const url = db.app.options_.databaseUrl;
+      this.setState({ status: "loading" });
       firebase
         .database()
         .ref("/dailyLists")
@@ -328,13 +350,25 @@ const connectViewState = Component =>
           // if no data, let the user know by updating the status
           const val = snapshot.val();
           if (val) {
-            this.receiveChecklists(val);
+            try {
+              this.receiveChecklists(val);
+              this.setState({ status: "success" });
+            } catch (e) {
+              alert("Error ingesting checklists. Please contact developer.");
+              this.setState({
+                status: "error"
+              });
+            }
+          } else {
+            this.setState({
+              status: "error"
+            });
           }
         });
     }
     render() {
       const { userInfo = {}, dateKey, history, location } = this.props;
-      const { checklists, roles, locations } = this.state;
+      const { checklists, roles, locations, status } = this.state;
       const filters = this.getParams();
       const filteredChecklists = filterChecklists(checklists, filters);
       const isAdmin =
@@ -351,6 +385,7 @@ const connectViewState = Component =>
             locations={locations}
             onFilterChange={filters => this.onFilterChange(filters)}
             filters={this.getParams()}
+            status={status}
           />
         );
       }

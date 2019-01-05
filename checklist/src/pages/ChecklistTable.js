@@ -64,6 +64,11 @@ const columns = [
   }
 ];
 
-export default ({ checklists }) => (
-  <Table columns={columns} dataSource={checklists} />
+export default ({ checklists, loading }) => (
+  <Table
+    columns={columns}
+    dataSource={checklists}
+    loading={loading}
+    locale={{ emptyText: loading ? "" : "No results found" }}
+  />
 );
