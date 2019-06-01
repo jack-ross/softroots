@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { isObject } from "lodash";
 import { Collapse } from "antd";
 import ViewSingleChecklist from "./ViewSingleChecklist.js";
 import createEndTimeString from "../helperFunctions/createEndTimeString.js";
@@ -15,11 +16,12 @@ import isPastEndTime from "../helperFunctions/isPastEndTime.js";
 
 export default class ListOfChecklists extends Component {
   render() {
-    console.log(this.props.checklists);
     // create an array of the checklists
-    let checklistArray = Object.keys(this.props.checklists).map(key => {
-      return this.props.checklists[key];
-    });
+    let checklistArray = Object.keys(this.props.checklists)
+      .map(key => {
+        return this.props.checklists[key];
+      })
+      .filter(checklist => isObject(checklist));
 
     // sort them based on their end times
     checklistArray.sort(function(a, b) {

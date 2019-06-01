@@ -1,7 +1,7 @@
 // takes in an endTime object with hours, minutes, and amPM fields and converts to military
 // time object with just hours and minutes.  used in compareEndTimes to sort time easier
 
-export default function(endTimeObject) {
+export default function(endTimeObject = {}) {
   let amPm = endTimeObject.amPm;
   let hours = parseInt(endTimeObject.hours, 10);
   let minutes = parseInt(endTimeObject.minutes, 10);

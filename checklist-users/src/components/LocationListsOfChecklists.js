@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { isObject } from "lodash";
 import ListOfChecklists from "./ListOfChecklists.js";
 
 /* PROPS
@@ -25,9 +26,12 @@ export default class LocationListsOfChecklists extends Component {
 
     // otherwise, map through the user's accessible roles and return the
     // necessary lists
+    console.log(this.props.roles);
     let listsByRole = this.props.roles.map(role => {
-      let checklistsForRole = this.props.checklistDataAtLocation[role];
+      let checklistsForRole = this.props.checklistDataAtLocation[role] || [];
+
       console.log(checklistsForRole);
+      console.log(role);
       let firebasePath = this.props.firebaseLocationPath + "/" + role + "/";
       return (
         <div>
