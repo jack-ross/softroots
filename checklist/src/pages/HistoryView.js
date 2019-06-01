@@ -7,6 +7,7 @@ import { Input, Select, DatePicker } from "antd";
 import firebase from "../configs/firebaseConfig";
 import ChecklistTable from "./ChecklistTable";
 const RangePicker = DatePicker.RangePicker;
+const Search = Input.Search;
 
 const Label = ({ children }) => (
   <div style={{ fontWeight: 500, color: "#777", paddingBottom: 4 }}>
@@ -30,6 +31,8 @@ const getNestedLocation = location => {
 const Filters = ({
   filters = {},
   onFilterChange,
+  setLookback,
+  daysLookback,
   locations = [],
   roles = []
 }) => (
@@ -80,7 +83,7 @@ const Filters = ({
       <Label>Location</Label>
       <Select
         key="location-select"
-        style={{ width: 200 }}
+        style={{ width: 200, marginRight: 12 }}
         placeholder="Location"
         allowClear={true}
         value={filters.location}
@@ -92,6 +95,16 @@ const Filters = ({
           </Select.Option>
         ))}
       </Select>
+    </span>
+    <span>
+      <Label>Days lookback</Label>
+      <Search
+        onSearch={value => {
+          setLookback(parseFloat(value));
+        }}
+        style={{ width: 200 }}
+        defaultValue={daysLookback}
+      />
     </span>
   </div>
 );
@@ -228,6 +241,8 @@ export const HistoryViewComponent = ({
   roles,
   locations,
   onFilterChange,
+  setLookback,
+  daysLookback,
   filters,
   isAdmin,
   status
@@ -247,6 +262,8 @@ export const HistoryViewComponent = ({
           <Filters
             filters={filters}
             onFilterChange={onFilterChange}
+            setLookback={setLookback}
+            daysLookback={daysLookback}
             roles={roles}
             locations={locations}
           />
@@ -270,7 +287,8 @@ const connectViewState = Component =>
     constructor() {
       super();
       this.state = {
-        checklists: []
+        checklists: [],
+        daysLookback: 14
       };
     }
 
@@ -338,7 +356,7 @@ const connectViewState = Component =>
       return search;
     };
 
-    componentWillMount() {
+    fetch(daysLookback) {
       const db = firebase.database();
       const url = db.app.options_.databaseUrl;
       this.setState({ status: "loading" });
@@ -346,6 +364,7 @@ const connectViewState = Component =>
         .database()
         .ref("/dailyLists")
         .orderByKey()
+        .limitToLast(daysLookback)
         .on("value", snapshot => {
           // if no data, let the user know by updating the status
           const val = snapshot.val();
@@ -366,6 +385,9 @@ const connectViewState = Component =>
           }
         });
     }
+    componentDidMount() {
+      this.fetch(this.state.daysLookback);
+    }
     render() {
       const { userInfo = {}, dateKey, history, location } = this.props;
       const { checklists, roles, locations, status } = this.state;
@@ -384,6 +406,15 @@ const connectViewState = Component =>
             roles={roles}
             locations={locations}
             onFilterChange={filters => this.onFilterChange(filters)}
+            daysLookback={this.state.daysLookback}
+            setLookback={daysLookback => {
+              this.setState(
+                {
+                  daysLookback
+                },
+                this.fetch(daysLookback)
+              );
+            }}
             filters={this.getParams()}
             status={status}
           />
