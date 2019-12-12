@@ -7,6 +7,17 @@ import { storeLocations } from "./locations.js";
 // and searches through them to check which ones should repeat
 // based on today's day (i.e. "Monday")
 
+// Sometimes locations are deeply nested after an update. This flattens them.
+function flatten(array) {
+  return array.reduce((acc, e) => {
+    if (Array.isArray(e)) {
+      return acc.concat(flatten(e));
+    } else {
+      return acc.concat(e);
+    }
+  }, []);
+}
+
 export default function(checklistSchemas, dateKey) {
   // get the day of the week (i.e. "Monday")
   let dayOfWeek = getDayOfWeek("America/New_York", dateKey);
@@ -34,6 +45,7 @@ export default function(checklistSchemas, dateKey) {
         if (checklistSchema.daysToRepeat.includes(dayOfWeek)) {
           let checklistCopies = createChecklistsUsingEndTimes(checklistSchema);
           checklistCopies.map(checklist => {
+            checklist.location = flatten(checklist.location);
             allChecklistCopies[location][role][
               checklist.key
             ] = convertChecklistSchema(checklist, checklistKey);
