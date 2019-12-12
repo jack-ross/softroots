@@ -7,7 +7,7 @@ import firebase from "../configs/firebaseConfig.js";
 import "../css/CreateAccount.css";
 
 // arrays for the dropdowns when creating an account
-const locations = ["Charlottesville", "Newark", "CV2", "Richmond", "Pitt"];
+const locations = ["Charlottesville", "Newark", "CV2", "Richmond", "Pitt", "PennState"];
 const roles = [
   "GM",
   "Assistant GM",

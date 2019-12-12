@@ -3,5 +3,6 @@ export const storeLocations = [
   "Roots-Newark",
   "Roots-CV2",
   "Roots-Richmond",
-  "Roots-Pitt"
+  "Roots-Pitt",
+  "Roots-PennState"
 ];
