@@ -11,7 +11,7 @@ const locations = ["Charlottesville", "Newark", "CV2", "Richmond", "Pitt", "Penn
 const roles = [
     "Manager",
     "Crew Member",
-    "------ Legacy roles below here ",
+    "------ Old roles below here ",
     "Admin",
     "GM",
     "Assistant GM",

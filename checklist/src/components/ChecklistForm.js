@@ -79,8 +79,18 @@ export default class ChecklistForm extends Component {
 
   componentWillReceiveProps(props) {
     this.state.newChecklist = props.checklistTemplate;
+    if(this.props.checklists) {
+      this.updateChecklists();
+    }
   }
   componentDidMount() {
+    if(this.props.checklists) {
+      this.updateChecklists();
+    }
+  }
+
+  updateChecklists() {
+
     const categories = this.props.checklists.map(checklist => checklist && checklist.category).filter(s => !!s);
     const subcategories = this.props.checklists.map(checklist => checklist && checklist.subCategory).filter(s => !!s);
     this.setState({
@@ -88,7 +98,6 @@ export default class ChecklistForm extends Component {
       subcategories
     })
   }
-
   confirmSubmit() {
     // validate input; throw errors if found
     let valid = new ChecklistValidation();

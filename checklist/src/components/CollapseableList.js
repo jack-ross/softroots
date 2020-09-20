@@ -34,6 +34,9 @@ export default class CollapseableList extends Component {
     let panels = this.props.listInfo.map((list, index) => {
       // create the strings for the list's end times
       let allEndTimesString = "";
+      if(!list.endTimes) {
+        console.log(list)
+      }
       list.endTimes.map(endTime => {
         let endTimeString =
           endTime.hours + ":" + endTime.minutes + " " + endTime.amPm;

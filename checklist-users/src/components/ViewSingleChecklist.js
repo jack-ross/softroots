@@ -65,6 +65,7 @@ export default class ViewSingleChecklist extends Component {
   }
 
   onMarkChecklistAsCompleted(isChecked) {
+    debugger;
     if (isChecked && this.props.checklist.requiresSignature) {
       this.openSignature();
     } else {
@@ -226,12 +227,15 @@ export default class ViewSingleChecklist extends Component {
         {subsections}
         <div style={{ margin: "8px 0" }} />
 
-        <p> Complete? </p>
-        <input
-          checked={this.props.checklist.isMarkedCompleted}
-          type="checkbox"
-          onChange={e => this.onMarkChecklistAsCompleted(e.target.checked)}
-        />
+
+        <div
+          onClick={() => this.onMarkChecklistAsCompleted(!this.props.checklist.isMarkedCompleted)}>
+          <p> Complete? </p>
+          <input
+            checked={this.props.checklist.isMarkedCompleted}
+            type="checkbox"
+          />
+        </div>
         {this.props.checklist.signature && (
           <img
             src={this.props.checklist.signature}

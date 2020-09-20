@@ -79,7 +79,7 @@ export default class ViewChecklists extends Component {
     if (this.state.viewMode === "me") {
       roles = [this.props.userInfo.role];
     } else if (this.state.viewMode === "crew") {
-      roles = roleHierarchy[this.props.userInfo.role];
+      roles = roleHierarchy[this.props.userInfo.role].filter(role => !role.includes("----"));
     }
 
     // if user is an Admin, show all locations; otherwise, just the user's location

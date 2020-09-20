@@ -63,7 +63,7 @@ export default class ListOfChecklists extends Component {
         <Collapse.Panel header={headerWithEndTime}>
           <ViewSingleChecklist
             checklist={checklist}
-            firebasePath={this.props.firebasePath}
+            firebasePath={this.props.firebaseLocationPath + "/" + checklist.role}
             userInfo={this.props.userInfo}
           />
         </Collapse.Panel>

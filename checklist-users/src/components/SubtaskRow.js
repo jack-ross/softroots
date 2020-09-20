@@ -64,6 +64,8 @@ export default class SubtaskRow extends Component {
     } else if (!isPastEndTime(this.props.endTime, "America/New_York")) {
       style = { backgroundColor: "#fafcb5" };
     }
+    style.cursor = "pointer"
+    style.padding= "8px 4px"
 
     // if it's a scale, we want the button to change color based on what's currently been
     // selected.  also want to display the currently selected value on the button
@@ -80,7 +82,20 @@ export default class SubtaskRow extends Component {
 
     return (
       <div>
-        <Row style={style} className="show-grid">
+        <Row style={style} className="show-grid" onClick={() => {
+          if(displayType === "checkbox") {
+            debugger;
+            this.props.onCheck(!this.props.subtask.isCompleted)
+          }
+          if(displayType === "input") {
+            this.changeModalVisibility("isInputModalVisible")
+          }
+          if(displayType === "scale") {
+
+            this.changeModalVisibility("isScaleModalVisible")
+          }
+        }
+        }>
           <Col xs={10} sm={9} className="textAndButtonsCol">
             <div className="textAndButtons">
               <p className="subtaskShortDescription">
@@ -104,14 +119,10 @@ export default class SubtaskRow extends Component {
               <input
                 type="checkbox"
                 checked={this.props.subtask.isCompleted}
-                onChange={e => this.props.onCheck(e.target.checked)}
               />
             )}
             {displayType === "input" && (
               <Button
-                onClick={() =>
-                  this.changeModalVisibility("isInputModalVisible")
-                }
                 size="small"
                 icon="arrows-alt"
               />
@@ -120,9 +131,6 @@ export default class SubtaskRow extends Component {
               <Button
                 size="small"
                 icon={scaleIcon}
-                onClick={() =>
-                  this.changeModalVisibility("isScaleModalVisible")
-                }
                 style={scaleButtonStyle}
               >
                 {scaleText}

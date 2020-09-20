@@ -1,7 +1,7 @@
 const roles = [
     "Manager",
     "Crew Member",
-    "---- Legacy roles below here ----",
+    "---- Old roles below here ----",
   "Admin",
   "GM",
   "Assistant GM",

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { isObject } from "lodash";
 import ListOfChecklists from "./ListOfChecklists.js";
+import {getChecklistsFromVal} from "../helperFunctions/getChecklistsFromVal";
+import {groupBy} from "lodash"
 
 /* PROPS
     location: string, which location is being referred to (i.e. "Charlottesville, VA")
@@ -26,26 +28,33 @@ export default class LocationListsOfChecklists extends Component {
 
     // otherwise, map through the user's accessible roles and return the
     // necessary lists
-    console.log(this.props.roles);
-    let listsByRole = this.props.roles.map(role => {
-      let checklistsForRole = this.props.checklistDataAtLocation[role] || [];
+    const checklists = getChecklistsFromVal({[this.props.location]: this.props.checklistDataAtLocation}).filter(c => !!c && c.location)
+      .map(c => ({...c, subCategory: c.subCategory || "Other", category: c.category || "Other"}));
+    const groupedByCategory = groupBy(checklists, "category");
 
-      console.log(checklistsForRole);
-      console.log(role);
-      let firebasePath = this.props.firebaseLocationPath + "/" + role + "/";
+    let listsByCategory = Object.keys(groupedByCategory).map(category => {
+      let checklistsForCategory = groupedByCategory[category] || [];
+      let groupedBySubcategory = groupBy(checklistsForCategory, "subCategory")
       return (
         <div>
-          <h5 style={{ fontSize: "16px" }}> {role} </h5>
+          <h5 style={{ fontSize: "16px" }}> {category} </h5>
           <div style={{ margin: "8px 0" }} />
-          {checklistsForRole && (
-            <ListOfChecklists
-              firebasePath={firebasePath}
-              checklists={checklistsForRole}
-              userInfo={this.props.userInfo}
-            />
-          )}
+          {checklistsForCategory && Object.keys(groupedBySubcategory).map(subCategory => {
+            const subcategoryChecklists = groupedBySubcategory[subCategory];
+            return (
+              <div style={{marginLeft: 8, paddingLeft: 8, borderLeft: "1px solid #ccc"}}>
+                <h5 style={{ fontSize: "16px" }}> {subCategory} </h5>
+                <ListOfChecklists
+                  firebaseLocationPath={this.props.firebaseLocationPath}
+                  checklists={groupedBySubcategory[subCategory]}
+                  userInfo={this.props.userInfo}
+                />
+              </div>
+            )
+            })
+          }
 
-          {!checklistsForRole && <p> None </p>}
+          {!checklistsForCategory && <p> None </p>}
           <div style={{ margin: "16px 0" }} />
         </div>
       );
@@ -56,7 +65,7 @@ export default class LocationListsOfChecklists extends Component {
         <h1> {this.props.location} </h1>
         <div style={{ height: "8px" }} />
 
-        {listsByRole}
+        {listsByCategory}
         <div style={{ height: "8px" }} />
       </div>
     );
