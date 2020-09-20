@@ -28,7 +28,8 @@ export default class LocationListsOfChecklists extends Component {
 
     // otherwise, map through the user's accessible roles and return the
     // necessary lists
-    const checklists = getChecklistsFromVal({[this.props.location]: this.props.checklistDataAtLocation}).filter(c => !!c && c.location)
+    const checklists = getChecklistsFromVal({[this.props.location]: this.props.checklistDataAtLocation})
+      .filter(c => !!c && c.location)
       .map(c => ({...c, subCategory: c.subCategory || "Other", category: c.category || "Other"}));
     const groupedByCategory = groupBy(checklists, "category");
 

@@ -6,6 +6,7 @@ import createEndTimeString from "../helperFunctions/createEndTimeString.js";
 import sortEndTimes from "../helperFunctions/sortEndTimes.js";
 import isChecklistCompleted from "../helperFunctions/isChecklistCompleted.js";
 import isPastEndTime from "../helperFunctions/isPastEndTime.js";
+import {Button} from "react-bootstrap";
 
 /* PROPS:
     checklists: [obj], the checklist objects pulled from firebase to render
@@ -16,12 +17,14 @@ import isPastEndTime from "../helperFunctions/isPastEndTime.js";
 
 export default class ListOfChecklists extends Component {
   render() {
+    const hideOptional = !this.state || !this.state.showOptional
     // create an array of the checklists
     let checklistArray = Object.keys(this.props.checklists)
       .map(key => {
         return this.props.checklists[key];
       })
       .filter(checklist => isObject(checklist));
+    const optionalCount = checklistArray.filter(c => !c.required).length;
 
     // sort them based on their end times
     checklistArray.sort(function(a, b) {
@@ -38,7 +41,8 @@ export default class ListOfChecklists extends Component {
     // displays the checklist itself as a ViewSingleChecklist component.
     // the color of the text in the header is determined by whether or not
     // the checklist is completed and if it's late
-    const renderedChecklists = checklistArray.map(checklist => {
+    const renderedChecklists = checklistArray.filter((c) => !hideOptional || c.required)
+      .map(checklist => {
       let headerWithEndTime =
         checklist.title + " (" + createEndTimeString(checklist.endTime) + ")";
 
@@ -70,6 +74,21 @@ export default class ListOfChecklists extends Component {
       );
     });
 
-    return <Collapse accordion>{renderedChecklists}</Collapse>;
+    return <div>
+      {renderedChecklists.length > 0 && <Collapse accordion>{renderedChecklists}</Collapse>}
+      {optionalCount > 0 &&
+        <div style={{paddingTop: 8}}>
+          {
+            (hideOptional ?
+                <Button onClick={() => this.setState({showOptional: true})}>Show optional ({optionalCount})</Button>
+                :
+                <Button onClick={() => this.setState({showOptional: false})}>Hide optional</Button>
+            )
+          }
+        </div>
+      }
+
+
+    </div>
   }
 }
