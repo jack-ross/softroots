@@ -4,6 +4,8 @@ import NewDynamicHeaders from "../components/NewDynamicHeaders.js";
 import Checklist from "../components/Checklist.js";
 import ChecklistValidation from "../validation/ChecklistValidation.js";
 import submitChecklist from "../firebase/submitChecklist.js";
+import CreatableSelect from 'react-select/creatable';
+
 import DropdownSelection from "../components/DropdownSelection.js";
 import TimeDropdowns from "../components/TimeDropdowns.js";
 import roleHierarchy from "../roles/roleHierarchy.js";
@@ -42,7 +44,30 @@ const daysOfWeek = [
   "Sunday"
 ];
 
-let locations = ["Charlottesville, VA", "Newark, DE"];
+class CategoryInput extends Component {
+  handleChange = (newValue, actionMeta) => {
+    console.log(newValue)
+    this.props.onChange(newValue.value)
+  };
+  handleInputChange = (inputValue, actionMeta) => {
+      // this.props.onChange(inputValue);
+  };
+  render() {
+    console.log(this.props.value)
+    return (
+    <CreatableSelect
+        value={{label: this.props.value, value: this.props.value}}
+        styles={{control: (style) => ({...style, width: 200})}}
+        isClearable
+        onChange={this.handleChange}
+        onInputChange={this.handleInputChange}
+        options={(this.props.options || []).map(option => option.length ? ({label: option, value: option}) : option)}
+    />
+    );
+  }
+  }
+
+  let locations = ["Charlottesville, VA", "Newark, DE"];
 
 export default class ChecklistForm extends Component {
   constructor(props) {
@@ -54,6 +79,14 @@ export default class ChecklistForm extends Component {
 
   componentWillReceiveProps(props) {
     this.state.newChecklist = props.checklistTemplate;
+  }
+  componentDidMount() {
+    const categories = this.props.checklists.map(checklist => checklist && checklist.category).filter(s => !!s);
+    const subcategories = this.props.checklists.map(checklist => checklist && checklist.subCategory).filter(s => !!s);
+    this.setState({
+      categories,
+      subcategories
+    })
   }
 
   confirmSubmit() {
@@ -89,6 +122,9 @@ export default class ChecklistForm extends Component {
           newChecklist: {
             title: "",
             description: "",
+            required: false,
+            category: "",
+            subCategory: "",
             subsections: [],
             daysToRepeat: [],
             endTimes: [],
@@ -251,6 +287,29 @@ export default class ChecklistForm extends Component {
             placeholder={"Description (max 500 characters)"}
             type="textarea"
             value={this.state.newChecklist.description}
+          />
+        </div>
+        <div className="description-container">
+          <p className="text"> Category </p>
+          <CategoryInput
+              value={this.state.newChecklist.category}
+              onChange={value => this.updateField("category", value)}
+              options={this.state.categories}
+          />
+        </div>
+        <div className="description-container">
+          <p className="text"> Sub Category </p>
+            <CategoryInput
+                value={this.state.newChecklist.subCategory}
+                onChange={value => this.updateField("subCategory", value)}
+                options={this.state.subcategories}
+            />
+        </div>
+        <div className="required-container" style={{marginBottom: 20}}>
+          <p className="text"> Required? </p>
+          <Switch
+              checked={!!this.state.newChecklist.required}
+              onChange={checked => this.updateField("required", checked)}
           />
         </div>
         <div className="description-container">

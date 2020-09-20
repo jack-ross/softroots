@@ -12,6 +12,7 @@ import roleHierarchy from "../roles/roleHierarchy.js";
 import "../css/ViewChecklists.css";
 import { storeLocations } from "../locations.js";
 import roles from "../roles/roles.js";
+import {getChecklistsFromVal} from "../helperFunctions/getChecklistsFromVal";
 
 export default class ViewChecklists extends Component {
   constructor(props) {
@@ -36,13 +37,15 @@ export default class ViewChecklists extends Component {
           this.setState({
             ...this.state,
             status: "",
-            checklists: snapshot.val()
+            checklists: snapshot.val(),
+            allChecklists: getChecklistsFromVal(snapshot.val())
           });
         } else {
           this.setState({
             ...this.state,
             status: "No checklists found.",
-            checklists: []
+            checklists: [],
+            allChecklists: []
           });
         }
       });
@@ -268,6 +271,7 @@ export default class ViewChecklists extends Component {
         >
           <EditChecklistForm
             checklistData={this.state.checklistToEdit}
+            checklists={this.state.allChecklists}
             updateField={this.updateChecklistField}
             userInfo={this.props.userInfo}
             hideLocations={true}

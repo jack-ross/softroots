@@ -1,6 +1,11 @@
 // this function takes in a value (integer 1-5) and returns a string
 // representing the CSS color associated with that value
 
+const colors = {
+  required: "#AE0000",
+  completed: "#AE0000",
+}
+
 export default function(value) {
   switch (value) {
     case 1:

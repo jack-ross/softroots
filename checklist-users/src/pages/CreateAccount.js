@@ -9,15 +9,19 @@ import "../css/CreateAccount.css";
 // arrays for the dropdowns when creating an account
 const locations = ["Charlottesville", "Newark", "CV2", "Richmond", "Pitt", "PennState", "VirginiaTech"];
 const roles = [
-  "GM",
-  "Assistant GM",
-  "Kitchen Manager",
-  "Shift Manager",
-  "Grill",
-  "Prep",
-  "Line",
-  "Dish"
-];
+    "Manager",
+    "Crew Member",
+    "------ Legacy roles below here ",
+    "Admin",
+    "GM",
+    "Assistant GM",
+    "Kitchen Manager",
+    "Prep",
+    "Dish",
+    "Shift Manager",
+    "Line",
+    "Grill"
+]
 
 export default class CreateAccount extends Component {
   constructor(props) {

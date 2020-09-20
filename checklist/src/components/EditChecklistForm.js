@@ -11,6 +11,7 @@ import "../css/ChecklistForm.css";
 import firebase from "../configs/firebaseConfig.js";
 import { storeLocations } from "../locations.js";
 import roles from "../roles/roles.js";
+import CreatableSelect from "react-select/creatable/dist/react-select.esm";
 
 /* PROPS
     checklistData: obj; has all the relevant fields for checklists (managed by parent component)
@@ -42,6 +43,26 @@ const daysOfWeek = [
   "Saturday",
   "Sunday"
 ];
+class CategoryInput extends Component {
+    handleChange = (newValue, actionMeta) => {
+        this.props.onChange(newValue.value)
+    };
+    handleInputChange = (inputValue, actionMeta) => {
+        // this.props.onChange(inputValue);
+    };
+    render() {
+        return (
+            <CreatableSelect
+                value={{label: this.props.value, value: this.props.value}}
+                styles={{control: (style) => ({...style, width: 200})}}
+                isClearable
+                onChange={this.handleChange}
+                onInputChange={this.handleInputChange}
+                options={(this.props.options || []).map(option => option.length ? ({label: option, value: option}) : option)}
+            />
+        );
+    }
+}
 
 export default class ChecklistForm extends Component {
   constructor(props) {
@@ -51,6 +72,15 @@ export default class ChecklistForm extends Component {
       isPreexistingModalVisible: false
     };
   }
+
+componentDidMount() {
+    const categories = this.props.checklists.map(checklist => checklist && checklist.category).filter(s => !!s);
+    const subcategories = this.props.checklists.map(checklist => checklist && checklist.subCategory).filter(s => !!s);
+    this.setState({
+        categories,
+        subcategories
+    })
+}
 
   render() {
     // if user not an admin, restrict locations to just that user's location
@@ -173,6 +203,29 @@ export default class ChecklistForm extends Component {
             type="textarea"
           />
         </div>
+          <div className="description-container">
+              <p className="text"> Category </p>
+              <CategoryInput
+                  value={this.props.checklistData.category}
+                  onChange={value => this.props.updateField("category", value)}
+                  options={this.state.categories}
+              />
+          </div>
+          <div className="description-container">
+              <p className="text"> Sub Category </p>
+              <CategoryInput
+                  value={this.props.checklistData.subCategory}
+                  onChange={value => this.props.updateField("subCategory", value)}
+                  options={this.state.subcategories}
+              />
+          </div>
+          <div className="required-container" style={{marginBottom: 20}}>
+              <p className="text"> Required? </p>
+              <Switch
+                  checked={!!this.props.checklistData.required}
+                  onChange={checked => this.props.updateField("required", checked)}
+              />
+          </div>
 
         <div className="description-container">
           <p className="text"> Requires signature? </p>

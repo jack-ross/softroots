@@ -1,15 +1,22 @@
+const allRoles = [
+  "Manager",
+  "Crew Member",
+  "------ Legacy roles below here ",
+  "Admin",
+  "GM",
+  "Assistant GM",
+  "Kitchen Manager",
+  "Prep",
+  "Dish",
+  "Shift Manager",
+  "Line",
+  "Grill"
+]
+
 let roleHierarchy = {
-  Admin: [
-    "Admin",
-    "GM",
-    "Assistant GM",
-    "Kitchen Manager",
-    "Prep",
-    "Dish",
-    "Shift Manager",
-    "Line",
-    "Grill"
-  ],
+  Manager: allRoles,
+  "Crew Member": ["Crew Member"],
+  Admin: allRoles,
   GM: [
     "GM",
     "Assistant GM",

@@ -11,6 +11,7 @@ import firebase from "../configs/firebaseConfig.js";
 import "../css/CreateOrEditChecklist.css";
 import { storeLocations } from "../locations.js";
 import roles from "../roles/roles.js";
+import {getChecklistsFromVal} from "../helperFunctions/getChecklistsFromVal";
 
 const tabs = [
   {
@@ -53,9 +54,16 @@ export default class CreateOrEditChecklist extends Component {
 
   componentWillMount() {
     this.setState({
-      ...this.state,
       roles: roles
-    });
+    })
+    firebase
+        .database()
+        .ref("/checklists/")
+        .on("value", snapshot => {
+          this.setState({
+            allChecklists: getChecklistsFromVal(snapshot.val())
+          });
+        });
   }
 
   switchModalVisibility() {
@@ -122,6 +130,7 @@ export default class CreateOrEditChecklist extends Component {
           <ChecklistForm
             userInfo={this.props.userInfo}
             checklistTemplate={this.state.checklistTemplate}
+            checklists = {this.state.allChecklists}
           />
         </div>
       </div>
