@@ -13,6 +13,12 @@ import "../css/ChecklistForm.css";
 import firebase from "../configs/firebaseConfig.js";
 import { storeLocations } from "../locations.js";
 
+Array.prototype.unique = function() {
+  return this.filter(function (value, index, self) {
+    return self.indexOf(value) === index;
+  });
+}
+
 /* PROPS
     checklistData: obj; has all the relevant fields for checklists (managed by parent component)
     updateField: function; updates the relevant field in the parent's state
@@ -90,9 +96,8 @@ export default class ChecklistForm extends Component {
   }
 
   updateChecklists() {
-
-    const categories = this.props.checklists.map(checklist => checklist && checklist.category).filter(s => !!s);
-    const subcategories = this.props.checklists.map(checklist => checklist && checklist.subCategory).filter(s => !!s);
+    const categories = this.props.checklists.map(checklist => checklist && checklist.category).filter(s => !!s).unique();
+    const subcategories = this.props.checklists.map(checklist => checklist && checklist.subCategory).filter(s => !!s).unique();
     this.setState({
       categories,
       subcategories

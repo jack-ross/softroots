@@ -21,6 +21,12 @@ import CreatableSelect from "react-select/creatable/dist/react-select.esm";
       be hidden when you go to edit a checklist)
 */
 
+Array.prototype.unique = function() {
+  return this.filter(function (value, index, self) {
+    return self.indexOf(value) === index;
+  });
+}
+
 const Option = Select.Option;
 
 const testFields = [
@@ -74,8 +80,8 @@ export default class ChecklistForm extends Component {
   }
 
 componentDidMount() {
-    const categories = this.props.checklists.map(checklist => checklist && checklist.category).filter(s => !!s);
-    const subcategories = this.props.checklists.map(checklist => checklist && checklist.subCategory).filter(s => !!s);
+    const categories = this.props.checklists.map(checklist => checklist && checklist.category).filter(s => !!s).unique();
+    const subcategories = this.props.checklists.map(checklist => checklist && checklist.subCategory).filter(s => !!s).unique();
     this.setState({
         categories,
         subcategories
@@ -92,7 +98,6 @@ componentDidMount() {
     } else {
       locationsUserCanSee = storeLocations;
     }
-    console.log(locationsUserCanSee);
 
     // grab the relevant roles based on user's position in the hierarchy
     var roles = [];

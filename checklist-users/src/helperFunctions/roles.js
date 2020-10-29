@@ -1,5 +1,6 @@
 export const roles = [
   "Manager",
+  "Crew Member",
   "Admin",
   "GM",
   "Assistant GM",

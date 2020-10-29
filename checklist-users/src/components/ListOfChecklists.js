@@ -43,8 +43,13 @@ export default class ListOfChecklists extends Component {
     // the checklist is completed and if it's late
     const renderedChecklists = checklistArray.filter((c) => !hideOptional || c.required)
       .map(checklist => {
+        const days = checklist.daysToRepeat.map(d => d.slice(0, 3)).join(" ")
+
       let headerWithEndTime =
-        checklist.title + " (" + createEndTimeString(checklist.endTime) + ")";
+        <div style={{display: "flex", justifyContent: "space-between"}}>
+          <div>{checklist.title + " (" + createEndTimeString(checklist.endTime) + ")"}</div>
+
+        </div>
 
       // determine the header color
       let areSubtasksCompleted = isChecklistCompleted(checklist);
