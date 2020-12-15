@@ -7,21 +7,30 @@ import firebase from "../configs/firebaseConfig.js";
 import "../css/CreateAccount.css";
 
 // arrays for the dropdowns when creating an account
-const locations = ["Charlottesville", "Newark", "CV2", "Richmond", "Pitt", "PennState", "VirginiaTech"];
+const locations = [
+  "Charlottesville",
+  "Newark",
+  "CV2",
+  "Richmond",
+  "Pitt",
+  "PittLibertyAve",
+  "PennState",
+  "VirginiaTech",
+];
 const roles = [
-    "Manager",
-    "Crew Member",
-    "------ Old roles below here ",
-    "Admin",
-    "GM",
-    "Assistant GM",
-    "Kitchen Manager",
-    "Prep",
-    "Dish",
-    "Shift Manager",
-    "Line",
-    "Grill"
-]
+  "Manager",
+  "Crew Member",
+  "------ Old roles below here ",
+  "Admin",
+  "GM",
+  "Assistant GM",
+  "Kitchen Manager",
+  "Prep",
+  "Dish",
+  "Shift Manager",
+  "Line",
+  "Grill",
+];
 
 export default class CreateAccount extends Component {
   constructor(props) {
@@ -33,14 +42,14 @@ export default class CreateAccount extends Component {
       password: "",
       passwordRepeated: "",
       location: "",
-      role: ""
+      role: "",
     };
   }
 
   onChange(value, field) {
     this.setState({
       ...this.state,
-      [field]: value
+      [field]: value,
     });
   }
 
@@ -51,7 +60,7 @@ export default class CreateAccount extends Component {
       firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
-        .then(user => {
+        .then((user) => {
           Modal.info({
             title: "Account Created",
             content:
@@ -59,7 +68,7 @@ export default class CreateAccount extends Component {
             okText: "Ok",
             onOk: () => {
               window.location = "/";
-            }
+            },
           });
           let uid = user.uid;
           let userInfo = this.state;
@@ -71,10 +80,10 @@ export default class CreateAccount extends Component {
             .ref("users/unverified/" + uid)
             .set(userInfo);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           notification.error({
             title: "ERROR",
-            description: error.message
+            description: error.message,
           });
         });
     }
@@ -87,7 +96,7 @@ export default class CreateAccount extends Component {
         <Input
           placeholder="(max 100 characters)"
           maxLength={100}
-          onChange={e => this.onChange(e.target.value, "firstName")}
+          onChange={(e) => this.onChange(e.target.value, "firstName")}
         />
         <div style={{ margin: "12px 0" }} />
 
@@ -95,7 +104,7 @@ export default class CreateAccount extends Component {
         <Input
           placeholder="(max 100 characters)"
           maxLength={100}
-          onChange={e => this.onChange(e.target.value, "lastName")}
+          onChange={(e) => this.onChange(e.target.value, "lastName")}
         />
         <div style={{ margin: "12px 0" }} />
 
@@ -103,7 +112,7 @@ export default class CreateAccount extends Component {
         <Input
           placeholder="(max 100 characters)"
           maxLength={100}
-          onChange={e => this.onChange(e.target.value, "email")}
+          onChange={(e) => this.onChange(e.target.value, "email")}
         />
         <div style={{ margin: "12px 0" }} />
 
@@ -112,7 +121,7 @@ export default class CreateAccount extends Component {
           placeholder="(between 6-100 characters)"
           maxLength={100}
           type="password"
-          onChange={e => this.onChange(e.target.value, "password")}
+          onChange={(e) => this.onChange(e.target.value, "password")}
         />
         <div style={{ margin: "12px 0" }} />
 
@@ -121,7 +130,7 @@ export default class CreateAccount extends Component {
           placeholder="(between 6-100 characters)"
           maxLength={100}
           type="password"
-          onChange={e => this.onChange(e.target.value, "passwordRepeated")}
+          onChange={(e) => this.onChange(e.target.value, "passwordRepeated")}
         />
         <div style={{ margin: "12px 0" }} />
 
@@ -130,7 +139,7 @@ export default class CreateAccount extends Component {
           promptText="Select Location"
           selectedValue={this.state.location}
           dropdownValues={locations}
-          onClickField={val => this.onChange(val, "location")}
+          onClickField={(val) => this.onChange(val, "location")}
         />
         <div style={{ margin: "12px 0" }} />
 
@@ -139,7 +148,7 @@ export default class CreateAccount extends Component {
           promptText="Select Role"
           selectedValue={this.state.role}
           dropdownValues={roles}
-          onClickField={val => this.onChange(val, "role")}
+          onClickField={(val) => this.onChange(val, "role")}
         />
         <div style={{ margin: "12px 0" }} />
 
